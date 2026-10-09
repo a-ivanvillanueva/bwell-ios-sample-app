@@ -29,7 +29,7 @@ struct HomeView: View {
                            buttonTitle: "Learn More")
                 .padding(.bottom, 20)
 
-                Text("Suggested activites")
+                Text("Suggested activities")
                     .font(.headline)
                     .padding(.bottom, 10)
 

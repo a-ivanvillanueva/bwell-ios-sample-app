@@ -289,8 +289,15 @@
     "Success!" : {
 
     },
-    "Suggested activites" : {
-
+    "Suggested activities" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suggested activities"
+          }
+        }
+      }
     },
     "test@test.test" : {
 
