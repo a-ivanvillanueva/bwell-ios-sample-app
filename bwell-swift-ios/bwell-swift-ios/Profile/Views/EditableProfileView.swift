@@ -198,7 +198,5 @@ private struct GenderMenuButton: View {
                         state: .constant("Maryland"),
                         postalCode: .constant("21230"),
                         language: .constant("en"),
-                        selectedBirthdate: .constant(Date.now), action: {
-        print("Action tapped in preview")
-    })
+                        selectedBirthdate: .constant(Date.now), action: {})
 }

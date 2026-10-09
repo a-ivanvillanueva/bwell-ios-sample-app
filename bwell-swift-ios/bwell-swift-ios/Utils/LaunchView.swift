@@ -46,7 +46,7 @@ final class LaunchViewModel: ObservableObject {
             isCheckingSession = false
             return
         }
-        
+
         do {
             // 1) Initialize the SDK (rehydrates token manager now).
             try await BWellSDKManager.shared.initialize(apiKey)
@@ -54,7 +54,7 @@ final class LaunchViewModel: ObservableObject {
             await BWellSDKManager.shared.validateSession()
         } catch {
             // This will only catch errors from the initial setup.
-            print("LaunchViewModel: SDK initialization failed.")
+            Log.sdk.error("Launch: SDK initialization failed: \(error.localizedDescription)")
         }
 
         // 3) Show RootView after session check completes so RootView can react to the final state.

@@ -69,14 +69,14 @@ private struct BannerView: View {
                     .font(.title2)
                     .fontWeight(.bold)
                     .foregroundStyle(.white)
-                
+
                 Text(description, tableName: "Home")
                     .font(.headline)
                     .foregroundStyle(.white)
                     .padding(.bottom, 10)
-                
+
                 Button {
-                    print("Banner tapped!")
+                    Log.ui.debug("Banner tapped")
                 } label: {
                     Text(buttonTitle, tableName: "Home")
                         .padding(10)

@@ -23,10 +23,10 @@ final class KeychainTokenStorageAdapter: BWell.TokenStorage {
     private func readStore() -> [String: String] {
         do {
             guard let blob = try keychain.loadToken(), !blob.isEmpty else {
-                print("KeychainTokenStorageAdapter: No token blob found in keychain.")
+                Log.keychain.debug("No token blob found in keychain.")
                 return [:]
             }
-            print("KeychainTokenStorageAdapter: Read token blob from keychain.")
+            Log.keychain.debug("Read token blob from keychain.")
             guard let data = blob.data(using: .utf8) else { return [:] }
 
             let obj = try JSONSerialization.jsonObject(with: data, options: [])
@@ -44,20 +44,20 @@ final class KeychainTokenStorageAdapter: BWell.TokenStorage {
             }
             return out
         } catch {
-            print("KeychainTokenStorageAdapter.readStore error: \(error)")
+            Log.keychain.error("readStore error: \(error.localizedDescription)")
             return [:]
         }
     }
 
     private func writeStore(_ dict: [String: String]) {
         do {
-            print("KeychainTokenStorageAdapter: Writing token blob to keychain...")
+            Log.keychain.debug("Writing token blob to keychain...")
             let data = try JSONSerialization.data(withJSONObject: dict, options: [])
             guard let s = String(data: data, encoding: .utf8) else { return }
             try keychain.save(token: s)
-            print("KeychainTokenStorageAdapter: Successfully wrote tokens.")
+            Log.keychain.debug("Successfully wrote tokens.")
         } catch {
-            print("KeychainTokenStorageAdapter.writeStore error: \(error)")
+            Log.keychain.error("writeStore error: \(error.localizedDescription)")
         }
     }
 

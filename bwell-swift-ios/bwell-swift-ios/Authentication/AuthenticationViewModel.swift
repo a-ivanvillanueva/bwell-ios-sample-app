@@ -50,7 +50,7 @@ final class AuthenticationViewModel: ObservableObject {
             do {
                 try await sdkManager.initialize(apiKey)
             } catch {
-                errorMessage = "SDK initilization failed"
+                errorMessage = "SDK initialization failed"
                 isLoading = false
             }
         }

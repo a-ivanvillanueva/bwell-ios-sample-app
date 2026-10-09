@@ -34,7 +34,7 @@ final class ManageConnectionsViewModel: ObservableObject {
 
             memberConnections = try await sdkManager.connection().getMemberConnections()
 
-            print("ALL MEMBER CONNECTIONS: \(memberConnections)")
+            Log.connections.debug("Loaded \(self.memberConnections.count) member connections")
 
             isLoading = false
         } catch {
@@ -60,7 +60,7 @@ final class ManageConnectionsViewModel: ObservableObject {
             let request = BWell.DeleteConnectionRequest(connectionId: connectionId)
             let result = try await sdkManager.connection().deleteConnection(request)
 
-            print("Delete connection result - status: \(String(describing: result.status)), updated: \(result.statusUpdated)")
+            Log.connections.debug("Delete connection result - status: \(String(describing: result.status)), updated: \(result.statusUpdated)")
 
             // Refresh connections list after successful deletion
             await getConnections()
@@ -86,7 +86,7 @@ final class ManageConnectionsViewModel: ObservableObject {
             let request = BWell.DisconnectConnectionRequest(connectionId: connectionId)
             let result = try await sdkManager.connection().disconnectConnection(request)
 
-            print("Disconnect connection result - status: \(String(describing: result.status)), updated: \(result.statusUpdated)")
+            Log.connections.debug("Disconnect connection result - status: \(String(describing: result.status)), updated: \(result.statusUpdated)")
 
             // Refresh connections list after successful disconnection
             await getConnections()
@@ -124,7 +124,7 @@ final class ManageConnectionsViewModel: ObservableObject {
             let request = BWell.DataSourceRequest(connectionId: "proa_demo")
 
             let response = try await sdkManager.connection().getDataSource(request)
-            print("ALL DATA SOURCE CONNECTIONS: \(response)")
+            Log.connections.debug("Fetched data source connections")
 
             /*for connection in response {
                 memberConnections.append(response)

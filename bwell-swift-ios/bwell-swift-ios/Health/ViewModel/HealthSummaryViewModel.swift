@@ -72,7 +72,7 @@ final class HealthSummaryViewModel: ObservableObject {
 
         self.allergyIntoleranceGroups = allergyIntoleranceGroups
 
-        print("\n Item: \(allergyIntoleranceGroups.count)\n response: \(allergyIntoleranceGroups)")
+        Log.health.debug("Loaded \(allergyIntoleranceGroups.count) allergy intolerance groups")
     }
 
     func getAllergyIntolerances(_ groupCode: BWell.Coding) async {

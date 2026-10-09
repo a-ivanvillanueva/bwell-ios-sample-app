@@ -33,6 +33,7 @@
 		5551A3AC2EC3B8EB00394D59 /* KeychainTokenStorageAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5551A3AB2EC3B8E300394D59 /* KeychainTokenStorageAdapter.swift */; };
 		5551A3B02EC3ECC000394D59 /* BWellSDKManager+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5551A3AF2EC3ECB200394D59 /* BWellSDKManager+Helpers.swift */; };
 		5551A3B42EC4023200394D59 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5551A3B32EC4023200394D59 /* HomeViewModel.swift */; };
+		557F91973078A04B005B1E2A /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557F91963078A049005B1E2A /* Log.swift */; };
 		5597E5482EBE561C00A744CD /* WebViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5597E5472EBE560500A744CD /* WebViewWrapper.swift */; };
 		5597E54A2EBE566700A744CD /* SearchConnectionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5597E5492EBE565C00A744CD /* SearchConnectionsViewModel.swift */; };
 		5597E54C2EBE56AC00A744CD /* SearchConnectionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5597E54B2EBE56A000A744CD /* SearchConnectionsView.swift */; };
@@ -108,6 +109,7 @@
 		5551A3AF2EC3ECB200394D59 /* BWellSDKManager+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BWellSDKManager+Helpers.swift"; sourceTree = "<group>"; };
 		5551A3B32EC4023200394D59 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		557D68922EC5542F0089DCC0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		557F91963078A049005B1E2A /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		5597E5472EBE560500A744CD /* WebViewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewWrapper.swift; sourceTree = "<group>"; };
 		5597E5492EBE565C00A744CD /* SearchConnectionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchConnectionsViewModel.swift; sourceTree = "<group>"; };
 		5597E54B2EBE56A000A744CD /* SearchConnectionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchConnectionsView.swift; sourceTree = "<group>"; };
@@ -210,6 +212,7 @@
 		5522DCA72EB032BB00F9BCD7 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				557F91963078A049005B1E2A /* Log.swift */,
 				55F2035C2EC504E3001DA1E8 /* LaunchView.swift */,
 				5522DCA32EB01BEF00F9BCD7 /* Router.swift */,
 				5522DCA02EB0168D00F9BCD7 /* RootView.swift */,
@@ -529,6 +532,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				557F91973078A04B005B1E2A /* Log.swift in Sources */,
 				5548A09D2EBEB13800C0ACF5 /* SearchConnectionDisclaimerView.swift in Sources */,
 				55F2035D2EC504E9001DA1E8 /* LaunchView.swift in Sources */,
 				55E6256C2EB42BB4000D3783 /* AllergyIntolerancesView.swift in Sources */,
@@ -745,8 +749,8 @@
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
@@ -756,10 +760,11 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				XROS_DEPLOYMENT_TARGET = 2.5;
 			};
 			name = Debug;
@@ -785,8 +790,8 @@
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
@@ -796,10 +801,11 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				XROS_DEPLOYMENT_TARGET = 2.5;
 			};
 			name = Release;

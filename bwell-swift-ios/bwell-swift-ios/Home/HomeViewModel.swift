@@ -47,7 +47,7 @@ final class HomeViewModel: ObservableObject {
                 let user = try await sdkManager.user().getProfile()
                 self.firstName = user?.name?.first?.given?.first ?? "User"
             } catch {
-                print("Error fetching user profile: \(error)")
+                Log.profile.error("Error fetching user profile: \(error.localizedDescription)")
             }
             self.isLoading = false
         }

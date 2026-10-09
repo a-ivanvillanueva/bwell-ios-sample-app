@@ -56,7 +56,7 @@ final class ProfileViewModel: ObservableObject {
             parseData(data: profileInformation)
             isLoading = false
         } catch {
-            print("Failed retrieving user's profile information: \(error)")
+            Log.profile.error("Failed retrieving profile: \(error.localizedDescription)")
             isLoading = false
         }
     }
@@ -70,7 +70,6 @@ final class ProfileViewModel: ObservableObject {
                 return
             }
 
-            print("new state: \(state)")
             let given: [String] = givenName.components(separatedBy: " ")
 
             let userName: BWell.HumanName = .init(family: familyName, given: given)

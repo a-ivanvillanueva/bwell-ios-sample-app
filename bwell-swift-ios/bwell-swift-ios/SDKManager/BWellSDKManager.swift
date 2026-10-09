@@ -24,7 +24,7 @@ final class BWellSDKManager: ObservableObject {
      */
     func initialize(_ apiKey: String) async throws {
         if sdk != nil {
-            print("SDK instance already exists.")
+            Log.sdk.debug("SDK instance already exists.")
             return
         }
 
@@ -38,9 +38,9 @@ final class BWellSDKManager: ObservableObject {
             self.sdk = sdkInstance
             self.state = .initialized
 
-            print("BWell SDK Initialized successfully.")
+            Log.sdk.info("BWell SDK initialized successfully.")
         } catch {
-            print("Error initilizing SDK: \(error)")
+            Log.sdk.error("Error initializing SDK: \(error.localizedDescription)")
             self.state = .failed(error)
             throw error
         }
@@ -62,9 +62,9 @@ final class BWellSDKManager: ObservableObject {
             _ = try await sdk.user.getProfile()
             self.state = .authenticated
 
-            print("Active session found. User is already authenticated.")
+            Log.sdk.info("Active session found. User is already authenticated.")
         } catch {
-            print("No active session found or token expired. Proceeding to login.")
+            Log.sdk.info("No active session found or token expired. Proceeding to login.")
             self.state = .unauthenticated
             throw error
         }
@@ -108,9 +108,9 @@ final class BWellSDKManager: ObservableObject {
             _ = try await sdk.user.createConsent(request)
             self.state = .authenticated
 
-            print("Login flow complete. SDK is ready.")
+            Log.sdk.info("Login flow complete. SDK is ready.")
         } catch {
-            print("Login flow failed with error: \(error)")
+            Log.sdk.error("Login flow failed: \(error.localizedDescription)")
 
             self.state = .failed(error)
             throw error
