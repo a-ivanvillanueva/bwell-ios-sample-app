@@ -21,20 +21,19 @@ enum SDKState {
 extension SDKState: Equatable {
     static func == (lhs: SDKState, rhs: SDKState) -> Bool {
         switch (lhs, rhs) {
-        case (.uninitialized, .uninitialized):
+        case (.uninitialized, .uninitialized),
+             (.initializing, .initializing),
+             (.initialized, .initialized),
+             (.checkingSession, .checkingSession),
+             (.unauthenticated, .unauthenticated),
+             (.authenticating, .authenticating),
+             (.authenticated, .authenticated):
             return true
-        case (.initializing, .initializing):
-            return true
-        case (.initialized, .initialized):
-            return true
-        case (.unauthenticated, .unauthenticated):
-            return true
-        case (.authenticating, .authenticating):
-            return true
-        case (.authenticated, .authenticated):
-            return true
-        case (.failed, .failed):
-            return false
+        case (.failed(let lhsError), .failed(let rhsError)):
+            // `Error` is not Equatable, so compare the bridged NSError identity.
+            let lhsNSError = lhsError as NSError
+            let rhsNSError = rhsError as NSError
+            return lhsNSError.domain == rhsNSError.domain && lhsNSError.code == rhsNSError.code
         default:
             return false
         }
