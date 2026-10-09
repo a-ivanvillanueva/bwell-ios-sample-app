@@ -57,7 +57,7 @@
 		55E6257F2EB56871000D3783 /* ManageConnectionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E6257E2EB5686B000D3783 /* ManageConnectionsView.swift */; };
 		55F2035B2EC4FE42001DA1E8 /* APIKeyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F2035A2EC4FE3A001DA1E8 /* APIKeyService.swift */; };
 		55F2035D2EC504E9001DA1E8 /* LaunchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F2035C2EC504E3001DA1E8 /* LaunchView.swift */; };
-		A2C35F5F2EDFAA240023FBC5 /* BWellSDK in Frameworks */ = {isa = PBXBuildFile; productRef = A2C35F5E2EDFAA240023FBC5 /* BWellSDK */; };
+		55F9B7EB30790BE800CD1931 /* BWellSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 55F9B7EA30790BE800CD1931 /* BWellSDK */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -108,6 +108,7 @@
 		5551A3AB2EC3B8E300394D59 /* KeychainTokenStorageAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainTokenStorageAdapter.swift; sourceTree = "<group>"; };
 		5551A3AF2EC3ECB200394D59 /* BWellSDKManager+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BWellSDKManager+Helpers.swift"; sourceTree = "<group>"; };
 		5551A3B32EC4023200394D59 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		556EE48F30790658003844CD /* MockBWellSDK */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MockBWellSDK; sourceTree = "<group>"; };
 		557D68922EC5542F0089DCC0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		557F91963078A049005B1E2A /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		5597E5472EBE560500A744CD /* WebViewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewWrapper.swift; sourceTree = "<group>"; };
@@ -140,7 +141,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A2C35F5F2EDFAA240023FBC5 /* BWellSDK in Frameworks */,
+				55F9B7EB30790BE800CD1931 /* BWellSDK in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -174,6 +175,7 @@
 			isa = PBXGroup;
 			children = (
 				5522DC862EAFE10C00F9BCD7 /* bwell-swift-ios */,
+				556EE48E30790658003844CD /* Frameworks */,
 				5522DC582EAFE0FD00F9BCD7 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -308,6 +310,14 @@
 			path = Home;
 			sourceTree = "<group>";
 		};
+		556EE48E30790658003844CD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				556EE48F30790658003844CD /* MockBWellSDK */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		5597E5462EBE55FC00A744CD /* SearchConnections */ = {
 			isa = PBXGroup;
 			children = (
@@ -407,7 +417,7 @@
 			);
 			name = "bwell-swift-ios";
 			packageProductDependencies = (
-				A2C35F5E2EDFAA240023FBC5 /* BWellSDK */,
+				55F9B7EA30790BE800CD1931 /* BWellSDK */,
 			);
 			productName = "bwell-swift-ios";
 			productReference = 5522DC572EAFE0FD00F9BCD7 /* bwell-swift-ios.app */;
@@ -486,7 +496,7 @@
 			mainGroup = 5522DC4E2EAFE0FD00F9BCD7;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				A2C35F5D2EDFAA240023FBC5 /* XCLocalSwiftPackageReference "../../bwell-sdk/bwell-sdk-swift" */,
+				55F9B7E930790AC300CD1931 /* XCLocalSwiftPackageReference "MockBWellSDK" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 5522DC582EAFE0FD00F9BCD7 /* Products */;
@@ -736,7 +746,7 @@
 				CODE_SIGN_ENTITLEMENTS = "bwell-swift-ios/bwell_swift_ios.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 93US676C37;
+				DEVELOPMENT_TEAM = NGBA5QG5TU;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "bwell-swift-ios/Info.plist";
@@ -777,7 +787,7 @@
 				CODE_SIGN_ENTITLEMENTS = "bwell-swift-ios/bwell_swift_ios.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 93US676C37;
+				DEVELOPMENT_TEAM = NGBA5QG5TU;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "bwell-swift-ios/Info.plist";
@@ -938,15 +948,16 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		A2C35F5D2EDFAA240023FBC5 /* XCLocalSwiftPackageReference "../../bwell-sdk/bwell-sdk-swift" */ = {
+		55F9B7E930790AC300CD1931 /* XCLocalSwiftPackageReference "MockBWellSDK" */ = {
 			isa = XCLocalSwiftPackageReference;
-			relativePath = "../../bwell-sdk/bwell-sdk-swift";
+			relativePath = MockBWellSDK;
 		};
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		A2C35F5E2EDFAA240023FBC5 /* BWellSDK */ = {
+		55F9B7EA30790BE800CD1931 /* BWellSDK */ = {
 			isa = XCSwiftPackageProductDependency;
+			package = 55F9B7E930790AC300CD1931 /* XCLocalSwiftPackageReference "MockBWellSDK" */;
 			productName = BWellSDK;
 		};
 /* End XCSwiftPackageProductDependency section */
