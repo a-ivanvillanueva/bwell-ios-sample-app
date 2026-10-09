@@ -55,7 +55,7 @@ final class AuthenticationViewModel: ObservableObject {
             }
         }
     }
-    
+
     private func handleSDKStateChange(_ state: SDKState) {
         switch state {
         case .initializing:
@@ -81,7 +81,7 @@ final class AuthenticationViewModel: ObservableObject {
             break
         }
     }
-    
+
     func loginWithOAuthToken() {
         isLoading = true
 
@@ -105,17 +105,13 @@ final class AuthenticationViewModel: ObservableObject {
     }
 
     func loginWithEmailAndPassword() {
+        emailErrorMessage = email.isEmpty ? "Email is required." : nil
+        passwordErrorMessage = password.isEmpty ? "Password is required." : nil
+
+        // Stop here if validation failed; don't call the SDK with empty credentials.
+        guard emailErrorMessage == nil, passwordErrorMessage == nil else { return }
+
         isLoading = true
-
-        if email.isEmpty {
-            isLoading = false
-            emailErrorMessage = "email is required."
-        }
-
-        if password.isEmpty {
-            isLoading = false
-            passwordErrorMessage = "password is required."
-        }
 
         Task {
             do {
