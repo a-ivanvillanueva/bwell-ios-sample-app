@@ -86,7 +86,6 @@ final class ProfileViewModel: ObservableObject {
                                                                              language: language)
 
             _ = try await sdkManager.user().updateProfile(updateProfileRequest)
-            // try await sdkManager.createConsent()
 
             isLoading = false
         } catch {

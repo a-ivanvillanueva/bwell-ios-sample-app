@@ -231,7 +231,7 @@ final class HealthSummaryViewModel: ObservableObject {
         self.vitalSignGroups = vitalSignGroups
     }
 
-    func getVialSigns(_ groupCode: BWell.Coding) async {
+    func getVitalSigns(_ groupCode: BWell.Coding) async {
         guard let sdkManager = sdkManager else { return }
 
         let request = createHealthDataRequest(with: groupCode)

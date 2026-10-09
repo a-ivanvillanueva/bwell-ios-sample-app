@@ -49,7 +49,7 @@ final class LaunchViewModel: ObservableObject {
         
         do {
             // 1) Initialize the SDK (rehydrates token manager now).
-            try await BWellSDKManager.shared.initilize(apiKey)
+            try await BWellSDKManager.shared.initialize(apiKey)
             // 2) Validate session before revealing RootView so state can be .authenticated.
             await BWellSDKManager.shared.validateSession()
         } catch {

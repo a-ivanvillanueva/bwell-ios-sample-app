@@ -22,7 +22,7 @@ final class BWellSDKManager: ObservableObject {
      * - Throws:
      *    - An error if the SDK fails to initialize.
      */
-    func initilize(_ apiKey: String, shouldCheckSession: Bool = false) async throws {
+    func initialize(_ apiKey: String) async throws {
         if sdk != nil {
             print("SDK instance already exists.")
             return
@@ -113,20 +113,6 @@ final class BWellSDKManager: ObservableObject {
             print("Login flow failed with error: \(error)")
 
             self.state = .failed(error)
-            throw error
-        }
-    }
-    
-    private func createConsent() async throws {
-        guard let sdk = sdk else { throw SDKError.createConsentNotCreated }
-
-        do {
-            let request: BWell.CreateConsentRequest = .init(status: .active,
-                                                            provision: .init(type: .permit),
-                                                            category: .tos)
-
-            _ = try await sdk.user.createConsent(request)
-        } catch {
             throw error
         }
     }

@@ -48,7 +48,7 @@ final class AuthenticationViewModel: ObservableObject {
 
         Task {
             do {
-                try await sdkManager.initilize(apiKey)
+                try await sdkManager.initialize(apiKey)
             } catch {
                 errorMessage = "SDK initilization failed"
                 isLoading = false

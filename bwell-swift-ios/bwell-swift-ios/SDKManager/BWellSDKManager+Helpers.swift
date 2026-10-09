@@ -43,7 +43,6 @@ extension SDKState: Equatable {
 enum SDKError: Error {
     case notInitialized
     case invalidCredentials
-    case createConsentNotCreated
 
     var errorDescription: String? {
         switch self {
@@ -51,8 +50,6 @@ enum SDKError: Error {
                 return "The BWell SDK has not been initialized. Please call initializeSDK() before using any SDK functionality."
             case .invalidCredentials:
                 return "The provided credentials for the BWell SDK are invalid."
-            case .createConsentNotCreated:
-                return "The TOS consent could not be created."
         }
     }
 }

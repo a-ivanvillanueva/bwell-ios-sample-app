@@ -145,7 +145,7 @@ struct HealthDataFactoryView: View {
                         return .init(title: vitalSign.code?.text,
                                      date: vitalSign.effectiveDateTime?.dateFormatter())
                     }, fetch: {
-                        await  viewModel.getVialSigns(groupCode.entry)
+                        await  viewModel.getVitalSigns(groupCode.entry)
                     }, detailView: { entry in
                         VitalSignsSheetView(vitalSigns: entry)
                     }
