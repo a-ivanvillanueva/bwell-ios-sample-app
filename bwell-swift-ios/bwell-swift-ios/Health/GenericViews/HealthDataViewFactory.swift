@@ -27,7 +27,7 @@ struct HealthDataFactoryView: View {
             switch category {
             case .allergyIntolerance:
                 HealthDataGroupItemsView(
-                    entry: viewModel.allergyIntolerances,
+                    entry: $viewModel.allergyIntolerances,
                     id: \.id,
                     rowContent: { allergy in
                         return .init(title: allergy.code?.coding?.first?.display,
@@ -41,7 +41,7 @@ struct HealthDataFactoryView: View {
                 .navigationTitle(category.title)
             case .carePlan:
                 HealthDataGroupItemsView(
-                    entry: viewModel.carePlans,
+                    entry: $viewModel.carePlans,
                     id: \.id,
                     rowContent: { carePlan in
                         return .init(title: carePlan.title,
@@ -55,7 +55,7 @@ struct HealthDataFactoryView: View {
                 .navigationTitle(category.title)
             case .condition:
                 HealthDataGroupItemsView(
-                    entry: viewModel.conditions,
+                    entry: $viewModel.conditions,
                     id: \.id,
                     rowContent: { condition in
                         return .init(title: condition.code?.text,
@@ -69,7 +69,7 @@ struct HealthDataFactoryView: View {
                 .navigationTitle(category.title)
             case .encounter:
                 HealthDataGroupItemsView(
-                    entry: viewModel.encounters,
+                    entry: $viewModel.encounters,
                     id: \.id,
                     rowContent: { encounter in
                         return .init(title: encounter.text?.status,
@@ -83,7 +83,7 @@ struct HealthDataFactoryView: View {
                 .navigationTitle(category.title)
             case .immunization:
                 HealthDataGroupItemsView(
-                    entry: viewModel.immunizations,
+                    entry: $viewModel.immunizations,
                     id: \.id,
                     rowContent: { immunization in
                         return .init(title: immunization.vaccineCode?.text,
@@ -97,7 +97,7 @@ struct HealthDataFactoryView: View {
                 .navigationTitle(category.title)
             case .labs:
                 HealthDataGroupItemsView(
-                    entry: viewModel.labs,
+                    entry: $viewModel.labs,
                     id: \.id,
                     rowContent: { labs in
                         return .init(title: labs.code?.text,
@@ -111,7 +111,7 @@ struct HealthDataFactoryView: View {
                 .navigationTitle(category.title)
             case .medications:
                 HealthDataGroupItemsView(
-                    entry: viewModel.medications,
+                    entry: $viewModel.medications,
                     id: \.id,
                     rowContent: { medication in
                         return .init(title: medication.medicationCodeableConcept?.text,
@@ -125,7 +125,7 @@ struct HealthDataFactoryView: View {
                 .navigationTitle(category.title)
             case .procedure:
                 HealthDataGroupItemsView(
-                    entry: viewModel.procedures,
+                    entry: $viewModel.procedures,
                     id: \.id,
                     rowContent: { procedure in
                         return .init(title: procedure.code?.text,
@@ -139,7 +139,7 @@ struct HealthDataFactoryView: View {
                 .navigationTitle(category.title)
             case .vitalSigns:
                 HealthDataGroupItemsView(
-                    entry: viewModel.vitalSigns,
+                    entry: $viewModel.vitalSigns,
                     id: \.id,
                     rowContent: { vitalSign in
                         return .init(title: vitalSign.code?.text,

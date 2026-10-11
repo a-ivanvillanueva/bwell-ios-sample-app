@@ -78,7 +78,7 @@ struct HealthDataGroupItemsView<Entry, ID: Hashable, Detail: View>: View {
     @State private var selectedEntry: Entry?
     @State private var showSheet = false
 
-    var entry: [Entry]
+    @Binding var entry: [Entry]
     let id: KeyPath<Entry, ID>
     let rowContent: (Entry) -> HealthDataRowContent
     let fetch: () async -> Void
