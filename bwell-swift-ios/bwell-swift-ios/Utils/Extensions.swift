@@ -75,7 +75,7 @@ extension String {
     }
 
     func capitalizingFirstLetter() -> String {
-        return prefix(1).capitalized + dropFirst().lowercased()
+        return prefix(1).capitalized + String(dropFirst())
     }
 }
 
