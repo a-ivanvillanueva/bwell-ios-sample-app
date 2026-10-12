@@ -15,25 +15,25 @@ final class ProfileViewModel: ObservableObject {
     @Published var isLoading: Bool = false
 
     // User's name
-    @Published var givenName: String = "John"
-    @Published var familyName: String = "Doe"
+    @Published var givenName: String = ""
+    @Published var familyName: String = ""
 
     // User's address
-    @Published var addressLineOne: String = "145 W Osten St"
-    @Published var addressLineTwo: String = "Suite 300"
-    @Published var country: String = "United States"
-    @Published var postalCode: String = "21230"
-    @Published var state: String = "Maryland"
-    @Published var city: String = "Baltimore"
+    @Published var addressLineOne: String = ""
+    @Published var addressLineTwo: String = ""
+    @Published var country: String = ""
+    @Published var postalCode: String = ""
+    @Published var state: String = ""
+    @Published var city: String = ""
 
     // Other user's information
     @Published var gender: BWell.Gender = .male
-    @Published var birthdate: String = "January 2, 1990"
-    @Published var language: String = "English"
-    @Published var email: String = "example@example.com"
-    @Published var workPhone: String = "221-923-1033"
-    @Published var homePhone: String = "221-629-2253"
-    @Published var mobilePhone: String = "221-812-7803"
+    @Published var birthdate: String = ""
+    @Published var language: String = ""
+    @Published var email: String = ""
+    @Published var workPhone: String = ""
+    @Published var homePhone: String = ""
+    @Published var mobilePhone: String = ""
 
     init() {
         self.sdkManager = .shared
@@ -88,6 +88,8 @@ final class ProfileViewModel: ObservableObject {
 
             isLoading = false
         } catch {
+            Log.profile.error("Failed updating profile: \(error.localizedDescription)")
+            errorMessage = "We couldn't save you profile. Please try again."
             isLoading = false
         }
     }
@@ -100,20 +102,14 @@ final class ProfileViewModel: ObservableObject {
             }
         }
 
-        if let address = data.address {
-            if let first = address.first {
-                if let lines = first.line {
-                    addressLineOne = lines[0]
-
-                    if lines.count > 1 {
-                        addressLineTwo = lines[1]
-                    }
-                }
-                country = first.country ?? ""
-                state = first.state ?? ""
-                postalCode = first.postalCode ?? ""
-                city = first.city ?? ""
-            }
+        if let address = data.address?.first {
+            let lines = address.line ?? []
+            addressLineOne = lines.first ?? ""
+            addressLineTwo = lines.dropFirst().first ?? ""
+            country = address.country ?? ""
+            state = address.state ?? ""
+            postalCode = address.postalCode ?? ""
+            city = address.city ?? ""
         }
 
         if let gender = data.gender {
