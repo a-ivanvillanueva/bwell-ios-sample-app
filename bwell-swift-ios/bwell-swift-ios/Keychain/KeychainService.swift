@@ -19,7 +19,7 @@ final class KeychainService {
     private init() {}
 
     private let service = "com.bwell.sdkSampleApp"
-    private let account = "bwell-user-token"
+    static let tokenAccount = "bwell-user-token"
 
     /**
      * Saves the authentication token to the Keychain
@@ -30,7 +30,7 @@ final class KeychainService {
      * - Throws:
      *    - Error if the save operation fails.
      */
-    public func save(token: String) throws {
+    public func save(token: String, account: String = KeychainService.tokenAccount) throws {
         guard let data = token.data(using: .utf8) else {
             throw KeychainError.stringToData_ConversionError
         }
@@ -42,17 +42,18 @@ final class KeychainService {
             kSecAttrAccount: account
         ]
 
-        // 2. Define the attributes for the new or updated item.
-        let attributes = [kSecValueData:data] as [String:Any]
-
         // 3. Try to update an existing item first
-        let status = SecItemUpdate(query as CFDictionary, attributes as CFDictionary)
+        let status = SecItemUpdate(query as CFDictionary, [kSecValueData: data] as CFDictionary)
 
         // 4. If no item exists to update, add a new one.
         if status == errSecItemNotFound {
-            let newQuery = query.merging([kSecValueData:data]) {(_, new) in new }
-            let addStatus = SecItemAdd(newQuery as CFDictionary, nil)
+            var newItem = query
 
+            newItem[kSecValueData] = data
+            newItem[kSecAttrAccessible] = kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
+
+
+            let addStatus = SecItemAdd(newItem as CFDictionary, nil)
             guard addStatus == errSecSuccess else {
                 throw KeychainError.unhandledError(status: addStatus)
             }
@@ -71,7 +72,7 @@ final class KeychainService {
      * - Throws:
      *    - An error if the load operation fails.
      */
-    func loadToken() throws -> String? {
+    func loadToken(account: String = KeychainService.tokenAccount) throws -> String? {
         let query = [
             kSecClass: kSecClassGenericPassword,
             kSecAttrService: service,
@@ -101,7 +102,7 @@ final class KeychainService {
      * - Throws:
      *    - An error if the delete operation fails.
      */
-    func deleteToken() throws {
+    func deleteToken(account: String = KeychainService.tokenAccount) throws {
         let query = [
             kSecClass: kSecClassGenericPassword,
             kSecAttrService: service,

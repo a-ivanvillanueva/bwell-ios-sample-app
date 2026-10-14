@@ -8,19 +8,50 @@ import Foundation
 
 final class APIKeyService {
     static let shared = APIKeyService()
-    private let apiKeyUD: String = "bwell_api_key"
+
+    private let account = "bwell-api-key"
+    private let legacyDefaultsKey: String = "bwell_api_key"
+    private let keychain = KeychainService.shared
 
     private init() {}
 
     func save(_ apiKey: String) {
-        UserDefaults.standard.set(apiKey, forKey: apiKeyUD)
+        do {
+            try keychain.save(token: apiKey, account: account)
+        } catch {
+            Log.keychain.error("Could not save API key: \(error.localizedDescription)")
+        }
+
     }
 
     func getAPIKey() -> String? {
-        UserDefaults.standard.string(forKey: apiKeyUD)
+        migrateLegacyKeyIfNeeded()
+
+        do {
+            return try keychain.loadToken(account: account)
+        } catch {
+            Log.keychain.error("Could not read API key: \(error.localizedDescription)")
+            return nil
+        }
     }
 
     func clear() {
-        UserDefaults.standard.removeObject(forKey: apiKeyUD)
+        UserDefaults.standard.removeObject(forKey: legacyDefaultsKey)
+
+        do {
+            try keychain.deleteToken(account: account)
+        } catch {
+            Log.keychain.error("Could not delete API key: \(error.localizedDescription)")
+        }
+    }
+
+    // Moves a keey saved by an older build out of UserDefaults.
+    private func migrateLegacyKeyIfNeeded() {
+        guard let legacy = UserDefaults.standard.string(forKey: legacyDefaultsKey) else {
+            return
+        }
+
+        save(legacy)
+        UserDefaults.standard.removeObject(forKey: legacyDefaultsKey)
     }
 }
