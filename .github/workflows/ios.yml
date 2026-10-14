@@ -1,0 +1,23 @@
+name: iOS CI
+
+on: 
+	push:
+		branches: [ivan-original, "ivan/**]
+	pull_request:
+		branches: [ivan-original]
+
+jobs:
+	build:
+		runs-on: macos-15
+		steps:
+			- used: actions/checkout@v4
+
+			- name: Build
+			  working-directory: bwell-swift-ios
+			  run: |
+			   xcodebuild build \
+				-project bwell-swift-ios.xcodeproj \
+				-scheme bwell-swift-ios \
+				-destination 'platform=iOS Simulator,name=iPhone 16' \
+				CODE_SIGNING_ALLOWED=NO
+
