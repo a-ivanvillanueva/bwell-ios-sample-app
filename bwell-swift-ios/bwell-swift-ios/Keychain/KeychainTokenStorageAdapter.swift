@@ -14,7 +14,7 @@ import BWellSDK
 final class KeychainTokenStorageAdapter: BWell.TokenStorage {
     private let keychain: KeychainService
 
-    init(keychain: KeychainService = .shared) {
+    init(keychain: KeychainService) {
         self.keychain = keychain
     }
 

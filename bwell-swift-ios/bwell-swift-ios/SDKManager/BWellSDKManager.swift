@@ -5,16 +5,23 @@
 //  Created by Ivan Villanueva on 27/10/25.
 //
 import Foundation
+import Combine
 import BWellSDK
 
 @MainActor
 final class BWellSDKManager: ObservableObject {
-    static let shared: BWellSDKManager = BWellSDKManager()
     private var sdk: BWellSDK?
+    private let tokenStorage: any BWell.TokenStorage
+    private let keychain: KeychainService
+    private let apiKeyStore: APIKeyStore
 
-    @Published var state: SDKState = .uninitialized
+    @Published private(set) var state: SessionState = .uninitialized
 
-    private init() {}
+    init(tokenStorage: any BWell.TokenStorage, keychain: KeychainService, apiKeyStore: APIKeyStore) {
+        self.tokenStorage = tokenStorage
+        self.keychain = keychain
+        self.apiKeyStore = apiKeyStore
+    }
 
     /**
      * Initialized the BWell SDK with the provided client key.
@@ -30,7 +37,7 @@ final class BWellSDKManager: ObservableObject {
 
         self.state = .initializing
         do {
-            let tokenStorage = KeychainTokenStorageAdapter()
+            let tokenStorage = KeychainTokenStorageAdapter(keychain: keychain)
             let config = BWell.SDKConfig(clientKey: apiKey, logLevel: .verbose,tokenStorage: tokenStorage)
             let sdkInstance = try BWellSDK(config: config)
 
@@ -53,7 +60,7 @@ final class BWellSDKManager: ObservableObject {
     func checkSessionStatus() async throws {
         guard let sdk = sdk else {
             state = .unauthenticated
-            throw SDKError.notInitialized
+            throw SessionError.notInitialized
         }
 
         state = .checkingSession
@@ -95,12 +102,19 @@ final class BWellSDKManager: ObservableObject {
      * - Throws:
      *    - An error is authentication fails.
      */
-    func login(credentials: BWell.Credentials) async throws {
-        guard let sdk = sdk else { throw SDKError.notInitialized }
+    func login(credentials: Credentials) async throws {
+        guard let sdk = sdk else { throw SessionError.notInitialized }
         self.state = .authenticating
 
+        let sdkCredentials: BWell.Credentials = switch credentials {
+        case .emailPassword(let email, let password):
+                .emailPassword(email: email, password: password)
+        case .oauth(let token):
+                .oauth(token: token)
+        }
+
         do {
-            try await sdk.authenticate(credentials: credentials)
+            try await sdk.authenticate(credentials: sdkCredentials)
 
             let request: BWell.CreateConsentRequest = .init(status: .active,
                                                             provision: .init(type: .permit),
@@ -124,8 +138,8 @@ final class BWellSDKManager: ObservableObject {
     func logout() {
         Task {
             do {
-                try KeychainService.shared.clear()
-                APIKeyService.shared.clear()
+                try keychain.clear()
+                apiKeyStore.clear()
 
                 await MainActor.run {
                     self.sdk = nil
@@ -140,10 +154,12 @@ final class BWellSDKManager: ObservableObject {
     }
 }
 
+// - MARK: Extensions
+
 extension BWellSDKManager {
     func health() throws -> HealthDataManager {
         guard let healthManager = sdk?.health else {
-            throw SDKError.notInitialized
+            throw SessionError.notInitialized
         }
 
         return healthManager
@@ -151,7 +167,7 @@ extension BWellSDKManager {
 
     func connection() throws -> ConnectionManager {
         guard let connectionManager = sdk?.connection else {
-            throw SDKError.notInitialized
+            throw SessionError.notInitialized
         }
 
         return connectionManager
@@ -159,7 +175,7 @@ extension BWellSDKManager {
 
     func device() throws -> DeviceManager {
         guard let device = sdk?.device else {
-            throw SDKError.notInitialized
+            throw SessionError.notInitialized
         }
 
         return device
@@ -167,7 +183,7 @@ extension BWellSDKManager {
 
     func search() throws -> SearchManager {
         guard let search = sdk?.search else {
-            throw SDKError.notInitialized
+            throw SessionError.notInitialized
         }
 
         return search
@@ -175,9 +191,15 @@ extension BWellSDKManager {
 
     func user() throws -> UserManager {
         guard let user = sdk?.user else {
-            throw SDKError.notInitialized
+            throw SessionError.notInitialized
         }
 
         return user
+    }
+}
+
+extension BWellSDKManager: SessionRepository {
+    var statePublisher: AnyPublisher<SessionState, Never> {
+        $state.eraseToAnyPublisher()
     }
 }

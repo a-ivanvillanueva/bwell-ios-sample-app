@@ -47,6 +47,7 @@ final class NavigationRouter: ObservableObject {
 
     // Navigates back to the root of the navigation stack.
     func navigateToRoot() {
+        guard !path.isEmpty else { return }
         path.removeLast(path.count)
     }
 }

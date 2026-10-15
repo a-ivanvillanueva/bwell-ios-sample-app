@@ -8,23 +8,30 @@ import Foundation
 import SwiftUI
 
 struct SearchConnectionsView: View {
+    private let connection: ConnectionsModel
+
     @Environment(\.dismissSearch) private var dismissSearch
     @EnvironmentObject private var router: NavigationRouter
-    @EnvironmentObject private var sdkManager: BWellSDKManager
 
-    @ObservedObject private var viewModel = SearchConnectionsViewModel()
-    @ObservedObject private var manageConnectionsViewModel = ManageConnectionsViewModel()
+    @StateObject private var viewModel: SearchConnectionsViewModel
+    @StateObject private var manageConnectionsViewModel: ManageConnectionsViewModel
 
     @State private var searchedText: String = ""
     @State private var activeSheet: SheetContent?
     @State private var showWebView: Bool = false
     @State private var showOnSuccessMessage: Bool = false
 
-    var connection: ConnectionsModel
+    init(connection: ConnectionsModel,
+         viewModel: @autoclosure @escaping () -> SearchConnectionsViewModel,
+         manageConnectionsViewModel: @autoclosure @escaping () -> ManageConnectionsViewModel) {
+        self.connection = connection
+        _viewModel = StateObject(wrappedValue: viewModel())
+        _manageConnectionsViewModel = StateObject(wrappedValue: manageConnectionsViewModel())
+    }
 
     var body: some View {
         ZStack {
-            if !viewModel.healthResources.isEmpty {
+            if !$viewModel.healthResources.isEmpty {
                 resultsView
                     .padding(.top, 10)
             } else {
@@ -92,7 +99,7 @@ struct SearchConnectionsView: View {
     @ViewBuilder
     var resultsView: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("Results (\(viewModel.healthResources.count))")
+            Text("Results (\($viewModel.healthResources.count))")
                 .font(.headline)
                 .fontWeight(.semibold)
                 .padding(.bottom, 5)
@@ -133,7 +140,7 @@ private struct ListItem: View {
 }
 
 #Preview {
-    SearchConnectionsView(connection: .clinics)
-        .environmentObject(BWellSDKManager.shared)
+    SearchConnectionsView(connection: .clinics, viewModel: AppContainer.preview.makeSearchConnectionsViewModel(), manageConnectionsViewModel: AppContainer.preview.makeManageConnectionsViewModel())
+        .environmentObject(AppContainer.preview.makeSideMenuViewModel())
         .environmentObject(NavigationRouter())
 }

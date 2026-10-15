@@ -9,32 +9,42 @@ import SwiftUI
 import BWellSDK
 
 struct RootView: View {
-    @StateObject private var bwellSDKManager = BWellSDKManager.shared
+    let container: AppContainer
+
     @StateObject private var router = NavigationRouter()
-    @StateObject private var viewModel = SideMenuOptionViewModel()
-    @StateObject private var healthSummaryViewModel = HealthSummaryViewModel()
+    @StateObject private var sideMenuViewModel: SideMenuViewModel
+    @StateObject private var healthSummaryViewModel: HealthSummaryViewModel
+
     @State private var showMenu: Bool = false
+
+    init(container: AppContainer) {
+        self.container = container
+        _sideMenuViewModel = StateObject(wrappedValue: container.makeSideMenuViewModel())
+        _healthSummaryViewModel = StateObject(wrappedValue: container.makeHealthSummaryViewModel())
+    }
 
     var body: some View {
         ZStack {
             NavigationStack(path: $router.path) {
-                AuthenticationView()
+                AuthenticationView(viewModel: container.makeAuthenticationViewModel())
                     .navigationDestination(for: AppView.self) { screen in
                         switch screen {
                         case .home:
-                            HomeView(showMenu: $showMenu)
+                            HomeView(showMenu: $showMenu, viewModel: container.makeHomeViewModel())
                                 .navigationBarBackButtonHidden()
                         case .profile:
-                            ProfileView(showMenu: $showMenu)
+                            ProfileView(showMenu: $showMenu, viewModel: container.makeProfileViewModel())
                                 .navigationBarBackButtonHidden()
                         case .healthSummary:
-                            HealthSummaryView(showMenu: $showMenu)
+                            HealthSummaryView(showMenu: $showMenu, viewModel: container.makeHealthSummaryViewModel())
                                 .navigationBarBackButtonHidden()
                         case .manageConnections:
-                            ManageConnectionsView(showMenu: $showMenu)
+                            ManageConnectionsView(showMenu: $showMenu, viewModel: container.makeManageConnectionsViewModel())
                                 .navigationBarBackButtonHidden()
                         case .searchConnections(let connection):
-                            SearchConnectionsView(connection: connection)
+                            SearchConnectionsView(connection: connection,
+                                                  viewModel: container.makeSearchConnectionsViewModel(),
+                                                  manageConnectionsViewModel: container.makeManageConnectionsViewModel())
                         case .connections:
                             ConnectionsView()
                         case .healthGroupItems(let category, let groupCode):
@@ -44,21 +54,17 @@ struct RootView: View {
                     }
             }
             
-            SideMenuView(isShowing: $showMenu, viewModel: viewModel)
+            SideMenuView(isShowing: $showMenu, viewModel: sideMenuViewModel)
         }
         .environmentObject(router)
-        .environmentObject(viewModel)
+        .environmentObject(sideMenuViewModel)
         .environmentObject(healthSummaryViewModel)
-        .onAppear {
-            // Critical: handle the already-authenticated state when this view first appears.
-            handleStateChange(bwellSDKManager.state)
-        }
-        .onChange(of: bwellSDKManager.state) { _, newState in
-            handleStateChange(newState)
+        .onReceive(container.session.statePublisher) {
+            handleStateChange($0)
         }
     }
 
-    private func handleStateChange(_ state: SDKState) {
+    private func handleStateChange(_ state: SessionState) {
         switch state {
         case .authenticated:
             if router.path.isEmpty {

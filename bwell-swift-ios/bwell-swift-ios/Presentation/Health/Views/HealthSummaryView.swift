@@ -6,14 +6,17 @@
 //
 import Foundation
 import SwiftUI
-import BWellSDK
 
 struct HealthSummaryView: View {
     @EnvironmentObject private var router: NavigationRouter
-    @EnvironmentObject private var sdkManager: BWellSDKManager
 
-    @EnvironmentObject private var viewModel: HealthSummaryViewModel
-    @Binding var showMenu: Bool
+    @StateObject private var viewModel: HealthSummaryViewModel
+    @Binding private var showMenu: Bool
+
+    init(showMenu: Binding<Bool>, viewModel: @autoclosure @escaping () -> HealthSummaryViewModel) {
+        _showMenu = showMenu
+        _viewModel = StateObject(wrappedValue: viewModel())
+    }
 
     var body: some View {
         List {
@@ -76,8 +79,7 @@ struct HealthSummaryDetailView: View {
 }
 
 #Preview {
-    HealthSummaryView(showMenu: .constant(false))
-        .environmentObject(BWellSDKManager.shared)
+    HealthSummaryView(showMenu: .constant(false), viewModel: AppContainer.preview.makeHealthSummaryViewModel())
         .environmentObject(NavigationRouter())
-        .environmentObject(SideMenuOptionViewModel())
+        .environmentObject(AppContainer.preview.makeSideMenuViewModel())
 }

@@ -10,13 +10,14 @@ import BWellSDK
 @MainActor
 final class SearchConnectionsViewModel: ObservableObject {
     private var sdkManager: BWellSDKManager?
+    private let session: SessionRepository
 
     @Published var errorMessage: String?
     @Published var isLoading: Bool = false
     @Published var healthResources: [BWell.SearchHealthResourcesResults.Result] = []
 
-    init() {
-        self.sdkManager = .shared
+    init(session: SessionRepository) {
+        self.session = session
     }
 
     func searchHealthResources(searchedText: String?) async {

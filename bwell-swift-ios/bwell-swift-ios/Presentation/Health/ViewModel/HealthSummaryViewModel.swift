@@ -10,6 +10,7 @@ import BWellSDK
 @MainActor
 final class HealthSummaryViewModel: ObservableObject {
     private var sdkManager: BWellSDKManager?
+    private let session: SessionRepository
     @Published var errorMessage: String?
     @Published var isLoading: Bool = false
 
@@ -36,8 +37,8 @@ final class HealthSummaryViewModel: ObservableObject {
     @Published var medicationGroups: [BWell.MedicationGroup] = []
     @Published var encounterGroups: [BWell.EncounterGroup] = []
 
-    init() {
-        sdkManager = .shared
+    init(session: SessionRepository) {
+        self.session = session
     }
 
     // MARK: - Get Summary

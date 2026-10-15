@@ -5,12 +5,13 @@
 //  Created by Ivan Villanueva on 31/10/25.
 //
 import Foundation
-import BWellSDK
 import Combine
 
 @MainActor
 final class AuthenticationViewModel: ObservableObject {
-    private let sdkManager: BWellSDKManager
+    private let session: SessionRepository
+    private let apiKeyStore: APIKeyStore
+
     private var cancellables = Set<AnyCancellable>()
 
     // Authentication published properties
@@ -27,9 +28,11 @@ final class AuthenticationViewModel: ObservableObject {
     @Published var passwordErrorMessage: String? = nil
     @Published var errorMessage: String? = nil
 
-    init() {
-        sdkManager = .shared
-        sdkManager.$state
+    init(session: SessionRepository, apiKeyStore: APIKeyStore) {
+        self.session = session
+        self.apiKeyStore = apiKeyStore
+
+        session.statePublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] state in
                 self?.handleSDKStateChange(state)
@@ -48,7 +51,7 @@ final class AuthenticationViewModel: ObservableObject {
 
         Task {
             do {
-                try await sdkManager.initialize(apiKey)
+                try await session.initialize(apiKey)
             } catch {
                 errorMessage = "SDK initialization failed"
                 isLoading = false
@@ -56,13 +59,13 @@ final class AuthenticationViewModel: ObservableObject {
         }
     }
 
-    private func handleSDKStateChange(_ state: SDKState) {
+    private func handleSDKStateChange(_ state: SessionState) {
         switch state {
         case .initializing:
             isLoading = true
             errorMessage = nil
         case .initialized:
-            APIKeyService.shared.save(apiKey)
+            apiKeyStore.save(apiKey)
             apiKeyValidated = true
             isLoading = false
         case .authenticating:
@@ -93,9 +96,7 @@ final class AuthenticationViewModel: ObservableObject {
 
         Task {
             do {
-                let credentials = BWell.Credentials.oauth(token: oauthToken)
-
-                try await sdkManager.login(credentials: credentials)
+                try await session.login(credentials: .oauth(token: oauthToken))
                 isLoading = false
             } catch {
                 errorMessage = "Login failed"
@@ -115,9 +116,7 @@ final class AuthenticationViewModel: ObservableObject {
 
         Task {
             do {
-                let credentials = BWell.Credentials.emailPassword(email: email, password: password)
-
-                try await sdkManager.login(credentials: credentials)
+                try await session.login(credentials: .emailPassword(email: email, password: password))
                 isLoading = false
             } catch {
                 errorMessage = "Login failed"

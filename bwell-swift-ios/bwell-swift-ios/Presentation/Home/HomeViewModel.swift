@@ -10,17 +10,18 @@ import Combine
 
 @MainActor
 final class HomeViewModel: ObservableObject {
-    private let sdkManager: BWellSDKManager
+    private var sdkManager: BWellSDKManager?
+    private let session: SessionRepository
     private var cancellables = Set<AnyCancellable>()
 
     @Published var firstName: String = ""
     @Published var isLoading: Bool = true
 
-    init() {
-        self.sdkManager = .shared
+    init(session: SessionRepository) {
+        self.session = session
 
         // Subscribe to state changes to know when it's safe to fetch data.
-        sdkManager.$state
+        sdkManager?.$state
             .receive(on: DispatchQueue.main)
             .sink { [weak self] state in
                 if case .authenticated = state {
@@ -29,7 +30,7 @@ final class HomeViewModel: ObservableObject {
             }
             .store(in: &cancellables)
 
-        if case .authenticated = sdkManager.state {
+        if case .authenticated = sdkManager?.state {
             fetchUsername()
         }
     }
@@ -44,7 +45,7 @@ final class HomeViewModel: ObservableObject {
 
         Task {
             do {
-                let user = try await sdkManager.user().getProfile()
+                let user = try await sdkManager?.user().getProfile()
                 self.firstName = user?.name?.first?.given?.first ?? "User"
             } catch {
                 Log.profile.error("Error fetching user profile: \(error.localizedDescription)")

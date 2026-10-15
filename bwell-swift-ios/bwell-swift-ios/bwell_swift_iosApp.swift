@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct bwell_swift_iosApp: App {
+    private let container = AppContainer()
+
     var body: some Scene {
         WindowGroup {
-            LaunchView()
+            LaunchView(container: container, viewModel: container.makeLaunchViewModel())
         }
     }
 }

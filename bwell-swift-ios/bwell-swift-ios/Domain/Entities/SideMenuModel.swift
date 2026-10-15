@@ -1,5 +1,5 @@
 //
-//  SideMenuOptionModel.swift
+//  SideMenuModel.swift
 //  bwell-swift-ios
 //
 //  Created by Ivan Villanueva on 28/10/25.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum SideMenuOptionModel: Int, CaseIterable {
+enum SideMenuModel: Int, CaseIterable {
     case home
     case profile
     case manageConnections
@@ -46,39 +46,8 @@ enum SideMenuOptionModel: Int, CaseIterable {
     }
 }
 
-extension SideMenuOptionModel: Identifiable {
+extension SideMenuModel: Identifiable {
     var id: Int {
         return self.rawValue
-    }
-}
-
-@MainActor 
-final class SideMenuOptionViewModel: ObservableObject {
-    private var router: NavigationRouter?
-    private var sdkManager: BWellSDKManager?
-    @Published var optionSelected: SideMenuOptionModel?
-
-    init() {
-        self.sdkManager = .shared
-    }
-
-    func setup(router: NavigationRouter) {
-        self.router = router
-    }
-
-    func navigate(to optionSelected: SideMenuOptionModel) {
-        guard let router = router else { return }
-        
-        // Handle logout separately
-        if optionSelected == .logout {
-            sdkManager?.logout()
-            return
-        }
-        
-        // Update the selected option
-        self.optionSelected = optionSelected
-        
-        // For other navigation, navigate and replace the current stack
-        router.navigateAndReplace(to: optionSelected.destination)
     }
 }

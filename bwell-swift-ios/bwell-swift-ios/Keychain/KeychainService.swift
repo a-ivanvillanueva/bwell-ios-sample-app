@@ -14,9 +14,8 @@ enum KeychainError: Error {
 }
 
 final class KeychainService {
-    static let shared = KeychainService()
 
-    private init() {}
+    init() {}
 
     private let service = "com.bwell.sdkSampleApp"
     static let tokenAccount = "bwell-user-token"

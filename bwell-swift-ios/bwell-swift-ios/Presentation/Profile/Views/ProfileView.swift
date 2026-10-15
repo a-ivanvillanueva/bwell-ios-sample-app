@@ -9,11 +9,16 @@ import Foundation
 import SwiftUI
 
 struct ProfileView: View {
-    @EnvironmentObject private var sdkManager: BWellSDKManager
-    @ObservedObject private var viewModel = ProfileViewModel()
-    @Binding var showMenu: Bool
+    @StateObject private var viewModel: ProfileViewModel
+    @Binding private var showMenu: Bool
+
     @State private var text: String = ""
     @State private var isEditing: Bool = false
+
+    init(showMenu: Binding<Bool>, viewModel: @autoclosure @escaping () -> ProfileViewModel) {
+        _showMenu = showMenu
+        _viewModel = StateObject(wrappedValue: viewModel())
+    }
 
     var fullName: String {
         return "\(viewModel.givenName) \(viewModel.familyName)"
@@ -165,8 +170,7 @@ private struct ListItem: View {
 }
 
 #Preview {
-    ProfileView(showMenu: .constant(false))
-        .environmentObject(BWellSDKManager.shared)
+    ProfileView(showMenu: .constant(false), viewModel: AppContainer.preview.makeProfileViewModel())
         .environmentObject(NavigationRouter())
-        .environmentObject(SideMenuOptionViewModel())
+        .environmentObject(AppContainer.preview.makeSideMenuViewModel())
 }

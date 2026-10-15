@@ -10,6 +10,7 @@ import BWellSDK
 @MainActor
 final class ManageConnectionsViewModel: ObservableObject {
     private var sdkManager: BWellSDKManager?
+    private let session: SessionRepository
     @Published var errorMessage: String?
     @Published var isLoading: Bool = false
 
@@ -17,8 +18,8 @@ final class ManageConnectionsViewModel: ObservableObject {
 
     @Published var url: URL?
 
-    init() {
-        self.sdkManager = .shared
+    init(session: SessionRepository) {
+        self.session = session
     }
 
     func getConnections() async {

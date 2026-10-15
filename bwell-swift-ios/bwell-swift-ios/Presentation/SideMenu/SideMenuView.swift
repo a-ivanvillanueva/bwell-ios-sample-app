@@ -9,10 +9,14 @@ import SwiftUI
 
 struct SideMenuView: View {
     @Binding var isShowing: Bool
-    @ObservedObject var viewModel: SideMenuOptionViewModel
+    @StateObject var viewModel: SideMenuViewModel
     @EnvironmentObject var router: NavigationRouter
-    @EnvironmentObject var sdkManager: BWellSDKManager
-    
+
+    init(isShowing: Binding<Bool>, viewModel: @autoclosure @escaping () -> SideMenuViewModel) {
+        _isShowing = isShowing
+        _viewModel = StateObject(wrappedValue: viewModel())
+    }
+
     var body: some View {
         ZStack {
             if isShowing {
@@ -27,7 +31,7 @@ struct SideMenuView: View {
                     VStack(alignment: .leading, spacing: 32) {
                         HeaderView()
                         VStack {
-                            ForEach(SideMenuOptionModel.allCases.dropLast()) { option in
+                            ForEach(SideMenuModel.allCases.dropLast()) { option in
                                 Button(action: {
                                     viewModel.navigate(to: option)
                                     isShowing = false
@@ -90,8 +94,8 @@ private struct HeaderView: View {
 }
 
 private struct RowView: View {
-    var option: SideMenuOptionModel
-    @Binding var selectedOption: SideMenuOptionModel?
+    var option: SideMenuModel
+    @Binding var selectedOption: SideMenuModel?
 
     private var isSelected: Bool {
         return selectedOption == option

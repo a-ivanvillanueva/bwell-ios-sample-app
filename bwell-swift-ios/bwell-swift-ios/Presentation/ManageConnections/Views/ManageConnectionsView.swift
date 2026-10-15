@@ -6,14 +6,18 @@
 //
 
 import Foundation
-import SwiftUI
 import BWellSDK
+import SwiftUI
 
 struct ManageConnectionsView: View {
     @EnvironmentObject private var router: NavigationRouter
-    @EnvironmentObject private var sdkManager: BWellSDKManager
-    @ObservedObject private var viewModel = ManageConnectionsViewModel()
+    @StateObject private var viewModel: ManageConnectionsViewModel
     @Binding var showMenu: Bool
+
+    init(showMenu: Binding<Bool>, viewModel: @autoclosure @escaping () -> ManageConnectionsViewModel) {
+        _showMenu = showMenu
+        _viewModel = StateObject(wrappedValue: viewModel())
+    }
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -32,7 +36,7 @@ struct ManageConnectionsView: View {
                         }
                         Spacer()
                     }
-                } else if viewModel.memberConnections.isEmpty {
+                } else if $viewModel.memberConnections.isEmpty {
                     HStack {
                         Spacer()
                         Text("No member connections found.")
@@ -74,7 +78,7 @@ struct ManageConnectionsView: View {
             }
         }
         .task {
-            if viewModel.memberConnections.isEmpty {
+            if $viewModel.memberConnections.isEmpty {
                 await viewModel.getConnections()
             }
         }
@@ -148,8 +152,7 @@ private struct ListItem: View {
 }
 
 #Preview {
-    ManageConnectionsView(showMenu: .constant(false))
-        .environmentObject(BWellSDKManager.shared)
+    ManageConnectionsView(showMenu: .constant(false), viewModel: AppContainer.preview.makeManageConnectionsViewModel())
         .environmentObject(NavigationRouter())
-        .environmentObject(SideMenuOptionViewModel())
+        .environmentObject(AppContainer.preview.makeSideMenuViewModel())
 }

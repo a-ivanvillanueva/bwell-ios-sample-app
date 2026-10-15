@@ -8,15 +8,20 @@ import Foundation
 import SwiftUI
 
 struct LaunchView: View {
-    @StateObject private var viewModel = LaunchViewModel()
-    @StateObject private var sideMenuViewModel = SideMenuOptionViewModel()
+    let container: AppContainer
+
+    @StateObject private var viewModel: LaunchViewModel
+
+    init(container: AppContainer, viewModel: LaunchViewModel) {
+        self.container = container
+        _viewModel = StateObject(wrappedValue: container.makeLaunchViewModel())
+    }
 
     var body: some View {
         Group {
             if viewModel.isCheckingSession {
                 ZStack {
-                    Color.bwellPurple
-                        .ignoresSafeArea()
+                    Color.bwellPurple.ignoresSafeArea()
 
                     Image("bwell-logo")
                         .resizable()
@@ -25,8 +30,7 @@ struct LaunchView: View {
                         .padding(.bottom, 40)
                 }
             } else {
-                RootView()
-                    .environmentObject(sideMenuViewModel)
+                RootView(container: container)
             }
         }.onAppear {
             Task {
@@ -38,26 +42,30 @@ struct LaunchView: View {
 
 @MainActor
 final class LaunchViewModel: ObservableObject {
+    private let session: SessionRepository
+    private let apiKeyStore: APIKeyStore
+
     @Published var isCheckingSession: Bool = true
 
+
+    init(session: SessionRepository, apiKeyStore: APIKeyStore) {
+        self.session = session
+        self.apiKeyStore = apiKeyStore
+    }
+
     func checkSession() async {
-        guard let apiKey = APIKeyService.shared.getAPIKey() else {
-            BWellSDKManager.shared.state = .uninitialized
+        guard let apiKey = apiKeyStore.getAPIKey() else {
             isCheckingSession = false
             return
         }
 
         do {
-            // 1) Initialize the SDK (rehydrates token manager now).
-            try await BWellSDKManager.shared.initialize(apiKey)
-            // 2) Validate session before revealing RootView so state can be .authenticated.
-            await BWellSDKManager.shared.validateSession()
+            try await session.initialize(apiKey)
+            await session.validateSession()
         } catch {
-            // This will only catch errors from the initial setup.
             Log.sdk.error("Launch: SDK initialization failed: \(error.localizedDescription)")
         }
 
-        // 3) Show RootView after session check completes so RootView can react to the final state.
         isCheckingSession = false
     }
 }

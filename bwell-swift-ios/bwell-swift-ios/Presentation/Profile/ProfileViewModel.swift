@@ -11,6 +11,7 @@ import BWellSDK
 @MainActor
 final class ProfileViewModel: ObservableObject {
     private var sdkManager: BWellSDKManager?
+    private let session: SessionRepository
     @Published var errorMessage: String?
     @Published var isLoading: Bool = false
 
@@ -35,8 +36,8 @@ final class ProfileViewModel: ObservableObject {
     @Published var homePhone: String = ""
     @Published var mobilePhone: String = ""
 
-    init() {
-        self.sdkManager = .shared
+    init(session: SessionRepository) {
+        self.session = session
     }
 
     func getUserProfile() async {

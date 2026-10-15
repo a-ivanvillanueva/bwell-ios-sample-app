@@ -8,10 +8,14 @@
 import SwiftUI
 
 struct AuthenticationView: View {
-    @StateObject private var viewModel = AuthenticationViewModel()
-    @StateObject private var connectionsViewModel = ManageConnectionsViewModel()
+    @StateObject private var viewModel: AuthenticationViewModel
+
     @EnvironmentObject var router: NavigationRouter
     @State private var authWithToken: Bool = false
+
+    init(viewModel: @autoclosure @escaping () -> AuthenticationViewModel) {
+        _viewModel = StateObject(wrappedValue: viewModel())
+    }
 
     var body: some View {
         ZStack {
@@ -150,6 +154,7 @@ struct AuthenticationView: View {
 }
 
 #Preview {
-    AuthenticationView()
+    AuthenticationView(viewModel: AppContainer.preview.makeAuthenticationViewModel())
         .environmentObject(NavigationRouter())
+        .environmentObject(AppContainer.preview.makeAuthenticationViewModel())
 }

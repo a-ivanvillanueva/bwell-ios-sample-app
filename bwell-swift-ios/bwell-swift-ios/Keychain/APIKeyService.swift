@@ -6,14 +6,14 @@
 //
 import Foundation
 
-final class APIKeyService {
-    static let shared = APIKeyService()
-
+final class APIKeyService: APIKeyStore {
     private let account = "bwell-api-key"
     private let legacyDefaultsKey: String = "bwell_api_key"
-    private let keychain = KeychainService.shared
+    private let keychain: KeychainService
 
-    private init() {}
+    init(keychain: KeychainService) {
+        self.keychain = keychain
+    }
 
     func save(_ apiKey: String) {
         do {

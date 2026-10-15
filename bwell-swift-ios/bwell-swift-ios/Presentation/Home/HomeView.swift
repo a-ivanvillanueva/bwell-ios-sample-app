@@ -6,11 +6,15 @@
 //
 import Foundation
 import SwiftUI
-import BWellSDK
 
 struct HomeView: View {
-    @StateObject private var viewModel = HomeViewModel()
+    @StateObject private var viewModel: HomeViewModel
     @Binding var showMenu: Bool
+
+    init(showMenu: Binding<Bool>, viewModel: @autoclosure @escaping () -> HomeViewModel) {
+        _viewModel = StateObject(wrappedValue: viewModel())
+        _showMenu = showMenu
+    }
 
     var body: some View {
         ScrollView {
@@ -138,8 +142,7 @@ private struct ActivityListItemView: View {
 }
 
 #Preview {
-    HomeView(showMenu: .constant(false))
-        .environmentObject(BWellSDKManager.shared)
-        .environmentObject(SideMenuOptionViewModel())
+    HomeView(showMenu: .constant(false), viewModel: AppContainer.preview.makeHomeViewModel())
+        .environmentObject(AppContainer.preview.makeSideMenuViewModel())
         .environmentObject(NavigationRouter())
 }
