@@ -105,7 +105,7 @@ struct ProfileView: View {
 
                 ListItem(icon: "person.text.rectangle", title: "Full name", text: fullName)
                 ListItem(icon: "calendar", title: "Birthdate", text: viewModel.birthdate)
-                ListItem(icon: "figure.stand.dress.line.vertical.figure", title: "Gender", text: viewModel.gender.description())
+                ListItem(icon: "figure.stand.dress.line.vertical.figure", title: "Gender", text: viewModel.gender.displayName)
                 ListItem(icon: "house", title: "Address", text: address)
 
                 Text("Contact Information")

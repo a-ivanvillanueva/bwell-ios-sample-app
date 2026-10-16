@@ -78,18 +78,3 @@ extension String {
         return prefix(1).capitalized + String(dropFirst())
     }
 }
-
-extension BWell.Gender {
-    func description() -> String {
-        switch self {
-            case .female:
-                return "Female"
-            case .male:
-                return "Male"
-            case .other:
-                return "Other"
-            default:
-                return "Unknown"
-        }
-    }
-}

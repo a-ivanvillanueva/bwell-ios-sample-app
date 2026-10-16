@@ -6,12 +6,11 @@
 //
 
 import Foundation
-import BWellSDK
 
 @MainActor
 final class ProfileViewModel: ObservableObject {
-    private var sdkManager: BWellSDKManager?
-    private let session: SessionRepository
+    private let userRepository: UserRepository
+
     @Published var errorMessage: String?
     @Published var isLoading: Bool = false
 
@@ -28,7 +27,7 @@ final class ProfileViewModel: ObservableObject {
     @Published var city: String = ""
 
     // Other user's information
-    @Published var gender: BWell.Gender = .male
+    @Published var gender: Gender = .unkown
     @Published var birthdate: String = ""
     @Published var language: String = ""
     @Published var email: String = ""
@@ -36,107 +35,73 @@ final class ProfileViewModel: ObservableObject {
     @Published var homePhone: String = ""
     @Published var mobilePhone: String = ""
 
-    init(session: SessionRepository) {
-        self.session = session
+    init(userRepository: UserRepository) {
+        self.userRepository = userRepository
     }
 
     func getUserProfile() async {
         isLoading = true
+        defer { isLoading = false }
+
         do {
-            guard let sdkManager = sdkManager else {
-                errorMessage = "SDK Manager not available"
-                isLoading = false
-                return
-            }
-
-            guard let profileInformation = try await sdkManager.user().getProfile() else {
-                isLoading = false
-                return
-            }
-
-            parseData(data: profileInformation)
-            isLoading = false
+            guard let profile = try await userRepository.getProfile() else { return }
+            apply(profile)
         } catch {
             Log.profile.error("Failed retrieving profile: \(error.localizedDescription)")
-            isLoading = false
+            errorMessage = "We couldn't load your profile. Please try again."
         }
     }
 
     func updateUserProfile() async {
         isLoading = true
+        defer { isLoading = false }
+
         do {
-            guard let sdkManager = sdkManager else {
-                errorMessage = "SDK Manager not available"
-                isLoading = false
-                return
-            }
-
-            let given: [String] = givenName.components(separatedBy: " ")
-
-            let userName: BWell.HumanName = .init(family: familyName, given: given)
-
-            let updateProfileRequest: BWell.UpdateUserProfileRequest = .init(name: userName,
-                                                                             addressStreet: addressLineOne,
-                                                                             addressUnit: addressLineTwo,
-                                                                             city: city,
-                                                                             stateOrProvidence: state,
-                                                                             postageOrZipCode: postalCode,
-                                                                             birthDate: birthdate,
-                                                                             gender: gender,
-                                                                             language: language)
-
-            _ = try await sdkManager.user().updateProfile(updateProfileRequest)
-
-            isLoading = false
+            try await userRepository.updateProfile(makeProfile())
         } catch {
             Log.profile.error("Failed updating profile: \(error.localizedDescription)")
             errorMessage = "We couldn't save you profile. Please try again."
-            isLoading = false
         }
     }
 
-    private func parseData(data: BWell.GetUserProfileResult) {
-        if let names = data.name {
-            if let first = names.first {
-                givenName = first.given?.joined(separator: " ") ?? ""
-                familyName = first.family ?? ""
-            }
-        }
+    private func apply(_ profile: UserProfile) {
+        givenName = profile.givenName
+        familyName = profile.familyName
+        gender = profile.gender
+        birthdate = profile.birthdate
+        language = profile.language
+        email = profile.email
+        workPhone = profile.workphone
+        homePhone = profile.homePhone
+        addressLineOne = profile.address.lineOne
+        addressLineTwo = profile.address.lineTwo
+        city = profile.address.city
+        state = profile.address.state
+        postalCode = profile.address.postalCode
+        country = profile.address.country
 
-        if let address = data.address?.first {
-            let lines = address.line ?? []
-            addressLineOne = lines.first ?? ""
-            addressLineTwo = lines.dropFirst().first ?? ""
-            country = address.country ?? ""
-            state = address.state ?? ""
-            postalCode = address.postalCode ?? ""
-            city = address.city ?? ""
-        }
+    }
 
-        if let gender = data.gender {
-            self.gender = gender
-        }
+    private func makeProfile() -> UserProfile {
 
-        if let birthdate = data.birthdate {
-            self.birthdate = birthdate
-        }
+        let address = Address(lineOne: addressLineOne,
+                              lineTwo: addressLineTwo,
+                              city: city,
+                              state: state,
+                              postalCode: postalCode,
+                              country: country)
 
-        if let language = data.language {
-            self.language = language
-        }
+        let userProfile = UserProfile(givenName: givenName,
+                    familyName: familyName,
+                    gender: gender,
+                    birthdate: birthdate,
+                    language: language,
+                    email: email,
+                    workphone: workPhone,
+                    homePhone: homePhone,
+                    mobilePhone: mobilePhone,
+                    address: address)
 
-        if let telecom = data.telecom {
-            for contactPoint in telecom {
-                if contactPoint.use == "email" {
-                    email = contactPoint.value ?? ""
-                } else if contactPoint.use == "mobile" {
-                    mobilePhone = contactPoint.value ?? ""
-                } else if contactPoint.use == "work" {
-                    workPhone = contactPoint.value ?? ""
-                } else if contactPoint.use == "home" {
-                    homePhone = contactPoint.value ?? ""
-                }
-            }
-        }
+        return userProfile
     }
 }

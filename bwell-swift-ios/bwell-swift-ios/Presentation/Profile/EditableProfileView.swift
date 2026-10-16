@@ -7,7 +7,6 @@
 
 import Foundation
 import SwiftUI
-import BWellSDK
 
 struct EditableProfileView: View {
     @State private var shouldRotate: Bool = false
@@ -15,7 +14,7 @@ struct EditableProfileView: View {
     // Personal Information
     @Binding var givenName: String
     @Binding var familyName: String
-    @Binding var gender: BWell.Gender
+    @Binding var gender: Gender
 
     // Contact Information
     @Binding var email: String
@@ -102,7 +101,7 @@ struct EditableProfileView: View {
         HStack(spacing: 12) {
             Image(systemName: "figure.stand.dress.line.vertical.figure")
                 .frame(width: 24, alignment: .center)
-            Text("\(gender.description())")
+            Text("\(gender.displayName)")
 
             Spacer()
 
@@ -166,8 +165,8 @@ private struct ListItem: View {
 
 private struct GenderMenuButton: View {
     let title: String
-    let genderOption: BWell.Gender
-    let currentGender: BWell.Gender
+    let genderOption: Gender
+    let currentGender: Gender
     let action: () -> Void
 
     var body: some View {
