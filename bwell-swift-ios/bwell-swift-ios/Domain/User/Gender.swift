@@ -8,5 +8,5 @@
 import Foundation
 
 enum Gender: CaseIterable {
-    case female, male, other, unkown
+    case female, male, other, unknown
 }

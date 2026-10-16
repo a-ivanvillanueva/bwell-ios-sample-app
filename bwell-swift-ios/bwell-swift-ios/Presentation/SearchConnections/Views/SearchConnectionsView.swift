@@ -14,24 +14,22 @@ struct SearchConnectionsView: View {
     @EnvironmentObject private var router: NavigationRouter
 
     @StateObject private var viewModel: SearchConnectionsViewModel
-    @StateObject private var manageConnectionsViewModel: ManageConnectionsViewModel
 
     @State private var searchedText: String = ""
     @State private var activeSheet: SheetContent?
-    @State private var showWebView: Bool = false
     @State private var showOnSuccessMessage: Bool = false
+    @State private var pendingWebURL: URL?
+    @State private var shouldShowSuccess = false
 
     init(connection: ConnectionsModel,
-         viewModel: @autoclosure @escaping () -> SearchConnectionsViewModel,
-         manageConnectionsViewModel: @autoclosure @escaping () -> ManageConnectionsViewModel) {
+         viewModel: @autoclosure @escaping () -> SearchConnectionsViewModel) {
         self.connection = connection
         _viewModel = StateObject(wrappedValue: viewModel())
-        _manageConnectionsViewModel = StateObject(wrappedValue: manageConnectionsViewModel())
     }
 
     var body: some View {
         ZStack {
-            if !$viewModel.healthResources.isEmpty {
+            if !viewModel.healthResources.isEmpty {
                 resultsView
                     .padding(.top, 10)
             } else {
@@ -56,32 +54,33 @@ struct SearchConnectionsView: View {
             }
             dismissSearch()
         }
-        .sheet(item: $activeSheet) { sheetContent in
+        .sheet(item: $activeSheet, onDismiss: presentNextStep) { sheetContent in
             switch sheetContent {
-                case .terms(let resource):
-                    if let title = resource.content {
-                        SearchConnectionDisclaimerView(resourceTitle: title) {
-                            Task {
-                                await manageConnectionsViewModel.getOAuthURL(search: resource.endpoint?.first?.name ?? "proa_demo")
-                            }
-                        }
-                        .presentationDetents([.medium])
-                        .presentationDragIndicator(.visible)
+            case .terms(let resource):
+                SearchConnectionDisclaimerView(resourceTitle: resource.name) {
+                    Task {
+                        await viewModel.requestOAuthURL(for: resource)
                     }
-                case .webView(let url):
-                    WebViewWrapper(url: url) {
-                        activeSheet = nil
-                        Task {
-                            try? await Task.sleep(nanoseconds: 100_000_000) // 0.1 seconds
-                            showOnSuccessMessage = true
-                        }
-                    }
+                }
+                .presentationDetents([.medium])
+                .presentationDragIndicator(.visible)
+
+            case .webView(let url):
+                WebViewWrapper(url: url) {
+                    shouldShowSuccess = true
+                    activeSheet = nil
+                }
             }
         }
-        .onChange(of: manageConnectionsViewModel.url) { _, url in
-            if let url = url {
-                activeSheet = .webView(url: url)
+        .onChange(of: viewModel.oauthURL) { _, url in
+            guard let url else {
+                return
             }
+
+            pendingWebURL = url
+            activeSheet = nil
+            viewModel.oauthURL = nil
+
         }
         .alert("Success!", isPresented: $showOnSuccessMessage) {
             Button("Done") {}
@@ -99,23 +98,31 @@ struct SearchConnectionsView: View {
     @ViewBuilder
     var resultsView: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("Results (\($viewModel.healthResources.count))")
+            Text("Results (\(viewModel.healthResources.count))")
                 .font(.headline)
                 .fontWeight(.semibold)
                 .padding(.bottom, 5)
 
             List {
-                ForEach(viewModel.healthResources, id: \.id) { result in
-                    if let content = result.content, !content.isEmpty {
-                        Button {
-                            activeSheet = .terms(resource: result)
-                        } label: {
-                            ListItem(title: content)
-                        }
+                ForEach(viewModel.healthResources) { resource in
+                    Button {
+                        activeSheet = .terms(resource: resource)
+                    } label: {
+                        ListItem(title: resource.name)
                     }
                 }
             }.listStyle(.plain)
         }.padding(.horizontal)
+    }
+
+    private func presentNextStep() {
+        if let url = pendingWebURL {
+            pendingWebURL = nil
+            activeSheet = .webView(url: url)
+        } else if shouldShowSuccess {
+            shouldShowSuccess = false
+            showOnSuccessMessage = true
+        }
     }
 }
 
@@ -140,7 +147,7 @@ private struct ListItem: View {
 }
 
 #Preview {
-    SearchConnectionsView(connection: .clinics, viewModel: AppContainer.preview.makeSearchConnectionsViewModel(), manageConnectionsViewModel: AppContainer.preview.makeManageConnectionsViewModel())
+    SearchConnectionsView(connection: .clinics, viewModel: AppContainer.preview.makeSearchConnectionsViewModel())
         .environmentObject(AppContainer.preview.makeSideMenuViewModel())
         .environmentObject(NavigationRouter())
 }

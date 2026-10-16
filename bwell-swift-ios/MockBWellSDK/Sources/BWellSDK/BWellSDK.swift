@@ -144,7 +144,7 @@ public final class ConnectionManager {
     }
 
     public func getOAuthURL(_ request: BWell.OAuthURLRequest) async throws -> BWell.OAuthURLResult {
-        .init(redirectURL: "https://example.org/")
+        .init(redirectURL: "https://example.org/?status_code=success")
     }
 }
 

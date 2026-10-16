@@ -13,6 +13,8 @@ final class AppContainer {
     private let apiKeyStore: APIKeyStore
     private let sdkManager: BWellSDKManager
     private let userRepository: UserRepository
+    private let connectionRepository: ConnectionRepository
+    private let healthResourceRepository: HealthResourceRepository
 
     var session: SessionRepository {
         sdkManager
@@ -29,6 +31,8 @@ final class AppContainer {
         self.apiKeyStore = apiKeyService
         self.sdkManager = sdkManager
         self.userRepository = BWellUserRepository(sdkManager: sdkManager)
+        self.connectionRepository = BWellConnectionRepository(sdkManager: sdkManager)
+        self.healthResourceRepository = BWellHealthResourceRepository(sdkManager: sdkManager)
     }
 
     // MARK: - ViewModel Factories
@@ -53,11 +57,11 @@ final class AppContainer {
     }
 
     func makeManageConnectionsViewModel() -> ManageConnectionsViewModel {
-        ManageConnectionsViewModel(sdkManager: sdkManager)
+        ManageConnectionsViewModel(repository: connectionRepository)
     }
 
     func makeSearchConnectionsViewModel() -> SearchConnectionsViewModel {
-        SearchConnectionsViewModel(sdkManager: sdkManager)
+        SearchConnectionsViewModel(searchRepository: healthResourceRepository, connectionRepository: connectionRepository)
     }
 
     func makeHealthSummaryViewModel() -> HealthSummaryViewModel {

@@ -8,18 +8,13 @@ import Foundation
 import SwiftUI
 
 enum SheetContent: Identifiable {
-    case terms(resource: BWellWrapper.healthResource.Result)
+    case terms(resource: HealthResource)
     case webView(url: URL)
 
     var id: String {
         switch self {
-            case .terms(let resource):
-                if let endpoint = resource.endpoint?.first?.name {
-                    return endpoint
-                }
-                return "proa_demo"
-            case .webView(let url):
-                return url.absoluteString
+        case .terms(let resource): resource.connectionId
+        case .webView(let url): url.absoluteString
         }
     }
 }

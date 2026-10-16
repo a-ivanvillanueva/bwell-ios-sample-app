@@ -17,7 +17,6 @@ struct BWellWrapper {
     typealias vitalSigns = BWell.Observation
     typealias encounter = BWell.Encounter
     typealias connectionStatus = BWell.DataConnectionStatus
-    typealias healthResource = BWell.SearchHealthResourcesResults
     typealias allergyIntolerances = BWell.AllergyIntolerance
 
     // Health Data Groups
@@ -40,19 +39,5 @@ struct BWellHealthDataWrapper<T>: Hashable, Identifiable {
 
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
-    }
-}
-
-extension BWell.DataConnectionStatus {
-    func description() -> String {
-        switch self {
-        case .connected: "CONNECTED"
-        case .disconnected: "DISCONNECTED"
-        case .deleted: "DELETED"
-        case .expired: "EXPIRED"
-        case .accessEnded: "ACCESS ENDED"
-        case .error: "ERROR"
-        case .unknown: "UNKNOWN"
-        }
     }
 }

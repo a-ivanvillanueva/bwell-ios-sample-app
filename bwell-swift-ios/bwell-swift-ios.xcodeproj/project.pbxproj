@@ -45,6 +45,13 @@
 		558FBF1C3081965F00505658 /* UserProfile+BWell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558FBF1B3081965400505658 /* UserProfile+BWell.swift */; };
 		558FBF1E30819C6B00505658 /* BWellUserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558FBF1D30819C6300505658 /* BWellUserRepository.swift */; };
 		558FBF203081A3E700505658 /* Gender+Display.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558FBF1F3081A3DC00505658 /* Gender+Display.swift */; };
+		558FBF243081B8AA00505658 /* Connection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558FBF233081B8A500505658 /* Connection.swift */; };
+		558FBF283081B9FF00505658 /* ConnectionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558FBF273081B9F900505658 /* ConnectionRepository.swift */; };
+		558FBF2A3081BA2300505658 /* HealthResourceRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558FBF293081BA1900505658 /* HealthResourceRepository.swift */; };
+		558FBF2D3081C20D00505658 /* Connection+BWell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558FBF2C3081C20800505658 /* Connection+BWell.swift */; };
+		558FBF2F3081C5A100505658 /* BWellConnectionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558FBF2E3081C59900505658 /* BWellConnectionRepository.swift */; };
+		558FBF31308291AB00505658 /* BWellHealthResourceRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558FBF30308291A000505658 /* BWellHealthResourceRepository.swift */; };
+		558FBF333082A9BB00505658 /* ConnectionStatus+Display.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558FBF323082A9B300505658 /* ConnectionStatus+Display.swift */; };
 		5597E5482EBE561C00A744CD /* WebViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5597E5472EBE560500A744CD /* WebViewWrapper.swift */; };
 		5597E54A2EBE566700A744CD /* SearchConnectionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5597E5492EBE565C00A744CD /* SearchConnectionsViewModel.swift */; };
 		5597E54C2EBE56AC00A744CD /* SearchConnectionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5597E54B2EBE56A000A744CD /* SearchConnectionsView.swift */; };
@@ -133,6 +140,13 @@
 		558FBF1B3081965400505658 /* UserProfile+BWell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserProfile+BWell.swift"; sourceTree = "<group>"; };
 		558FBF1D30819C6300505658 /* BWellUserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BWellUserRepository.swift; sourceTree = "<group>"; };
 		558FBF1F3081A3DC00505658 /* Gender+Display.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Gender+Display.swift"; sourceTree = "<group>"; };
+		558FBF233081B8A500505658 /* Connection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connection.swift; sourceTree = "<group>"; };
+		558FBF273081B9F900505658 /* ConnectionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionRepository.swift; sourceTree = "<group>"; };
+		558FBF293081BA1900505658 /* HealthResourceRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthResourceRepository.swift; sourceTree = "<group>"; };
+		558FBF2C3081C20800505658 /* Connection+BWell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Connection+BWell.swift"; sourceTree = "<group>"; };
+		558FBF2E3081C59900505658 /* BWellConnectionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BWellConnectionRepository.swift; sourceTree = "<group>"; };
+		558FBF30308291A000505658 /* BWellHealthResourceRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BWellHealthResourceRepository.swift; sourceTree = "<group>"; };
+		558FBF323082A9B300505658 /* ConnectionStatus+Display.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConnectionStatus+Display.swift"; sourceTree = "<group>"; };
 		5597E5472EBE560500A744CD /* WebViewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewWrapper.swift; sourceTree = "<group>"; };
 		5597E5492EBE565C00A744CD /* SearchConnectionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchConnectionsViewModel.swift; sourceTree = "<group>"; };
 		5597E54B2EBE56A000A744CD /* SearchConnectionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchConnectionsView.swift; sourceTree = "<group>"; };
@@ -332,6 +346,8 @@
 		558FBEFD307FEBF200505658 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				558FBF223081B88D00505658 /* Connections */,
+				558FBF213081B84800505658 /* User */,
 				558FBF0D3080658500505658 /* Entities */,
 				558FBEFE307FEBFA00505658 /* Session */,
 			);
@@ -391,6 +407,7 @@
 		558FBF133081941E00505658 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				558FBF2B3081C1FE00505658 /* Connections */,
 				558FBF14308194BF00505658 /* User */,
 			);
 			path = Data;
@@ -401,11 +418,38 @@
 			children = (
 				558FBF1D30819C6300505658 /* BWellUserRepository.swift */,
 				558FBF1B3081965400505658 /* UserProfile+BWell.swift */,
-				558FBF19308195BD00505658 /* UserRepository.swift */,
-				558FBF15308194CA00505658 /* Gender.swift */,
-				558FBF17308194FA00505658 /* UserProfile.swift */,
 			);
 			path = User;
+			sourceTree = "<group>";
+		};
+		558FBF213081B84800505658 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				558FBF19308195BD00505658 /* UserRepository.swift */,
+				558FBF17308194FA00505658 /* UserProfile.swift */,
+				558FBF15308194CA00505658 /* Gender.swift */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
+		558FBF223081B88D00505658 /* Connections */ = {
+			isa = PBXGroup;
+			children = (
+				558FBF233081B8A500505658 /* Connection.swift */,
+				558FBF273081B9F900505658 /* ConnectionRepository.swift */,
+				558FBF293081BA1900505658 /* HealthResourceRepository.swift */,
+			);
+			path = Connections;
+			sourceTree = "<group>";
+		};
+		558FBF2B3081C1FE00505658 /* Connections */ = {
+			isa = PBXGroup;
+			children = (
+				558FBF30308291A000505658 /* BWellHealthResourceRepository.swift */,
+				558FBF2E3081C59900505658 /* BWellConnectionRepository.swift */,
+				558FBF2C3081C20800505658 /* Connection+BWell.swift */,
+			);
+			path = Connections;
 			sourceTree = "<group>";
 		};
 		5597E5462EBE55FC00A744CD /* SearchConnections */ = {
@@ -474,6 +518,7 @@
 		55E6257B2EB56858000D3783 /* ManageConnections */ = {
 			isa = PBXGroup;
 			children = (
+				558FBF323082A9B300505658 /* ConnectionStatus+Display.swift */,
 				5551A3A22EBF00BA00394D59 /* Views */,
 				5506C1FF2EBD14D1005842A6 /* ConnectionsModel.swift */,
 				55E6257C2EB56861000D3783 /* ManageConnectionsViewModel.swift */,
@@ -625,12 +670,14 @@
 			files = (
 				558FBF04307FEEE700505658 /* SessionRepository.swift in Sources */,
 				557F91973078A04B005B1E2A /* Log.swift in Sources */,
+				558FBF31308291AB00505658 /* BWellHealthResourceRepository.swift in Sources */,
 				558FBF09307FF9F800505658 /* AppContainer.swift in Sources */,
 				5548A09D2EBEB13800C0ACF5 /* SearchConnectionDisclaimerView.swift in Sources */,
 				55F2035D2EC504E9001DA1E8 /* LaunchView.swift in Sources */,
 				55E6256C2EB42BB4000D3783 /* AllergyIntolerancesView.swift in Sources */,
 				5522DCB32EB1314300F9BCD7 /* AuthenticationTextField.swift in Sources */,
 				55E625672EB34903000D3783 /* EditableProfileView.swift in Sources */,
+				558FBF333082A9BB00505658 /* ConnectionStatus+Display.swift in Sources */,
 				5506C2002EBD14D5005842A6 /* ConnectionsModel.swift in Sources */,
 				5522DCBC2EB161FF00F9BCD7 /* HealthSummaryView.swift in Sources */,
 				5522DCC32EB2388A00F9BCD7 /* HealthDataSummaryModel.swift in Sources */,
@@ -641,6 +688,7 @@
 				55D5DF882EB945A300D71D99 /* ProceduresView.swift in Sources */,
 				55D5DF822EB933BD00D71D99 /* ImmunizationsView.swift in Sources */,
 				558FBF16308194CC00505658 /* Gender.swift in Sources */,
+				558FBF2F3081C5A100505658 /* BWellConnectionRepository.swift in Sources */,
 				55E6257A2EB54FC9000D3783 /* AuthenticationViewModel.swift in Sources */,
 				5522DCAC2EB0380800F9BCD7 /* SideMenuView.swift in Sources */,
 				558FBF1C3081965F00505658 /* UserProfile+BWell.swift in Sources */,
@@ -648,6 +696,7 @@
 				5522DCB52EB1320D00F9BCD7 /* BWellButton.swift in Sources */,
 				5522DCB12EB11FB500F9BCD7 /* ProfileView.swift in Sources */,
 				55E625782EB54376000D3783 /* BWellWrapper.swift in Sources */,
+				558FBF283081B9FF00505658 /* ConnectionRepository.swift in Sources */,
 				5551A3B02EC3ECC000394D59 /* SessionState.swift in Sources */,
 				55D5DF8A2EB945AC00D71D99 /* VitalSignsView.swift in Sources */,
 				5506C1FE2EBD147E005842A6 /* ConnectionsView.swift in Sources */,
@@ -655,6 +704,7 @@
 				5551A3AA2EC390A200394D59 /* KeychainService.swift in Sources */,
 				5551A3AC2EC3B8EB00394D59 /* KeychainTokenStorageAdapter.swift in Sources */,
 				55D5DF8C2EB9813700D71D99 /* EncountersView.swift in Sources */,
+				558FBF2A3081BA2300505658 /* HealthResourceRepository.swift in Sources */,
 				55E6257F2EB56871000D3783 /* ManageConnectionsView.swift in Sources */,
 				5522DCBA2EB161F600F9BCD7 /* HealthSummaryViewModel.swift in Sources */,
 				5522DC962EAFE5E400F9BCD7 /* BWellSDKManager.swift in Sources */,
@@ -669,12 +719,14 @@
 				55E625652EB34785000D3783 /* Extensions.swift in Sources */,
 				5522DC892EAFE10C00F9BCD7 /* AuthenticationView.swift in Sources */,
 				551538732EB25C7D001174F9 /* ProfileViewModel.swift in Sources */,
+				558FBF2D3081C20D00505658 /* Connection+BWell.swift in Sources */,
 				5522DCAE2EB1083300F9BCD7 /* SideMenuModel.swift in Sources */,
 				55F2035B2EC4FE42001DA1E8 /* APIKeyService.swift in Sources */,
 				558FBF18308194FE00505658 /* UserProfile.swift in Sources */,
 				55D5DF862EB9459800D71D99 /* MedicationsView.swift in Sources */,
 				55E625762EB5402F000D3783 /* DetailedItemView.swift in Sources */,
 				558FBF02307FEE9D00505658 /* Credentials.swift in Sources */,
+				558FBF243081B8AA00505658 /* Connection.swift in Sources */,
 				558FBF06307FF6C100505658 /* APIKeyStore.swift in Sources */,
 				5551A3B42EC4023200394D59 /* HomeViewModel.swift in Sources */,
 				55E6256E2EB42BE7000D3783 /* ConditionsView.swift in Sources */,

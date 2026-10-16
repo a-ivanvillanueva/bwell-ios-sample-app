@@ -19,7 +19,7 @@ struct Address: Equatable {
 struct UserProfile: Equatable {
     var givenName = ""
     var familyName = ""
-    var gender: Gender = .unkown
+    var gender: Gender = .unknown
     var birthdate = ""
     var language = ""
     var email = ""

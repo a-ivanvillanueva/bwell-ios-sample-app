@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import BWellSDK
 import SwiftUI
 
 struct ManageConnectionsView: View {
@@ -36,7 +35,7 @@ struct ManageConnectionsView: View {
                         }
                         Spacer()
                     }
-                } else if $viewModel.memberConnections.isEmpty {
+                } else if viewModel.memberConnections.isEmpty {
                     HStack {
                         Spacer()
                         Text("No member connections found.")
@@ -78,7 +77,7 @@ struct ManageConnectionsView: View {
             }
         }
         .task {
-            if $viewModel.memberConnections.isEmpty {
+            if viewModel.memberConnections.isEmpty {
                 await viewModel.getConnections()
             }
         }
@@ -86,7 +85,7 @@ struct ManageConnectionsView: View {
 }
 
 private struct ListItem: View {
-    let connection: BWell.MemberConnectionResult
+    let connection: Connection
     let onDelete: () -> Void
     let onDisconnect: () -> Void
 
@@ -104,7 +103,7 @@ private struct ListItem: View {
                 Text(connection.name)
                     .fontWeight(.semibold)
 
-                Text(connection.status.description())
+                Text(connection.status.displayName)
                     .padding(5)
                     .background(.bwellGreen)
                     .font(.system(size: 16, weight: .bold, design: .rounded))

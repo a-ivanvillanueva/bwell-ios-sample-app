@@ -5,137 +5,65 @@
 //  Created by Ivan Villanueva on 31/10/25.
 //
 import Foundation
-import BWellSDK
 
 @MainActor
 final class ManageConnectionsViewModel: ObservableObject {
-    private var sdkManager: BWellSDKManager?
+    private let repository: ConnectionRepository
 
     @Published var errorMessage: String?
     @Published var isLoading: Bool = false
-    @Published var memberConnections: [BWell.MemberConnectionResult] = []
+    @Published var memberConnections: [Connection] = []
 
-    @Published var url: URL?
-
-    init(sdkManager: BWellSDKManager) {
-        self.sdkManager = sdkManager
+    init(repository: ConnectionRepository) {
+        self.repository = repository
     }
 
     func getConnections() async {
         isLoading = true
-        errorMessage = nil  // Clear previous errors
+        errorMessage = nil
+
+        defer { isLoading = false }
 
         do {
-            guard let sdkManager = sdkManager else {
-                errorMessage = "SDK Manager not available."
-                isLoading = false
-                return
-            }
-
-            memberConnections = try await sdkManager.connection().getMemberConnections()
-
+            memberConnections = try await repository.connections()
             Log.connections.debug("Loaded \(self.memberConnections.count) member connections")
-
-            isLoading = false
         } catch {
-            errorMessage = "Failed to retrieve member connections: \(error.localizedDescription)"
-            isLoading = false
-            return
+            Log.connections.error("Failed to load connections: \(error.localizedDescription)")
+            errorMessage = "We couldn't load your connections. Please try again."
         }
     }
 
     /// Deletes a connection and refreshes the connections list
     /// - Parameter connectionId: The ID of the connection to delete
     func deleteConnection(connectionId: String) async {
-        isLoading = true
-        errorMessage = nil
-
-        do {
-            guard let sdkManager = sdkManager else {
-                errorMessage = "SDK Manager not available."
-                isLoading = false
-                return
-            }
-
-            let request = BWell.DeleteConnectionRequest(connectionId: connectionId)
-            let result = try await sdkManager.connection().deleteConnection(request)
-
-            Log.connections.debug("Delete connection result - status: \(String(describing: result.status)), updated: \(result.statusUpdated)")
-
-            // Refresh connections list after successful deletion
-            await getConnections()
-        } catch {
-            errorMessage = "Failed to delete connection: \(error.localizedDescription)"
-            isLoading = false
+        await perform(failureMesssage: "We couldn't delete the connection.") {
+            try await repository.delete(connectionId)
         }
     }
 
     /// Disconnects a connection and refreshes the connections list
     /// - Parameter connectionId: The ID of the connection to disconnect
     func disconnectConnection(connectionId: String) async {
+        await perform(failureMesssage: "We couldn't disconnect the connection.") {
+            try await repository.disconnect(connectionId)
+        }
+    }
+
+    private func perform(failureMesssage: String, _ action: () async throws -> Void) async {
         isLoading = true
         errorMessage = nil
 
         do {
-            guard let sdkManager = sdkManager else {
-                errorMessage = "SDK Manager not available."
-                isLoading = false
-                return
-            }
-
-            let request = BWell.DisconnectConnectionRequest(connectionId: connectionId)
-            let result = try await sdkManager.connection().disconnectConnection(request)
-
-            Log.connections.debug("Disconnect connection result - status: \(String(describing: result.status)), updated: \(result.statusUpdated)")
-
-            // Refresh connections list after successful disconnection
+            try await action()
             await getConnections()
         } catch {
-            errorMessage = "Failed to disconnect connection: \(error.localizedDescription)"
+            Log.connections.error("\(failureMesssage) \(error.localizedDescription)")
+            errorMessage = failureMesssage
             isLoading = false
         }
     }
 
-    func createConnection(username: String, password: String, connectionId: String = "proa_demo") async {
-        do {
-            guard let sdkManager = sdkManager else {
-                errorMessage = "SDK Manager not available"
-                isLoading = false
-                return
-            }
-            let request = BWell.CreateConnectionRequest(connectionId: connectionId,
-                                                        username: username,
-                                                        password: password)
-            _ = try await sdkManager.connection().createConnection(request)
-        } catch {
-            errorMessage = "Failed to established a connection."
-            return
-        }
-    }
-
-    func getDataSourceConnections() async {
-        do {
-            guard let sdkManager = sdkManager else {
-                errorMessage = "SDK Manager not available"
-                isLoading = false
-                return
-            }
-
-            let request = BWell.DataSourceRequest(connectionId: "proa_demo")
-
-            let response = try await sdkManager.connection().getDataSource(request)
-            Log.connections.debug("Fetched data source connections")
-
-            /*for connection in response {
-                memberConnections.append(response)
-            }*/
-        } catch {
-            errorMessage = "Failed to established a connection."
-            return
-        }
-    }
-
-    func getOAuthURL(search userRequest: String) async {
+    /*webfunc getOAuthURL(search userRequest: String) async {
         do {
             guard let sdkManager = sdkManager else {
                 errorMessage = "SDK Manager not available"
@@ -151,5 +79,5 @@ final class ManageConnectionsViewModel: ObservableObject {
             errorMessage = "Failed to established a connection."
             return
         }
-    }
+    }*/
 }

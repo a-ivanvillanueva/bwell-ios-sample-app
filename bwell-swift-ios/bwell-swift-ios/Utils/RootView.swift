@@ -43,8 +43,7 @@ struct RootView: View {
                                 .navigationBarBackButtonHidden()
                         case .searchConnections(let connection):
                             SearchConnectionsView(connection: connection,
-                                                  viewModel: container.makeSearchConnectionsViewModel(),
-                                                  manageConnectionsViewModel: container.makeManageConnectionsViewModel())
+                                                  viewModel: container.makeSearchConnectionsViewModel())
                         case .connections:
                             ConnectionsView()
                         case .healthGroupItems(let category, let groupCode):

@@ -27,7 +27,7 @@ final class ProfileViewModel: ObservableObject {
     @Published var city: String = ""
 
     // Other user's information
-    @Published var gender: Gender = .unkown
+    @Published var gender: Gender = .unknown
     @Published var birthdate: String = ""
     @Published var language: String = ""
     @Published var email: String = ""

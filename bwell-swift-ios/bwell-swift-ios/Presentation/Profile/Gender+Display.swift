@@ -13,7 +13,7 @@ extension Gender {
         case .female: "Female"
         case .male: "Male"
         case .other: "Other"
-        case .unkown: "Unknown"
+        case .unknown: "Unknown"
         }
     }
 }

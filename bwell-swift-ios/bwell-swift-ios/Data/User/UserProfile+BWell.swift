@@ -28,7 +28,7 @@ extension UserProfile {
                               country: sdkAddress.country ?? "")
         }
 
-        gender = result.gender.map(Gender.init(sdk:)) ?? .unkown
+        gender = result.gender.map(Gender.init(sdk:)) ?? .unknown
         birthdate = result.birthdate ?? ""
         language = result.language ?? ""
 
@@ -64,7 +64,7 @@ extension Gender {
         case .female: self = .female
         case .male: self = .male
         case .other: self = .other
-        case .unknown: self = .unkown
+        case .unknown: self = .unknown
         }
     }
 
@@ -73,7 +73,7 @@ extension Gender {
         case .female: .female
         case .male: .male
         case .other: .other
-        case .unkown: .unknown
+        case .unknown: .unknown
         }
     }
 }

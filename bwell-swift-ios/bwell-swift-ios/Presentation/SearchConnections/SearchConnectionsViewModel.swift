@@ -5,51 +5,45 @@
 //  Created by Ivan Villanueva on 07/11/25.
 //
 import Foundation
-import BWellSDK
 
 @MainActor
 final class SearchConnectionsViewModel: ObservableObject {
-    private var sdkManager: BWellSDKManager?
+    private let searchRepository: HealthResourceRepository
+    private let connectionRepository: ConnectionRepository
 
     @Published var errorMessage: String?
     @Published var isLoading: Bool = false
-    @Published var healthResources: [BWell.SearchHealthResourcesResults.Result] = []
+    @Published var healthResources: [HealthResource] = []
+    @Published var oauthURL: URL?
 
-    init(sdkManager: BWellSDKManager) {
-        self.sdkManager = sdkManager
+    init(searchRepository: HealthResourceRepository, connectionRepository: ConnectionRepository) {
+        self.searchRepository = searchRepository
+        self.connectionRepository = connectionRepository
     }
 
     func searchHealthResources(searchedText: String?) async {
         isLoading = true
+        errorMessage = nil
+
+        defer { isLoading = false }
 
         do {
-            guard let sdkManager = sdkManager else {
-                isLoading = false
-                errorMessage = "SDK Manager not available."
-                return
-            }
-
-            let filters: BWell.SearchHealthResourcesRequest.Filter = .init(includePopulatedProaOnly: true)
-            let orderBy: BWell.SearchHealthResourcesRequest.OrderBy = .init(field: .distance, order: .asc)
-            let location: BWell.SearchHealthResourcesRequest.Location = .init(latitude: 39.2848102, longitude: -76.702898)
-
-            let request = BWell.SearchHealthResourcesRequest(page: 0,
-                                                             pageSize: 100,
-                                                             search: searchedText,
-                                                             filters: filters,
-                                                             orderBy: [orderBy],
-                                                             location: location)
-
-
-            let response = try await sdkManager.search().searchHealthResources(request)
-
-            if let healthResourcesResults = response.results, !healthResourcesResults.isEmpty {
-                healthResources = healthResourcesResults
-            }
+            healthResources = try await searchRepository.search(matching: searchedText)
         } catch {
-            errorMessage = "Failed to load connections."
-            isLoading = false
-            return
+            Log.connections.error("Search failed: \(error.localizedDescription)")
+            errorMessage = "We couldn't load the results. Please try again."
+        }
+    }
+
+    // Asks for the sign-in page of the chosen resource; the view reacts to 'oauthURL'.
+    func requestOAuthURL(for resource: HealthResource) async {
+        errorMessage = nil
+
+        do {
+            oauthURL = try await connectionRepository.oauthURL(for: resource.connectionId)
+        } catch {
+            Log.connections.error("OAuth URL failed: \(error.localizedDescription)")
+            errorMessage = "We couldn't start the connection. Please try again."
         }
     }
 }
