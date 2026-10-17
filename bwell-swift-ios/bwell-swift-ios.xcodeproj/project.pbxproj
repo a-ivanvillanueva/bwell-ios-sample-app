@@ -52,6 +52,11 @@
 		558FBF2F3081C5A100505658 /* BWellConnectionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558FBF2E3081C59900505658 /* BWellConnectionRepository.swift */; };
 		558FBF31308291AB00505658 /* BWellHealthResourceRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558FBF30308291A000505658 /* BWellHealthResourceRepository.swift */; };
 		558FBF333082A9BB00505658 /* ConnectionStatus+Display.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558FBF323082A9B300505658 /* ConnectionStatus+Display.swift */; };
+		558FBF353082E90000505658 /* HealthCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558FBF343082E8FC00505658 /* HealthCategory.swift */; };
+		558FBF383082E9E000505658 /* HealthRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558FBF373082E9E000505658 /* HealthRecord.swift */; };
+		558FBF3A3082EAE800505658 /* HealthRecordRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558FBF393082EAE200505658 /* HealthRecordRepository.swift */; };
+		558FBF3D3082F22C00505658 /* HealthRecord+BWell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558FBF3C3082F22600505658 /* HealthRecord+BWell.swift */; };
+		558FBF3F3083088E00505658 /* BWellHealthRecordRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558FBF3E3083088800505658 /* BWellHealthRecordRepository.swift */; };
 		5597E5482EBE561C00A744CD /* WebViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5597E5472EBE560500A744CD /* WebViewWrapper.swift */; };
 		5597E54A2EBE566700A744CD /* SearchConnectionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5597E5492EBE565C00A744CD /* SearchConnectionsViewModel.swift */; };
 		5597E54C2EBE56AC00A744CD /* SearchConnectionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5597E54B2EBE56A000A744CD /* SearchConnectionsView.swift */; };
@@ -147,6 +152,11 @@
 		558FBF2E3081C59900505658 /* BWellConnectionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BWellConnectionRepository.swift; sourceTree = "<group>"; };
 		558FBF30308291A000505658 /* BWellHealthResourceRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BWellHealthResourceRepository.swift; sourceTree = "<group>"; };
 		558FBF323082A9B300505658 /* ConnectionStatus+Display.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConnectionStatus+Display.swift"; sourceTree = "<group>"; };
+		558FBF343082E8FC00505658 /* HealthCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthCategory.swift; sourceTree = "<group>"; };
+		558FBF373082E9E000505658 /* HealthRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthRecord.swift; sourceTree = "<group>"; };
+		558FBF393082EAE200505658 /* HealthRecordRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthRecordRepository.swift; sourceTree = "<group>"; };
+		558FBF3C3082F22600505658 /* HealthRecord+BWell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HealthRecord+BWell.swift"; sourceTree = "<group>"; };
+		558FBF3E3083088800505658 /* BWellHealthRecordRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BWellHealthRecordRepository.swift; sourceTree = "<group>"; };
 		5597E5472EBE560500A744CD /* WebViewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewWrapper.swift; sourceTree = "<group>"; };
 		5597E5492EBE565C00A744CD /* SearchConnectionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchConnectionsViewModel.swift; sourceTree = "<group>"; };
 		5597E54B2EBE56A000A744CD /* SearchConnectionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchConnectionsView.swift; sourceTree = "<group>"; };
@@ -346,6 +356,7 @@
 		558FBEFD307FEBF200505658 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				558FBF363082E97D00505658 /* Health */,
 				558FBF223081B88D00505658 /* Connections */,
 				558FBF213081B84800505658 /* User */,
 				558FBF0D3080658500505658 /* Entities */,
@@ -407,6 +418,7 @@
 		558FBF133081941E00505658 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				558FBF3B3082F21E00505658 /* Health */,
 				558FBF2B3081C1FE00505658 /* Connections */,
 				558FBF14308194BF00505658 /* User */,
 			);
@@ -450,6 +462,25 @@
 				558FBF2C3081C20800505658 /* Connection+BWell.swift */,
 			);
 			path = Connections;
+			sourceTree = "<group>";
+		};
+		558FBF363082E97D00505658 /* Health */ = {
+			isa = PBXGroup;
+			children = (
+				558FBF393082EAE200505658 /* HealthRecordRepository.swift */,
+				558FBF343082E8FC00505658 /* HealthCategory.swift */,
+				558FBF373082E9E000505658 /* HealthRecord.swift */,
+			);
+			path = Health;
+			sourceTree = "<group>";
+		};
+		558FBF3B3082F21E00505658 /* Health */ = {
+			isa = PBXGroup;
+			children = (
+				558FBF3E3083088800505658 /* BWellHealthRecordRepository.swift */,
+				558FBF3C3082F22600505658 /* HealthRecord+BWell.swift */,
+			);
+			path = Health;
 			sourceTree = "<group>";
 		};
 		5597E5462EBE55FC00A744CD /* SearchConnections */ = {
@@ -694,6 +725,7 @@
 				558FBF1C3081965F00505658 /* UserProfile+BWell.swift in Sources */,
 				5597E54A2EBE566700A744CD /* SearchConnectionsViewModel.swift in Sources */,
 				5522DCB52EB1320D00F9BCD7 /* BWellButton.swift in Sources */,
+				558FBF3F3083088E00505658 /* BWellHealthRecordRepository.swift in Sources */,
 				5522DCB12EB11FB500F9BCD7 /* ProfileView.swift in Sources */,
 				55E625782EB54376000D3783 /* BWellWrapper.swift in Sources */,
 				558FBF283081B9FF00505658 /* ConnectionRepository.swift in Sources */,
@@ -713,8 +745,10 @@
 				55E6257D2EB56867000D3783 /* ManageConnectionsViewModel.swift in Sources */,
 				5522DCA12EB0168D00F9BCD7 /* RootView.swift in Sources */,
 				558FBF1E30819C6B00505658 /* BWellUserRepository.swift in Sources */,
+				558FBF353082E90000505658 /* HealthCategory.swift in Sources */,
 				55DEF60E2EC7746300C8DB85 /* HealthDataViewFactory.swift in Sources */,
 				558FBF123080666F00505658 /* SideMenuViewModel.swift in Sources */,
+				558FBF3A3082EAE800505658 /* HealthRecordRepository.swift in Sources */,
 				5597E54C2EBE56AC00A744CD /* SearchConnectionsView.swift in Sources */,
 				55E625652EB34785000D3783 /* Extensions.swift in Sources */,
 				5522DC892EAFE10C00F9BCD7 /* AuthenticationView.swift in Sources */,
@@ -722,7 +756,9 @@
 				558FBF2D3081C20D00505658 /* Connection+BWell.swift in Sources */,
 				5522DCAE2EB1083300F9BCD7 /* SideMenuModel.swift in Sources */,
 				55F2035B2EC4FE42001DA1E8 /* APIKeyService.swift in Sources */,
+				558FBF383082E9E000505658 /* HealthRecord.swift in Sources */,
 				558FBF18308194FE00505658 /* UserProfile.swift in Sources */,
+				558FBF3D3082F22C00505658 /* HealthRecord+BWell.swift in Sources */,
 				55D5DF862EB9459800D71D99 /* MedicationsView.swift in Sources */,
 				55E625762EB5402F000D3783 /* DetailedItemView.swift in Sources */,
 				558FBF02307FEE9D00505658 /* Credentials.swift in Sources */,
