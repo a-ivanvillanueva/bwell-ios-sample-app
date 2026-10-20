@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import BWellSDK
 
 extension Date {
     func toString() -> String {

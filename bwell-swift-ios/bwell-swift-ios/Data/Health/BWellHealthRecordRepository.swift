@@ -51,7 +51,7 @@ final class BWellHealthRecordRepository: HealthRecordRepository {
             return try await health.getLabGroups(request).mapGroups {
                 HealthGroup(id: $0.id, name: $0.name, coding: $0.coding, date: $0.effectiveDateTime)
             }
-        case .medication:
+        case .medications:
             return try await health.getMedicationGroups(request).mapGroups {
                 HealthGroup(id: $0.id, name: $0.name, coding: $0.coding, date: $0.authoredOn)
             }
@@ -97,7 +97,7 @@ final class BWellHealthRecordRepository: HealthRecordRepository {
             return try await health.getLabs(request).items.map {
                 HealthRecord(sdk: $0)
             }
-        case .medication:
+        case .medications:
             return try await health.getMedicationStatements(request).items.map {
                 HealthRecord(sdk: $0)
             }

@@ -15,6 +15,7 @@ final class AppContainer {
     private let userRepository: UserRepository
     private let connectionRepository: ConnectionRepository
     private let healthResourceRepository: HealthResourceRepository
+    private let healthRecordRepository: HealthRecordRepository
 
     var session: SessionRepository {
         sdkManager
@@ -33,6 +34,7 @@ final class AppContainer {
         self.userRepository = BWellUserRepository(sdkManager: sdkManager)
         self.connectionRepository = BWellConnectionRepository(sdkManager: sdkManager)
         self.healthResourceRepository = BWellHealthResourceRepository(sdkManager: sdkManager)
+        self.healthRecordRepository = BWellHealthRecordRepository(sdkManager: sdkManager)
     }
 
     // MARK: - ViewModel Factories
@@ -64,8 +66,22 @@ final class AppContainer {
         SearchConnectionsViewModel(searchRepository: healthResourceRepository, connectionRepository: connectionRepository)
     }
 
-    func makeHealthSummaryViewModel() -> HealthSummaryViewModel {
-        HealthSummaryViewModel(sdkManager: sdkManager)
+    func makeHealthSummaryViewModel() -> LoadableViewModel<[HealthCategory: Int]> {
+        let repository = healthRecordRepository
+        return LoadableViewModel(initialValue: [:]) { try await repository.summary() }
+    }
+
+    func makeHealthGroupsViewModel(for category: HealthCategory) -> LoadableViewModel<[HealthGroup]> {
+        let repository = healthRecordRepository
+        return LoadableViewModel(initialValue: []) { try await repository.groups(in: category) }
+    }
+
+    func makeHealthRecordsViewModel(for category: HealthCategory,
+                                    group: HealthGroup) -> LoadableViewModel<[HealthRecord]> {
+        let repository = healthRecordRepository
+        return LoadableViewModel(initialValue: []) {
+            try await repository.records(in: category, group: group)
+        }
     }
 }
 

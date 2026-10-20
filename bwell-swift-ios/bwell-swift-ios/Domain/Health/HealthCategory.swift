@@ -7,7 +7,9 @@
 
 import Foundation
 
-enum HealthCategory {
+enum HealthCategory: CaseIterable, Hashable, Identifiable {
     case allergyIntolerance, carePlan, condition, encounter, immunization
-    case labs, medication, procedure, vitalSigns
+    case labs, medications, procedure, vitalSigns
+
+    var id: Self { self }
 }

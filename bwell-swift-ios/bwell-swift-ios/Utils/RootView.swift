@@ -6,21 +6,18 @@
 //
 
 import SwiftUI
-import BWellSDK
 
 struct RootView: View {
     let container: AppContainer
 
     @StateObject private var router = NavigationRouter()
     @StateObject private var sideMenuViewModel: SideMenuViewModel
-    @StateObject private var healthSummaryViewModel: HealthSummaryViewModel
 
     @State private var showMenu: Bool = false
 
     init(container: AppContainer) {
         self.container = container
         _sideMenuViewModel = StateObject(wrappedValue: container.makeSideMenuViewModel())
-        _healthSummaryViewModel = StateObject(wrappedValue: container.makeHealthSummaryViewModel())
     }
 
     var body: some View {
@@ -37,7 +34,7 @@ struct RootView: View {
                                 .navigationBarBackButtonHidden()
                         case .healthSummary:
                             HealthSummaryView(showMenu: $showMenu, viewModel: container.makeHealthSummaryViewModel())
-                                .navigationBarBackButtonHidden()
+                                 .navigationBarBackButtonHidden()
                         case .manageConnections:
                             ManageConnectionsView(showMenu: $showMenu, viewModel: container.makeManageConnectionsViewModel())
                                 .navigationBarBackButtonHidden()
@@ -46,9 +43,12 @@ struct RootView: View {
                                                   viewModel: container.makeSearchConnectionsViewModel())
                         case .connections:
                             ConnectionsView()
-                        case .healthGroupItems(let category, let groupCode):
-                            // Health data summary detail views
-                            HealthDataFactoryView(category, groupCode)
+                        case .healthGroups(let category):
+                            HealthGroupsView(category: category,
+                                             viewModel: container.makeHealthGroupsViewModel(for: category))
+                        case .healthRecords(let category, let group):
+                            HealthRecordsView(category: category,
+                                              viewModel: container.makeHealthRecordsViewModel(for: category, group: group))
                         }
                     }
             }
@@ -57,7 +57,6 @@ struct RootView: View {
         }
         .environmentObject(router)
         .environmentObject(sideMenuViewModel)
-        .environmentObject(healthSummaryViewModel)
         .onReceive(container.session.statePublisher) {
             handleStateChange($0)
         }

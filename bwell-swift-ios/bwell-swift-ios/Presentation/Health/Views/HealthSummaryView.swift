@@ -10,37 +10,34 @@ import SwiftUI
 struct HealthSummaryView: View {
     @EnvironmentObject private var router: NavigationRouter
 
-    @StateObject private var viewModel: HealthSummaryViewModel
+    @StateObject private var viewModel: LoadableViewModel<[HealthCategory: Int]>
     @Binding private var showMenu: Bool
 
-    init(showMenu: Binding<Bool>, viewModel: @autoclosure @escaping () -> HealthSummaryViewModel) {
+    init(showMenu: Binding<Bool>,
+         viewModel: @autoclosure @escaping () -> LoadableViewModel<[HealthCategory: Int]>) {
         _showMenu = showMenu
         _viewModel = StateObject(wrappedValue: viewModel())
     }
 
     var body: some View {
         List {
-            ForEach(HealthDataSummaryModel.allCases) { item in
+            ForEach(HealthCategory.allCases) { category in
                 Button {
-                    router.path.append(item)
+                    router.navigate(to: .healthGroups(category))
                 } label: {
                     HStack(spacing: 12) {
-                        Image(systemName: item.icon)
+                        Image(systemName: category.icon)
                             .frame(width: 24, alignment: .center)
 
-                        Text(item.title)
+                        Text(category.title)
 
                         Spacer()
 
                         if viewModel.isLoading {
                             ProgressView()
-                        } else {
-                            if let total = viewModel.healthSummary.first(where: {
-                                $0.category == item.category
-                            })?.total {
-                                Text("\(total)")
-                                    .foregroundStyle(.secondary)
-                            }
+                        } else if let total = viewModel.value[category] {
+                            Text("\(total)")
+                                .foregroundStyle(.secondary)
                         }
 
                         Image(systemName: "chevron.right")
@@ -49,37 +46,21 @@ struct HealthSummaryView: View {
                             .foregroundStyle(.gray)
                     }
                 }
-            }.listRowSeparator(.hidden)
+            }
+            .listRowSeparator(.hidden)
         }
         .padding(.top, 10)
         .bwellNavigationBar(showMenu: $showMenu, navigationTitle: "Health Summary")
         .listStyle(.plain)
-        .listRowSeparator(.hidden)
         .task {
-            if viewModel.healthSummary.isEmpty {
-                await viewModel.getHealthDataSummary()
-            }
-        }
-        .navigationDestination(for: HealthDataSummaryModel.self) { category in
-            HealthSummaryDetailView(category: category)
-                .environmentObject(viewModel)
-        }
-    }
-}
-
-struct HealthSummaryDetailView: View {
-    @EnvironmentObject private var vieModel: HealthSummaryViewModel
-    var category: HealthDataSummaryModel
-
-    var body: some View {
-        Group {
-            category.view
+            await viewModel.load()
         }
     }
 }
 
 #Preview {
-    HealthSummaryView(showMenu: .constant(false), viewModel: AppContainer.preview.makeHealthSummaryViewModel())
+    HealthSummaryView(showMenu: .constant(false),
+                      viewModel: AppContainer.preview.makeHealthSummaryViewModel())
         .environmentObject(NavigationRouter())
         .environmentObject(AppContainer.preview.makeSideMenuViewModel())
 }

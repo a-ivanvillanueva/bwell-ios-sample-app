@@ -61,7 +61,7 @@ extension HealthRecord {
                   value: allergy.criticality,
                   details: [
                     .stacked("Category: ", allergy.code?.text?.capitalizingFirstLetter()),
-                    .dated("Date of last occurance: ", allergy.onsetDateTime),
+                    .dated("Date of last occurrence: ", allergy.onsetDateTime),
                     .stacked("Summary: ", allergy.text?.div?.stripHTML())
                   ])
     }
@@ -185,7 +185,7 @@ extension HealthCategory {
         case .encounter: self = .encounter
         case .immunization: self = .immunization
         case .labs: self = .labs
-        case .medications: self = .medication
+        case .medications: self = .medications
         case .procedure: self = .procedure
         case .vitalSigns: self = .vitalSigns
         }
