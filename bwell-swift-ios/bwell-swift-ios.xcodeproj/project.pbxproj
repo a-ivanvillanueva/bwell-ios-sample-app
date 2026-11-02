@@ -254,7 +254,7 @@
 				5522DC822EAFE10C00F9BCD7 /* Assets.xcassets */,
 				557D68922EC5542F0089DCC0 /* Info.plist */,
 				5522DC832EAFE10C00F9BCD7 /* bwell_swift_ios.entitlements */,
-				5534D94530966AA9000118C5 /* bwell-swlft-iosTests */,
+				55A474EA30984B2F00293B43 /* bwell-swlft-iosTests */,
 			);
 			path = "bwell-swift-ios";
 			sourceTree = "<group>";
@@ -298,20 +298,6 @@
 			children = (
 			);
 			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		5534D94530966AA9000118C5 /* bwell-swlft-iosTests */ = {
-			isa = PBXGroup;
-			children = (
-				5537F2CA3098299A0007F9BD /* AuthenticationViewModelTests.swift */,
-				5537F2CC30982B9C0007F9BD /* HomeAndProfileViewModelTests.swift */,
-				5537F2CE30982C200007F9BD /* ConnectionViewModelTests.swift */,
-				5537F2D030982EE20007F9BD /* DomainAndMapperTests.swift */,
-				5537F2D230982F6D0007F9BD /* MockSDKIntegrationTests.swift */,
-				5534D94A30966DF6000118C5 /* LadableViewModelTests.swift */,
-				5534D94630966AF8000118C5 /* TestSupport.swift */,
-			);
-			path = "bwell-swlft-iosTests";
 			sourceTree = "<group>";
 		};
 		5551A3A22EBF00BA00394D59 /* Views */ = {
@@ -500,6 +486,20 @@
 				5597E5472EBE560500A744CD /* WebViewWrapper.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		55A474EA30984B2F00293B43 /* bwell-swlft-iosTests */ = {
+			isa = PBXGroup;
+			children = (
+				5537F2CA3098299A0007F9BD /* AuthenticationViewModelTests.swift */,
+				5537F2CC30982B9C0007F9BD /* HomeAndProfileViewModelTests.swift */,
+				5537F2CE30982C200007F9BD /* ConnectionViewModelTests.swift */,
+				5537F2D030982EE20007F9BD /* DomainAndMapperTests.swift */,
+				5537F2D230982F6D0007F9BD /* MockSDKIntegrationTests.swift */,
+				5534D94A30966DF6000118C5 /* LadableViewModelTests.swift */,
+				5534D94630966AF8000118C5 /* TestSupport.swift */,
+			);
+			path = "bwell-swlft-iosTests";
 			sourceTree = "<group>";
 		};
 		55E625632EB34775000D3783 /* ReusableViews */ = {
