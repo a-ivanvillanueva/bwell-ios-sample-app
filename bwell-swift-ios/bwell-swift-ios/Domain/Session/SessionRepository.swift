@@ -10,11 +10,18 @@ import Combine
 
 @MainActor
 protocol SessionRepository: AnyObject {
-    var state: SessionState { get }
-    var statePublisher: AnyPublisher<SessionState, Never> { get }
+    var authState: AuthState { get }
+    var authStatePublisher: AnyPublisher<AuthState, Never> { get }
 
-    func initialize(_ apiKey: String) async throws
-    func validateSession() async
-    func login(credentials: Credentials) async throws
-    func logout()
+    /// True once the SDK has accepted an API key and is ready to use.
+    var isStarted: Bool { get }
+
+    /// Prepares the SDK with the API key. Throws if the key is rejected.
+    func start(apiKey: String) async throws
+
+    /// Checks whether a saved session is still valid and updates `authState`.
+    func restoreSession() async
+
+    func signIn(with credentials: Credentials) async throws
+    func signOut()
 }

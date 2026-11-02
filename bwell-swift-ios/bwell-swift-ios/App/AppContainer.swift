@@ -9,32 +9,27 @@ import Foundation
 
 @MainActor
 final class AppContainer {
-    private let keychain: KeychainService
     private let apiKeyStore: APIKeyStore
-    private let sdkManager: BWellSDKManager
     private let userRepository: UserRepository
     private let connectionRepository: ConnectionRepository
     private let healthResourceRepository: HealthResourceRepository
     private let healthRecordRepository: HealthRecordRepository
 
-    var session: SessionRepository {
-        sdkManager
-    }
+    let session: SessionRepository
 
     init() {
         let keychain = KeychainService()
         let apiKeyService = APIKeyService(keychain: keychain)
-        let sdkManager = BWellSDKManager(tokenStorage: KeychainTokenStorageAdapter(keychain: keychain),
-                                         keychain: keychain,
-                                         apiKeyStore: apiKeyService)
+        let provider = BWellSDKProvider(tokenStorage: KeychainTokenStorageAdapter(keychain: keychain))
 
-        self.keychain = keychain
         self.apiKeyStore = apiKeyService
-        self.sdkManager = sdkManager
-        self.userRepository = BWellUserRepository(sdkManager: sdkManager)
-        self.connectionRepository = BWellConnectionRepository(sdkManager: sdkManager)
-        self.healthResourceRepository = BWellHealthResourceRepository(sdkManager: sdkManager)
-        self.healthRecordRepository = BWellHealthRecordRepository(sdkManager: sdkManager)
+        self.session = BWellSessionRepository(provider: provider,
+                                              keychain: keychain,
+                                              apiKeyStore: apiKeyService)
+        self.userRepository = BWellUserRepository(provider: provider)
+        self.connectionRepository = BWellConnectionRepository(provider: provider)
+        self.healthResourceRepository = BWellHealthResourceRepository(provider: provider)
+        self.healthRecordRepository = BWellHealthRecordRepository(provider: provider)
     }
 
     // MARK: - ViewModel Factories

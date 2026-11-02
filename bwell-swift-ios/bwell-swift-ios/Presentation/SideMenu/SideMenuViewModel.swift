@@ -27,7 +27,7 @@ final class SideMenuViewModel: ObservableObject {
 
         // Handle logout separately
         if optionSelected == .logout {
-            session.logout()
+            session.signOut()
             return
         }
 

@@ -19,10 +19,10 @@ final class HomeViewModel: ObservableObject {
         self.userRepository = userRepository
 
         // Subscribe to state changes to know when it's safe to fetch data.
-        session.statePublisher
+        session.authStatePublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] state in
-                if case .authenticated = state {
+                if state == .signedIn {
                     self?.fetchUsername()
                 }
             }

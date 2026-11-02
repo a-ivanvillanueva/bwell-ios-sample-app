@@ -57,21 +57,19 @@ struct RootView: View {
         }
         .environmentObject(router)
         .environmentObject(sideMenuViewModel)
-        .onReceive(container.session.statePublisher) {
-            handleStateChange($0)
+        .onReceive(container.session.authStatePublisher) {
+            handleAuthStateChange($0)
         }
     }
 
-    private func handleStateChange(_ state: SessionState) {
+    private func handleAuthStateChange(_ state: AuthState) {
         switch state {
-        case .authenticated:
+        case .signedIn:
             if router.path.isEmpty {
                 router.path = NavigationPath([AppView.home])
             }
-        case .uninitialized, .unauthenticated, .failed:
+        case .signedOut:
             router.navigateToRoot()
-        case .initializing, .authenticating, .initialized, .checkingSession:
-            break
         }
     }
 }

@@ -60,12 +60,11 @@ final class LaunchViewModel: ObservableObject {
         }
 
         do {
-            try await session.initialize(apiKey)
-            await session.validateSession()
+            try await session.start(apiKey: apiKey)
+            await session.restoreSession()
         } catch {
-            Log.sdk.error("Launch: SDK initialization failed: \(error.localizedDescription)")
+            Log.sdk.error("Launch: SDK start failed: \(error.localizedDescription)")
         }
-
         isCheckingSession = false
     }
 }

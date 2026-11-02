@@ -317,11 +317,25 @@ extension BWell {
         public var state: String?
         public var postalCode: String?
         public var country: String?
+
+        public init(line: [String]? = nil, city: String? = nil, state: String? = nil,
+                    postalCode: String? = nil, country: String? = nil) {
+            self.line = line
+            self.city = city
+            self.state = state
+            self.postalCode = postalCode
+            self.country = country
+        }
     }
 
     public struct ContactPoint: Hashable {
         public var use: String?
         public var value: String?
+
+        public init(use: String? = nil, value: String? = nil) {
+            self.use = use
+            self.value = value
+        }
     }
 
     public struct GetUserProfileResult: Hashable {
@@ -331,6 +345,16 @@ extension BWell {
         public var birthdate: String?
         public var language: String?
         public var telecom: [ContactPoint]?
+
+        public init(name: [HumanName]? = nil, address: [Address]? = nil, gender: Gender? = nil,
+                    birthdate: String? = nil, language: String? = nil, telecom: [ContactPoint]? = nil) {
+            self.name = name
+            self.address = address
+            self.gender = gender
+            self.birthdate = birthdate
+            self.language = language
+            self.telecom = telecom
+        }
     }
 
     public struct UpdateUserProfileRequest: Hashable {

@@ -10,13 +10,13 @@ import BWellSDK
 
 @MainActor
 final class BWellHealthResourceRepository: HealthResourceRepository {
-    private let sdkManager: BWellSDKManager
+    private let provider: BWellSDKProvider
 
     // Demo location (Baltimore). A real app would get this from a location service.
     private let searchLocation = BWell.SearchHealthResourcesRequest.Location(latitude: 39.2848102, longitude: -76.702898)
 
-    init(sdkManager: BWellSDKManager) {
-        self.sdkManager = sdkManager
+    init(provider: BWellSDKProvider) {
+        self.provider = provider
     }
 
     func search(matching text: String?) async throws -> [HealthResource] {
@@ -29,7 +29,7 @@ final class BWellHealthResourceRepository: HealthResourceRepository {
             location: searchLocation
         )
 
-        let response = try await sdkManager.search().searchHealthResources(request)
+        let response = try await provider.search().searchHealthResources(request)
 
         return (response.results ?? []).compactMap(HealthResource.init(sdk:))
     }

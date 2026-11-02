@@ -10,20 +10,20 @@ import BWellSDK
 
 @MainActor
 final class BWellHealthRecordRepository: HealthRecordRepository {    
-    private let sdkManager: BWellSDKManager
+    private let provider: BWellSDKProvider
 
-    init(sdkManager: BWellSDKManager) {
-        self.sdkManager = sdkManager
+    init(provider: BWellSDKProvider) {
+        self.provider = provider
     }
 
     func summary() async throws -> [HealthCategory: Int] {
-        let response = try await sdkManager.health().getHealthSummary()
+        let response = try await provider.health().getHealthSummary()
         return Dictionary(response.resources.map { (HealthCategory(sdk: $0.category), $0.total) },
                           uniquingKeysWith: +)
     }
 
     func groups (in category: HealthCategory) async throws -> [HealthGroup] {
-        let health = try sdkManager.health()
+        let health = try provider.health()
         let request = BWell.HealthDataGroupRequest(page: 0)
 
         switch category {
@@ -67,7 +67,7 @@ final class BWellHealthRecordRepository: HealthRecordRepository {
     }
 
     func records(in category: HealthCategory, group: HealthGroup) async throws -> [HealthRecord] {
-        let health = try sdkManager.health()
+        let health = try provider.health()
         var request = BWell.HealthDataRequest(page: 0)
 
         request.groupCode = BWell.SearchToken(value: BWell.SearchToken.Value(system: group.code.system, code: group.code.code))

@@ -4,6 +4,7 @@
 //
 //  Created by Ivan Villanueva on 31/10/25.
 //
+
 import Foundation
 import Combine
 
@@ -11,7 +12,6 @@ import Combine
 final class AuthenticationViewModel: ObservableObject {
     private let session: SessionRepository
     private let apiKeyStore: APIKeyStore
-
     private var cancellables = Set<AnyCancellable>()
 
     // Authentication published properties
@@ -31,78 +31,48 @@ final class AuthenticationViewModel: ObservableObject {
     init(session: SessionRepository, apiKeyStore: APIKeyStore) {
         self.session = session
         self.apiKeyStore = apiKeyStore
+        self.apiKeyValidated = session.isStarted
 
-        session.statePublisher
+        // Signing out, or a session that can't be restored, brings the user back to this screen.
+        session.authStatePublisher
+            .dropFirst()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] state in
-                self?.handleSDKStateChange(state)
+                guard let self, state == .signedOut else { return }
+                self.apiKeyValidated = self.session.isStarted
+                self.isLoading = false
             }
             .store(in: &cancellables)
     }
 
     func initializeSDK() {
-        isLoading = true
-
         guard !apiKey.isEmpty else {
             errorMessage = "API key is required."
-            isLoading = false
             return
         }
 
-        Task {
-            do {
-                try await session.initialize(apiKey)
-            } catch {
-                errorMessage = "SDK initialization failed"
-                isLoading = false
-            }
-        }
-    }
+        isLoading = true
+        errorMessage = nil
 
-    private func handleSDKStateChange(_ state: SessionState) {
-        switch state {
-        case .initializing:
-            isLoading = true
-            errorMessage = nil
-        case .initialized:
-            apiKeyStore.save(apiKey)
-            apiKeyValidated = true
-            isLoading = false
-        case .authenticating:
-            isLoading = true
-            errorMessage = nil
-        case .authenticated:
-            apiKeyValidated = true
-            isLoading = false
-        case .uninitialized, .unauthenticated:
-            apiKeyValidated = false
-            isLoading = false
-        case .failed(let error):
-            errorMessage = "SDK error: \(error.localizedDescription)"
-            isLoading = false
-        case .checkingSession:
-            break
+        Task {
+            defer { isLoading = false }
+            do {
+                try await session.start(apiKey: apiKey)
+                apiKeyStore.save(apiKey)
+                apiKeyValidated = true
+            } catch {
+                errorMessage = "We couldn't start with that API key."
+            }
         }
     }
 
     func loginWithOAuthToken() {
-        isLoading = true
-
         guard !oauthToken.isEmpty else {
             errorMessage = "OAuth token is required."
-            isLoading = false
             return
         }
 
-        Task {
-            do {
-                try await session.login(credentials: .oauth(token: oauthToken))
-                isLoading = false
-            } catch {
-                errorMessage = "Login failed"
-                isLoading = false
-            }
-        }
+        signIn(with: .oauth(token: oauthToken))
     }
 
     func loginWithEmailAndPassword() {
@@ -112,15 +82,19 @@ final class AuthenticationViewModel: ObservableObject {
         // Stop here if validation failed; don't call the SDK with empty credentials.
         guard emailErrorMessage == nil, passwordErrorMessage == nil else { return }
 
+        signIn(with: .emailPassword(email: email, password: password))
+    }
+
+    private func signIn(with credentials: Credentials) {
         isLoading = true
+        errorMessage = nil
 
         Task {
+            defer { isLoading = false }
             do {
-                try await session.login(credentials: .emailPassword(email: email, password: password))
-                isLoading = false
+                try await session.signIn(with: credentials)
             } catch {
-                errorMessage = "Login failed"
-                isLoading = false
+                errorMessage = "Login failed. Please check your details and try again."
             }
         }
     }
