@@ -13,11 +13,15 @@ final class LoadableViewModel<Value>: ObservableObject {
     @Published private(set) var isLoading = false
     @Published private(set) var errorMessage: String?
 
+    private let failureAction: String
     private let loader: () async throws -> Value
     private var hasLoaded = false
 
-    init(initialValue: Value, loader: @escaping () async throws -> Value) {
+    init(initialValue: Value,
+         failureAction: String = "load this information",
+         loader: @escaping () async throws -> Value) {
         self.value = initialValue
+        self.failureAction = failureAction
         self.loader = loader
     }
 
@@ -37,7 +41,7 @@ final class LoadableViewModel<Value>: ObservableObject {
             hasLoaded = true
         } catch {
             Log.health.error("Failed to load health data: \(error.localizedDescription)")
-            errorMessage = "We couldn't load this information. Please try again."
+            errorMessage = userMessage(for: error, whileTrying: failureAction)
         }
     }
 }

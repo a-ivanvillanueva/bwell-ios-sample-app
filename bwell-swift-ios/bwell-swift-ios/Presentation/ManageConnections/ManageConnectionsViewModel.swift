@@ -21,7 +21,6 @@ final class ManageConnectionsViewModel: ObservableObject {
     func getConnections() async {
         isLoading = true
         errorMessage = nil
-
         defer { isLoading = false }
 
         do {
@@ -29,55 +28,35 @@ final class ManageConnectionsViewModel: ObservableObject {
             Log.connections.debug("Loaded \(self.memberConnections.count) member connections")
         } catch {
             Log.connections.error("Failed to load connections: \(error.localizedDescription)")
-            errorMessage = "We couldn't load your connections. Please try again."
+            errorMessage = userMessage(for: error, whileTrying: "load your connections")
         }
     }
 
-    /// Deletes a connection and refreshes the connections list
-    /// - Parameter connectionId: The ID of the connection to delete
+    /// Deletes a connection and refreshes the list.
     func deleteConnection(connectionId: String) async {
-        await perform(failureMesssage: "We couldn't delete the connection.") {
+        await perform(action: "delete the connection") {
             try await repository.delete(connectionId)
         }
     }
 
-    /// Disconnects a connection and refreshes the connections list
-    /// - Parameter connectionId: The ID of the connection to disconnect
+    /// Disconnects a connection and refreshes the list.
     func disconnectConnection(connectionId: String) async {
-        await perform(failureMesssage: "We couldn't disconnect the connection.") {
+        await perform(action: "disconnect the connection") {
             try await repository.disconnect(connectionId)
         }
     }
 
-    private func perform(failureMesssage: String, _ action: () async throws -> Void) async {
+    private func perform(action: String, _ work: () async throws -> Void) async {
         isLoading = true
         errorMessage = nil
 
         do {
-            try await action()
+            try await work()
             await getConnections()
         } catch {
-            Log.connections.error("\(failureMesssage) \(error.localizedDescription)")
-            errorMessage = failureMesssage
+            Log.connections.error("Could not \(action): \(error.localizedDescription)")
+            errorMessage = userMessage(for: error, whileTrying: action)
             isLoading = false
         }
     }
-
-    /*webfunc getOAuthURL(search userRequest: String) async {
-        do {
-            guard let sdkManager = sdkManager else {
-                errorMessage = "SDK Manager not available"
-                isLoading = false
-                return
-            }
-
-            let request = BWell.OAuthURLRequest(connectionId: userRequest)
-            let response = try await sdkManager.connection().getOAuthURL(request)
-
-            url = URL(string: response.redirectURL)
-        } catch {
-            errorMessage = "Failed to established a connection."
-            return
-        }
-    }*/
 }

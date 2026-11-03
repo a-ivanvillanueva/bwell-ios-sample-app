@@ -63,18 +63,22 @@ final class AppContainer {
 
     func makeHealthSummaryViewModel() -> LoadableViewModel<[HealthCategory: Int]> {
         let repository = healthRecordRepository
-        return LoadableViewModel(initialValue: [:]) { try await repository.summary() }
+        return LoadableViewModel(initialValue: [:], failureAction: "load your health summary") {
+            try await repository.summary()
+        }
     }
 
     func makeHealthGroupsViewModel(for category: HealthCategory) -> LoadableViewModel<[HealthGroup]> {
         let repository = healthRecordRepository
-        return LoadableViewModel(initialValue: []) { try await repository.groups(in: category) }
+        return LoadableViewModel(initialValue: [], failureAction: "load your \(category.title.lowercased())") {
+            try await repository.groups(in: category)
+        }
     }
 
     func makeHealthRecordsViewModel(for category: HealthCategory,
                                     group: HealthGroup) -> LoadableViewModel<[HealthRecord]> {
         let repository = healthRecordRepository
-        return LoadableViewModel(initialValue: []) {
+        return LoadableViewModel(initialValue: [], failureAction: "load your \(category.title.lowercased())") {
             try await repository.records(in: category, group: group)
         }
     }

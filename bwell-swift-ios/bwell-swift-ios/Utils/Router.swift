@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-enum AppView: Hashable {
+enum AppRoute: Hashable {
     case home
     case profile
     case healthSummary
@@ -26,27 +26,26 @@ enum AppView: Hashable {
 @MainActor
 final class NavigationRouter: ObservableObject {
     // The path that controls the navigation stack
-    @Published var path = NavigationPath()
+    @Published var path: [AppRoute] = []
 
     // Push the new screen into the navigation path
-    func navigate(to destination: AppView) {
-        path.append(destination)
+    func navigate(to route: AppRoute) {
+        path.append(route)
     }
 
     // Navigate to a specific destination, clearing the current path first
-    func navigateAndReplace(to destination: AppView) {
-        path = NavigationPath()
-        path.append(destination)
+    func navigateAndReplace(to route: AppRoute) {
+        path = [route]
     }
 
     // Navigate to the previous screen
-    func pop() {
-        path.removeLast()
+    func goBack() {
+       _ =  path.popLast()
     }
 
     // Navigates back to the root of the navigation stack.
     func navigateToRoot() {
         guard !path.isEmpty else { return }
-        path.removeLast(path.count)
+        path.removeAll()
     }
 }

@@ -61,7 +61,7 @@ final class AuthenticationViewModel: ObservableObject {
                 apiKeyStore.save(apiKey)
                 apiKeyValidated = true
             } catch {
-                errorMessage = "We couldn't start with that API key."
+                errorMessage = userMessage(for: error, whileTrying: "verify that API key")
             }
         }
     }
@@ -94,7 +94,7 @@ final class AuthenticationViewModel: ObservableObject {
             do {
                 try await session.signIn(with: credentials)
             } catch {
-                errorMessage = "Login failed. Please check your details and try again."
+                errorMessage = userMessage(for: error, whileTrying: "sign you in")
             }
         }
     }

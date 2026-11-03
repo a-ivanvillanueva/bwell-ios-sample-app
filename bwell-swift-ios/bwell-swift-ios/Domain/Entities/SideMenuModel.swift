@@ -35,7 +35,7 @@ enum SideMenuModel: Int, CaseIterable {
         }
     }
 
-    var destination: AppView {
+    var destination: AppRoute {
         switch self {
             case .home: .home
             case .profile: .profile

@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5502AF4C309921590093B22D /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5502AF4B309921570093B22D /* AppError.swift */; };
+		5502AF5030996D8F0093B22D /* AppErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5502AF4F30996D8C0093B22D /* AppErrorTests.swift */; };
+		5502AF5230996DE80093B22D /* UserMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5502AF5130996DE40093B22D /* UserMessage.swift */; };
+		5502AF54309974480093B22D /* NavigationRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5502AF53309974430093B22D /* NavigationRouterTests.swift */; };
 		5506C1FC2EBD0FC7005842A6 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 5506C1FB2EBD0FC7005842A6 /* Localizable.xcstrings */; };
 		5506C1FE2EBD147E005842A6 /* ConnectionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5506C1FD2EBD1479005842A6 /* ConnectionsView.swift */; };
 		5506C2002EBD14D5005842A6 /* ConnectionsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5506C1FF2EBD14D1005842A6 /* ConnectionsModel.swift */; };
@@ -103,6 +107,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5502AF4B309921570093B22D /* AppError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppError.swift; sourceTree = "<group>"; };
+		5502AF4F30996D8C0093B22D /* AppErrorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppErrorTests.swift; sourceTree = "<group>"; };
+		5502AF5130996DE40093B22D /* UserMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMessage.swift; sourceTree = "<group>"; };
+		5502AF53309974430093B22D /* NavigationRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationRouterTests.swift; sourceTree = "<group>"; };
 		5506C1FB2EBD0FC7005842A6 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		5506C1FD2EBD1479005842A6 /* ConnectionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionsView.swift; sourceTree = "<group>"; };
 		5506C1FF2EBD14D1005842A6 /* ConnectionsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionsModel.swift; sourceTree = "<group>"; };
@@ -212,6 +220,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5502AF4A309921520093B22D /* Errors */ = {
+			isa = PBXGroup;
+			children = (
+				5502AF4B309921570093B22D /* AppError.swift */,
+			);
+			path = Errors;
+			sourceTree = "<group>";
+		};
 		551538712EB25C6A001174F9 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
@@ -338,6 +354,7 @@
 		558FBEFD307FEBF200505658 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				5502AF4A309921520093B22D /* Errors */,
 				558FBF363082E97D00505658 /* Health */,
 				558FBF223081B88D00505658 /* Connections */,
 				558FBF213081B84800505658 /* User */,
@@ -491,6 +508,8 @@
 		55A474EA30984B2F00293B43 /* bwell-swift-iosTests */ = {
 			isa = PBXGroup;
 			children = (
+				5502AF53309974430093B22D /* NavigationRouterTests.swift */,
+				5502AF4F30996D8C0093B22D /* AppErrorTests.swift */,
 				5537F2CA3098299A0007F9BD /* AuthenticationViewModelTests.swift */,
 				5537F2CC30982B9C0007F9BD /* HomeAndProfileViewModelTests.swift */,
 				5537F2CE30982C200007F9BD /* ConnectionViewModelTests.swift */,
@@ -527,6 +546,7 @@
 		55F0BCB33083ADB600FF4BDC /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				5502AF5130996DE40093B22D /* UserMessage.swift */,
 				55F0BCB43083ADBE00FF4BDC /* LoadableViewModel.swift */,
 			);
 			path = Shared;
@@ -718,11 +738,13 @@
 				558FBF333082A9BB00505658 /* ConnectionStatus+Display.swift in Sources */,
 				5506C2002EBD14D5005842A6 /* ConnectionsModel.swift in Sources */,
 				5522DCBC2EB161FF00F9BCD7 /* HealthSummaryView.swift in Sources */,
+				5502AF5230996DE80093B22D /* UserMessage.swift in Sources */,
 				558FBF203081A3E700505658 /* Gender+Display.swift in Sources */,
 				5522DCA42EB01BF200F9BCD7 /* Router.swift in Sources */,
 				5597E5482EBE561C00A744CD /* WebViewWrapper.swift in Sources */,
 				558FBF16308194CC00505658 /* Gender.swift in Sources */,
 				558FBF2F3081C5A100505658 /* BWellConnectionRepository.swift in Sources */,
+				5502AF4C309921590093B22D /* AppError.swift in Sources */,
 				55F0BCBF308679C100FF4BDC /* HealthRecordsView.swift in Sources */,
 				55E6257A2EB54FC9000D3783 /* AuthenticationViewModel.swift in Sources */,
 				5522DCAC2EB0380800F9BCD7 /* SideMenuView.swift in Sources */,
@@ -777,10 +799,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5502AF54309974480093B22D /* NavigationRouterTests.swift in Sources */,
 				5537F2CF30982C290007F9BD /* ConnectionViewModelTests.swift in Sources */,
 				5537F2CB309829A20007F9BD /* AuthenticationViewModelTests.swift in Sources */,
 				5537F2D130982EEA0007F9BD /* DomainAndMapperTests.swift in Sources */,
 				5537F2CD30982BA90007F9BD /* HomeAndProfileViewModelTests.swift in Sources */,
+				5502AF5030996D8F0093B22D /* AppErrorTests.swift in Sources */,
 				5537F2D330982F750007F9BD /* MockSDKIntegrationTests.swift in Sources */,
 				5534D94B30966DFD000118C5 /* LoadableViewModelTests.swift in Sources */,
 				5534D94730966B85000118C5 /* TestSupport.swift in Sources */,

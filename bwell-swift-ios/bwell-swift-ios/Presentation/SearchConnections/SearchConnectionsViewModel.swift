@@ -31,7 +31,7 @@ final class SearchConnectionsViewModel: ObservableObject {
             healthResources = try await searchRepository.search(matching: searchedText)
         } catch {
             Log.connections.error("Search failed: \(error.localizedDescription)")
-            errorMessage = "We couldn't load the results. Please try again."
+            errorMessage = userMessage(for: error, whileTrying: "load the results")
         }
     }
 
@@ -43,7 +43,7 @@ final class SearchConnectionsViewModel: ObservableObject {
             oauthURL = try await connectionRepository.oauthURL(for: resource.connectionId)
         } catch {
             Log.connections.error("OAuth URL failed: \(error.localizedDescription)")
-            errorMessage = "We couldn't start the connection. Please try again."
+            errorMessage = userMessage(for: error, whileTrying: "start the connection")
         }
     }
 }

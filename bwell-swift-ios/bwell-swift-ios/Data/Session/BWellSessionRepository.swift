@@ -36,9 +36,11 @@ final class BWellSessionRepository: SessionRepository {
         do {
             try await provider.configure(apiKey: apiKey)
             Log.sdk.info("BWell SDK started.")
+        } catch let error as URLError where error.isOffline {
+            throw error
         } catch {
             Log.sdk.error("Could not start SDK: \(error.localizedDescription)")
-            throw error
+            throw SessionError.invalidAPIKey
         }
     }
 
@@ -77,9 +79,11 @@ final class BWellSessionRepository: SessionRepository {
 
             authStateSubject.send(.signedIn)
             Log.sdk.info("Login flow complete.")
+        }  catch let error as URLError where error.isOffline {
+            throw error
         } catch {
             Log.sdk.error("Login flow failed: \(error.localizedDescription)")
-            throw error
+            throw SessionError.invalidCredentials
         }
     }
 
@@ -96,14 +100,7 @@ final class BWellSessionRepository: SessionRepository {
     }
 
     private static func isTemporary(_ error: Error) -> Bool {
-        guard let urlError = error as? URLError else { return false }
-        switch urlError.code {
-        case .notConnectedToInternet, .timedOut, .networkConnectionLost,
-             .cannotConnectToHost, .dnsLookupFailed:
-            return true
-        default:
-            return false
-        }
+        (error as? URLError)?.isOffline ?? false
     }
 }
 

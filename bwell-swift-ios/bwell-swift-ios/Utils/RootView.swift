@@ -24,7 +24,7 @@ struct RootView: View {
         ZStack {
             NavigationStack(path: $router.path) {
                 AuthenticationView(viewModel: container.makeAuthenticationViewModel())
-                    .navigationDestination(for: AppView.self) { screen in
+                    .navigationDestination(for: AppRoute.self) { screen in
                         switch screen {
                         case .home:
                             HomeView(showMenu: $showMenu, viewModel: container.makeHomeViewModel())
@@ -66,7 +66,7 @@ struct RootView: View {
         switch state {
         case .signedIn:
             if router.path.isEmpty {
-                router.path = NavigationPath([AppView.home])
+                router.path  = [.home]
             }
         case .signedOut:
             router.navigateToRoot()

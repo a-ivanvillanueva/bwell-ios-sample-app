@@ -25,6 +25,7 @@ struct MockSDKIntegrationTests {
         let session = makeSession(provider)
         try await session.start(apiKey: "test-key")
         try await session.signIn(with: .oauth(token: "token"))
+
         return provider
     }
 
@@ -53,23 +54,29 @@ struct MockSDKIntegrationTests {
 
     @Test func anEmptyApiKeyIsRejected() async {
         let session = makeSession(makeProvider())
+        var caught: Error?
 
-        var didThrow = false
-        do { try await session.start(apiKey: "") } catch { didThrow = true }
+        do {
+            try await session.start(apiKey: "")
+        } catch {
+            caught = error
+        }
 
-        #expect(didThrow)
-        #expect(!session.isStarted)
+        #expect(caught as? SessionError == .invalidAPIKey)
     }
 
     @Test func emptyCredentialsAreRejectedAndTheUserStaysSignedOut() async throws {
         let session = makeSession(makeProvider())
         try await session.start(apiKey: "test-key")
 
-        var didThrow = false
-        do { try await session.signIn(with: .oauth(token: "")) } catch { didThrow = true }
-
-        #expect(didThrow)
-        #expect(session.authState == .signedOut)
+        var caught: Error?
+        
+        do {
+            try await session.signIn(with: .oauth(token: ""))
+        } catch {
+            caught = error
+        }
+        #expect(caught as? SessionError == .invalidCredentials)
     }
 
     // MARK: User
@@ -96,9 +103,11 @@ struct MockSDKIntegrationTests {
 
         profile.givenName = "Sam"
         profile.address.lineOne = "9 New Road"
+
         try await repository.updateProfile(profile)
 
         let reloaded = try #require(try await repository.getProfile())
+
         #expect(reloaded.givenName == "Sam")
         #expect(reloaded.address.lineOne == "9 New Road")
     }
@@ -136,6 +145,7 @@ struct MockSDKIntegrationTests {
 
         let group = try #require(groups.first)
         let records = try await repository.records(in: category, group: group)
+
         #expect(!records.isEmpty)
         #expect(records.allSatisfy { !$0.id.isEmpty })
     }

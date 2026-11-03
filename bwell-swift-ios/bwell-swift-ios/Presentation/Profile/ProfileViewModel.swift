@@ -48,7 +48,7 @@ final class ProfileViewModel: ObservableObject {
             apply(profile)
         } catch {
             Log.profile.error("Failed retrieving profile: \(error.localizedDescription)")
-            errorMessage = "We couldn't load your profile. Please try again."
+            errorMessage = userMessage(for: error, whileTrying: "load your profile")
         }
     }
 
@@ -60,7 +60,7 @@ final class ProfileViewModel: ObservableObject {
             try await userRepository.updateProfile(makeProfile())
         } catch {
             Log.profile.error("Failed updating profile: \(error.localizedDescription)")
-            errorMessage = "We couldn't save you profile. Please try again."
+            errorMessage = userMessage(for: error, whileTrying: "save your profile")
         }
     }
 
