@@ -43,7 +43,7 @@ struct HealthGroupsView: View {
         .navigationTitle(category.title)
         .toolbarColorScheme(.dark, for: .navigationBar)
         .toolbarBackgroundVisibility(.visible, for: .navigationBar)
-        .toolbarBackground(.bwellPurple, for: .navigationBar)
+        .toolbarBackground(.indigoBrand, for: .navigationBar)
         .task { await viewModel.load() }
     }
 }

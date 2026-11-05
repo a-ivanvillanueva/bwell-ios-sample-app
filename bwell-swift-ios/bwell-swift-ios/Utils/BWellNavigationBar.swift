@@ -20,7 +20,7 @@ struct BWellNavigationBar<TrailingItem: View>: ViewModifier {
             .navigationBarTitleDisplayMode(.inline)
             .toolbarColorScheme(.dark, for: .navigationBar)
             .toolbar(showMenu ? .hidden: .visible, for: .navigationBar)
-            .toolbarBackground(.bwellPurple, for: .navigationBar)
+            .toolbarBackground(.indigoBrand, for: .navigationBar)
             .toolbarBackgroundVisibility(.visible, for: .navigationBar)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {

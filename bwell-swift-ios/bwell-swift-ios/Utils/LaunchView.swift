@@ -21,7 +21,7 @@ struct LaunchView: View {
         Group {
             if viewModel.isCheckingSession {
                 ZStack {
-                    Color.bwellPurple.ignoresSafeArea()
+                    Color.indigoBrand.ignoresSafeArea()
 
                     Image("bwell-logo")
                         .resizable()

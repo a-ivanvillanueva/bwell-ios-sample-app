@@ -54,7 +54,7 @@ struct SearchConnectionDisclaimerView: View {
                     termsAccepted.toggle()
                 } label: {
                     Image(systemName: !termsAccepted ? "square" : "checkmark.square.fill")
-                        .foregroundStyle(termsAccepted ? .bwellGreen : .black)
+                        .foregroundStyle(termsAccepted ? .success : .black)
                 }
 
                 Text("Connection Credentials Confirmation", tableName: "Localizable")
@@ -75,7 +75,7 @@ struct SearchConnectionDisclaimerView: View {
             } label: {
                 Text("Proceed")
                     .padding(5)
-                    .background(termsAccepted ? .bwellGreen : .gray)
+                    .background(termsAccepted ? .success : .gray)
                     .foregroundStyle(.white)
                     .fontWeight(.semibold)
                     .clipShape(RoundedRectangle(cornerRadius: 5))

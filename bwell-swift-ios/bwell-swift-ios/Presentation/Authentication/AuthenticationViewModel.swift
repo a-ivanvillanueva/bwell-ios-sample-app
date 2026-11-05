@@ -98,4 +98,22 @@ final class AuthenticationViewModel: ObservableObject {
             }
         }
     }
+
+    func pasteAPIKey(_ items: [String]) {
+        guard let text = items.first else {
+            return
+        }
+
+        apiKey = text.trimmingCharacters(in: .whitespacesAndNewlines)
+        errorMessage = nil
+    }
+
+    func pasteOAuthToken(_ items: [String]) {
+        guard let text = items.first else {
+            return
+        }
+
+        oauthToken = text.components(separatedBy: .whitespacesAndNewlines).joined()
+        errorMessage = nil
+    }
 }

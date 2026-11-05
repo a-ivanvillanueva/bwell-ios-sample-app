@@ -9,26 +9,27 @@ import SwiftUI
 
 struct BWellButton: View {
     let title: String
-    var buttonColor: Color = .bwellBlue
+    var textColor: Color = .white
+    var buttonColor: Color = .action
     var isLoading: Bool = false
     let action: () -> Void
 
     var body: some View {
         Button(action: action) {
-            if isLoading {
-                ProgressView()
-                    .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                    .frame(maxWidth: .infinity, minHeight: 30)
-            } else {
-                Text(title)
-                    .fontWeight(.semibold)
-                    .frame(maxWidth: .infinity, minHeight: 30)
-            }
+            Text(title)
+                .font(.system(size: 17, weight: .semibold))
         }
         .padding()
+        .frame(maxWidth: .infinity)
         .background(buttonColor)
         .foregroundColor(.white)
-        .cornerRadius(10)
+        .cornerRadius(14)
         .disabled(isLoading)
     }
+}
+
+#Preview {
+    BWellButton(title: "Sign in") {
+        debugPrint("Button pressed")
+    }.padding(.horizontal)
 }

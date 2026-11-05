@@ -11,6 +11,7 @@
 		5502AF5030996D8F0093B22D /* AppErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5502AF4F30996D8C0093B22D /* AppErrorTests.swift */; };
 		5502AF5230996DE80093B22D /* UserMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5502AF5130996DE40093B22D /* UserMessage.swift */; };
 		5502AF54309974480093B22D /* NavigationRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5502AF53309974430093B22D /* NavigationRouterTests.swift */; };
+		5502AF56309999000093B22D /* Authentication.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 5502AF55309999000093B22D /* Authentication.xcstrings */; };
 		5506C1FC2EBD0FC7005842A6 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 5506C1FB2EBD0FC7005842A6 /* Localizable.xcstrings */; };
 		5506C1FE2EBD147E005842A6 /* ConnectionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5506C1FD2EBD1479005842A6 /* ConnectionsView.swift */; };
 		5506C2002EBD14D5005842A6 /* ConnectionsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5506C1FF2EBD14D1005842A6 /* ConnectionsModel.swift */; };
@@ -23,7 +24,6 @@
 		5522DCAC2EB0380800F9BCD7 /* SideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5522DCAB2EB0380800F9BCD7 /* SideMenuView.swift */; };
 		5522DCAE2EB1083300F9BCD7 /* SideMenuModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5522DCAD2EB1082500F9BCD7 /* SideMenuModel.swift */; };
 		5522DCB12EB11FB500F9BCD7 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5522DCB02EB11FB100F9BCD7 /* ProfileView.swift */; };
-		5522DCB32EB1314300F9BCD7 /* AuthenticationTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5522DCB22EB1314300F9BCD7 /* AuthenticationTextField.swift */; };
 		5522DCB52EB1320D00F9BCD7 /* BWellButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5522DCB42EB1320700F9BCD7 /* BWellButton.swift */; };
 		5522DCB72EB1532000F9BCD7 /* BWellNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5522DCB62EB1531400F9BCD7 /* BWellNavigationBar.swift */; };
 		5522DCBC2EB161FF00F9BCD7 /* HealthSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5522DCBB2EB161FA00F9BCD7 /* HealthSummaryView.swift */; };
@@ -72,6 +72,8 @@
 		5597E5482EBE561C00A744CD /* WebViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5597E5472EBE560500A744CD /* WebViewWrapper.swift */; };
 		5597E54A2EBE566700A744CD /* SearchConnectionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5597E5492EBE565C00A744CD /* SearchConnectionsViewModel.swift */; };
 		5597E54C2EBE56AC00A744CD /* SearchConnectionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5597E54B2EBE56A000A744CD /* SearchConnectionsView.swift */; };
+		55ADC618309C16BA00989145 /* PasteTextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55ADC617309C16B600989145 /* PasteTextButton.swift */; };
+		55B0F96E309A4CB700064660 /* AppTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B0F96D309A4CAE00064660 /* AppTab.swift */; };
 		55E625652EB34785000D3783 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E625642EB34782000D3783 /* Extensions.swift */; };
 		55E625672EB34903000D3783 /* EditableProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E625662EB348FC000D3783 /* EditableProfileView.swift */; };
 		55E625762EB5402F000D3783 /* DetailedItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E625752EB53FE0000D3783 /* DetailedItemView.swift */; };
@@ -111,6 +113,7 @@
 		5502AF4F30996D8C0093B22D /* AppErrorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppErrorTests.swift; sourceTree = "<group>"; };
 		5502AF5130996DE40093B22D /* UserMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMessage.swift; sourceTree = "<group>"; };
 		5502AF53309974430093B22D /* NavigationRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationRouterTests.swift; sourceTree = "<group>"; };
+		5502AF55309999000093B22D /* Authentication.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Authentication.xcstrings; sourceTree = "<group>"; };
 		5506C1FB2EBD0FC7005842A6 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		5506C1FD2EBD1479005842A6 /* ConnectionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionsView.swift; sourceTree = "<group>"; };
 		5506C1FF2EBD14D1005842A6 /* ConnectionsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionsModel.swift; sourceTree = "<group>"; };
@@ -127,7 +130,6 @@
 		5522DCAB2EB0380800F9BCD7 /* SideMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuView.swift; sourceTree = "<group>"; };
 		5522DCAD2EB1082500F9BCD7 /* SideMenuModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuModel.swift; sourceTree = "<group>"; };
 		5522DCB02EB11FB100F9BCD7 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
-		5522DCB22EB1314300F9BCD7 /* AuthenticationTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationTextField.swift; sourceTree = "<group>"; };
 		5522DCB42EB1320700F9BCD7 /* BWellButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BWellButton.swift; sourceTree = "<group>"; };
 		5522DCB62EB1531400F9BCD7 /* BWellNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BWellNavigationBar.swift; sourceTree = "<group>"; };
 		5522DCBB2EB161FA00F9BCD7 /* HealthSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthSummaryView.swift; sourceTree = "<group>"; };
@@ -177,6 +179,8 @@
 		5597E5472EBE560500A744CD /* WebViewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewWrapper.swift; sourceTree = "<group>"; };
 		5597E5492EBE565C00A744CD /* SearchConnectionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchConnectionsViewModel.swift; sourceTree = "<group>"; };
 		5597E54B2EBE56A000A744CD /* SearchConnectionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchConnectionsView.swift; sourceTree = "<group>"; };
+		55ADC617309C16B600989145 /* PasteTextButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasteTextButton.swift; sourceTree = "<group>"; };
+		55B0F96D309A4CAE00064660 /* AppTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTab.swift; sourceTree = "<group>"; };
 		55E625642EB34782000D3783 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		55E625662EB348FC000D3783 /* EditableProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditableProfileView.swift; sourceTree = "<group>"; };
 		55E625752EB53FE0000D3783 /* DetailedItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedItemView.swift; sourceTree = "<group>"; };
@@ -330,6 +334,7 @@
 			children = (
 				5506C1FB2EBD0FC7005842A6 /* Localizable.xcstrings */,
 				5551A3A42EC296E600394D59 /* Home.xcstrings */,
+				5502AF55309999000093B22D /* Authentication.xcstrings */,
 			);
 			path = Localizables;
 			sourceTree = "<group>";
@@ -387,12 +392,12 @@
 		558FBF0A3080621F00505658 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				5522DCAA2EB037CF00F9BCD7 /* Authentication */,
 				55F0BCB33083ADB600FF4BDC /* Shared */,
 				558FBF103080664E00505658 /* SideMenu */,
 				5551A3B52EC4023900394D59 /* Home */,
 				551538712EB25C6A001174F9 /* Profile */,
 				5597E5462EBE55FC00A744CD /* SearchConnections */,
-				5522DCAA2EB037CF00F9BCD7 /* Authentication */,
 				55E6257B2EB56858000D3783 /* ManageConnections */,
 				5522DCAF2EB11F9C00F9BCD7 /* Health */,
 			);
@@ -527,7 +532,6 @@
 			children = (
 				55E625752EB53FE0000D3783 /* DetailedItemView.swift */,
 				5522DCB42EB1320700F9BCD7 /* BWellButton.swift */,
-				5522DCB22EB1314300F9BCD7 /* AuthenticationTextField.swift */,
 			);
 			path = ReusableViews;
 			sourceTree = "<group>";
@@ -546,6 +550,8 @@
 		55F0BCB33083ADB600FF4BDC /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				55ADC617309C16B600989145 /* PasteTextButton.swift */,
+				55B0F96D309A4CAE00064660 /* AppTab.swift */,
 				5502AF5130996DE40093B22D /* UserMessage.swift */,
 				55F0BCB43083ADBE00FF4BDC /* LoadableViewModel.swift */,
 			);
@@ -702,6 +708,7 @@
 				5506C1FC2EBD0FC7005842A6 /* Localizable.xcstrings in Resources */,
 				5522DC872EAFE10C00F9BCD7 /* Assets.xcassets in Resources */,
 				5551A3A52EC296E600394D59 /* Home.xcstrings in Resources */,
+				5502AF56309999000093B22D /* Authentication.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -731,9 +738,9 @@
 				558FBF31308291AB00505658 /* BWellHealthResourceRepository.swift in Sources */,
 				5537F2D5309831F20007F9BD /* BWellSDKProvider.swift in Sources */,
 				558FBF09307FF9F800505658 /* AppContainer.swift in Sources */,
+				55B0F96E309A4CB700064660 /* AppTab.swift in Sources */,
 				5548A09D2EBEB13800C0ACF5 /* SearchConnectionDisclaimerView.swift in Sources */,
 				55F2035D2EC504E9001DA1E8 /* LaunchView.swift in Sources */,
-				5522DCB32EB1314300F9BCD7 /* AuthenticationTextField.swift in Sources */,
 				55E625672EB34903000D3783 /* EditableProfileView.swift in Sources */,
 				558FBF333082A9BB00505658 /* ConnectionStatus+Display.swift in Sources */,
 				5506C2002EBD14D5005842A6 /* ConnectionsModel.swift in Sources */,
@@ -784,6 +791,7 @@
 				558FBF3D3082F22C00505658 /* HealthRecord+BWell.swift in Sources */,
 				55E625762EB5402F000D3783 /* DetailedItemView.swift in Sources */,
 				558FBF02307FEE9D00505658 /* Credentials.swift in Sources */,
+				55ADC618309C16BA00989145 /* PasteTextButton.swift in Sources */,
 				558FBF243081B8AA00505658 /* Connection.swift in Sources */,
 				55F0BCBC3086799500FF4BDC /* HealthGroupsView.swift in Sources */,
 				558FBF06307FF6C100505658 /* APIKeyStore.swift in Sources */,
@@ -972,21 +980,20 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 15.5;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bwell.sdkSampleApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				XROS_DEPLOYMENT_TARGET = 2.5;
 			};
 			name = Debug;
@@ -1013,21 +1020,20 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 15.5;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bwell.sdkSampleApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				XROS_DEPLOYMENT_TARGET = 2.5;
 			};
 			name = Release;

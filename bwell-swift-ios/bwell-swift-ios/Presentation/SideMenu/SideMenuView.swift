@@ -105,7 +105,7 @@ private struct RowView: View {
         HStack {
             Image(systemName: option.iconName)
                 .imageScale(.small)
-                .foregroundStyle(selectedOption == .logout ? .red : .bwellPurple)
+                .foregroundStyle(selectedOption == .logout ? .red : .indigoBrand)
 
             Text(option.title)
                 .font(.subheadline)
@@ -114,7 +114,7 @@ private struct RowView: View {
         }
         .padding(.leading)
         .frame(height: 44)
-        .background((isSelected && selectedOption != .logout) ? .bwellPurple.opacity(0.25) : .clear)
+        .background((isSelected && selectedOption != .logout) ? .indigoBrand.opacity(0.25) : .clear)
         .clipShape(RoundedRectangle(cornerRadius: 10))
     }
 }

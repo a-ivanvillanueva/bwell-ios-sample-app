@@ -105,7 +105,7 @@ private struct ListItem: View {
 
                 Text(connection.status.displayName)
                     .padding(5)
-                    .background(.bwellGreen)
+                    .background(.success)
                     .font(.system(size: 16, weight: .bold, design: .rounded))
                     .foregroundStyle(.white)
                     .clipShape(RoundedRectangle(cornerRadius: 5))

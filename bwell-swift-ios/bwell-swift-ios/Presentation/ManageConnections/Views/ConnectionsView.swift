@@ -22,7 +22,7 @@ struct ConnectionsView: View {
         }
         .toolbarColorScheme(.dark, for: .navigationBar)
         .toolbarBackgroundVisibility(.visible, for: .navigationBar)
-        .toolbarBackground(.bwellPurple, for: .navigationBar)
+        .toolbarBackground(.indigoBrand, for: .navigationBar)
         .toolbar {
             ToolbarItem(placement: .principal) {
                 Text("Search connections by")

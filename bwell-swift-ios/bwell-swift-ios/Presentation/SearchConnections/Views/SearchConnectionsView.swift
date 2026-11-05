@@ -43,7 +43,7 @@ struct SearchConnectionsView: View {
         }
         .toolbarColorScheme(.dark, for: .navigationBar)
         .toolbarBackgroundVisibility(.visible, for: .navigationBar)
-        .toolbarBackground(.bwellPurple, for: .navigationBar)
+        .toolbarBackground(.indigoBrand, for: .navigationBar)
         .navigationBarTitleDisplayMode(.inline)
         .navigationTitle(Text(connection.title))
         .searchable(text: $searchedText, placement: .toolbar, prompt: Text("Search"))
