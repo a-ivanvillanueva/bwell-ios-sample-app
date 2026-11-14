@@ -7,7 +7,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Securely link your health records from doctors, labs, and insurance providers."
+            "value" : "Securely link providers, labs, and insurers."
           }
         }
       }
@@ -29,7 +29,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Fill out your profile to get personalized health insights. "
+            "value" : "Add details for personalized insights."
           }
         }
       }
@@ -51,7 +51,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "See a timeline of your health events and upcoming appointments."
+            "value" : "See a timeline of events and appointments."
           }
         }
       }
@@ -67,29 +67,29 @@
         }
       }
     },
-    "Bottom Banner Description" : {
+    "Banner Button Title" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Unlock Personalized Health Insights with Health Match. \n\nSecurely and privately contribute your health data to help researchers find new treatments and cures."
+            "value" : "Connect records"
           }
         }
       }
     },
-    "First Banner Description" : {
+    "Banner Description" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Combine all your health records to unlock more data"
+            "value" : "Connect clinics, labs, and insurers to unlock  more of your data."
           }
         }
       }
     },
-    "First Banner Title" : {
+    "Banner Title" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -118,28 +118,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Learn More"
-          }
-        }
-      }
-    },
-    "Second Banner Description" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Discover clinical studies tailored to your health needs."
-          }
-        }
-      }
-    },
-    "Second Banner Title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Introducing health match"
           }
         }
       }

@@ -1,0 +1,44 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "Allergies" : {
+      "extractionState" : "manual"
+    },
+    "Care Plans" : {
+      "extractionState" : "manual"
+    },
+    "Conditions" : {
+      "extractionState" : "manual"
+    },
+    "Encounters" : {
+      "extractionState" : "manual"
+    },
+    "HealthTitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Health"
+          }
+        }
+      }
+    },
+    "Immunizations" : {
+      "extractionState" : "manual"
+    },
+    "Labs" : {
+      "extractionState" : "manual"
+    },
+    "Medications" : {
+      "extractionState" : "manual"
+    },
+    "Procedures" : {
+      "extractionState" : "manual"
+    },
+    "Vital Signs" : {
+      "extractionState" : "manual"
+    }
+  },
+  "version" : "1.3"
+}

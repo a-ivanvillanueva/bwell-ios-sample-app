@@ -194,15 +194,6 @@ struct AuthenticationView: View {
                     .font(.system(size: 13))
                     .foregroundStyle(.muted)
                 Spacer()
-
-                if viewModel.oauthToken.isEmpty {
-                    PasteTextButton { text in
-                        viewModel.pasteOAuthToken([text])
-                    }
-                } else {
-                    Button("Clear") { viewModel.oauthToken = "" }
-                        .font(.subheadline.weight(.semibold))
-                }
             }
 
             TextField("",
@@ -251,13 +242,6 @@ struct AuthenticationView: View {
                                 text: $viewModel.apiKey,
                                 prompt: Text("Required").font(.system(size: 17))
                     )
-
-                    // TODO: Fix paste action for API Key
-                    Button(viewModel.oauthToken.isEmpty ? "Paste" : "Clear") {
-                        print("Paste button tapped")
-                    }
-                    .font(.system(size: 15, weight: .semibold))
-                    .foregroundStyle(.action)
                 }
                 .padding(.horizontal, 16)
                 .padding(.vertical, 8)
@@ -306,33 +290,6 @@ private struct ErrorMessageView: View {
             Spacer()
         }
         .padding(.horizontal, 4)
-    }
-}
-
-private struct PillView: View {
-    var icon: String = ""
-    var text: String
-    var textColor: Color
-    var pillColor: Color
-
-    var body: some View {
-        HStack(spacing: 4) {
-            if !icon.isEmpty {
-                Image(systemName: icon)
-                    .font(.system(size: 12, weight: .medium))
-                    .foregroundStyle(.success)
-                    .opacity(1)
-            }
-
-            Text(text)
-                .font(.system(size: 13, weight: .medium))
-                .foregroundStyle(textColor)
-                .opacity(1)
-        }
-        .padding(.horizontal, 10)
-        .padding(.vertical, 3)
-        .background(pillColor)
-        .clipShape(.capsule)
     }
 }
 

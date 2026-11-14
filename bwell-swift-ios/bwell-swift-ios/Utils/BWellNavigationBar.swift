@@ -9,7 +9,6 @@ import SwiftUI
 
 struct BWellNavigationBar<TrailingItem: View>: ViewModifier {
     @Binding var showMenu: Bool
-    @EnvironmentObject var viewModel: SideMenuViewModel
     var navigationTitle: String = ""
     var trailingItem: (() -> TrailingItem)?
 

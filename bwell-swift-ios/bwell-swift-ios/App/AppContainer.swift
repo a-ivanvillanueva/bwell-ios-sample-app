@@ -70,7 +70,7 @@ final class AppContainer {
 
     func makeHealthGroupsViewModel(for category: HealthCategory) -> LoadableViewModel<[HealthGroup]> {
         let repository = healthRecordRepository
-        return LoadableViewModel(initialValue: [], failureAction: "load your \(category.title.lowercased())") {
+        return LoadableViewModel(initialValue: [], failureAction: "load your \(String(localized: category.title))") {
             try await repository.groups(in: category)
         }
     }
@@ -78,7 +78,7 @@ final class AppContainer {
     func makeHealthRecordsViewModel(for category: HealthCategory,
                                     group: HealthGroup) -> LoadableViewModel<[HealthRecord]> {
         let repository = healthRecordRepository
-        return LoadableViewModel(initialValue: [], failureAction: "load your \(category.title.lowercased())") {
+        return LoadableViewModel(initialValue: [], failureAction: "load your \(String(localized: category.title))") {
             try await repository.records(in: category, group: group)
         }
     }

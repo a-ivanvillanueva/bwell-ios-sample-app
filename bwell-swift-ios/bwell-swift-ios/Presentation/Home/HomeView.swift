@@ -9,52 +9,50 @@ import SwiftUI
 
 struct HomeView: View {
     @StateObject private var viewModel: HomeViewModel
-    @Binding var showMenu: Bool
 
-    init(showMenu: Binding<Bool>, viewModel: @autoclosure @escaping () -> HomeViewModel) {
+    init(viewModel: @autoclosure @escaping () -> HomeViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel())
-        _showMenu = showMenu
     }
 
     var body: some View {
-        ScrollView {
+        ZStack {
+            Color.canvas
+                .ignoresSafeArea()
             VStack(alignment: .leading) {
-                Text("Welcome, \(viewModel.firstName)!")
-                    .font(.title)
-                    .fontWeight(.semibold)
-                    .padding(.bottom, 15)
+                Group {
+                    Text("Welcome, \(viewModel.firstName)!")
+                        .font(.title)
+                        .fontWeight(.semibold)
+                        .padding(.bottom, 8)
+                        // .frame(width: .infinity, alignment: .leading)
 
-                BannerView(title: "First Banner Title",
-                           description: "First Banner Description",
-                           buttonTitle: "Get Started")
+                    BannerView(title: .Home.bannerTitle,
+                               description: .Home.bannerDescription,
+                               buttonTitle: .Home.bannerButtonTitle)
+                    .transition(.slide)
+                }.padding(.horizontal, 16)
 
-                BannerView(title: "Second Banner Title",
-                           description: "Second Banner Description",
-                           buttonTitle: "Learn More")
-                .padding(.bottom, 20)
+                List {
+                    Section("Suggested for you") {
+                        ListItemView(title: .Home.activityOneTitle,
+                                             description: .Home.activityOneDescription,
+                                             icon: "link", iconColor: .ink)
 
-                Text("Suggested activities")
-                    .font(.headline)
-                    .padding(.bottom, 10)
+                        ListItemView(title: .Home.activityTwoTitle,
+                                             description: .Home.activityTwoDescription,
+                                             icon: "heart", iconColor: .alert)
 
-                ActivityListItemView(title: "Activity One Title",
-                                     description: "Activity One Description",
-                                     icon: "personalhotspot",
-                                     iconColor: .bwellBlue)
-
-                ActivityListItemView(title: "Activity Two Title",
-                                     description: "Activity Two Description",
-                                     icon: "cross.fill",
-                                     iconColor: .bwellRed)
-
-                ActivityListItemView(title: "Activity Three Title",
-                                     description: "Activity Three Description",
-                                     icon: "person.fill",
-                                     iconColor: .bwellPurple)
-
-                Spacer()
-            }.padding(.horizontal)
-        }.bwellNavigationBar(showMenu: $showMenu, navigationTitle: "Home")
+                        ListItemView(title: .Home.activityThreeTitle,
+                                             description: .Home.activityThreeDescription,
+                                             icon: "person", iconColor: .action)
+                    }.headerProminence(.increased)
+                }
+                .scrollContentBackground(.hidden)
+                .scrollDisabled(true)
+                .background(.canvas)
+                .padding(.top, 20)
+            }
+        }
     }
 }
 
@@ -62,37 +60,37 @@ struct HomeView: View {
 private struct BannerView: View {
     @State private var shouldClose: Bool = false
 
-    var title: LocalizedStringKey
-    var description: LocalizedStringKey
-    var buttonTitle: LocalizedStringKey
+    var title: LocalizedStringResource
+    var description: LocalizedStringResource
+    var buttonTitle: LocalizedStringResource
 
     var body: some View {
         if !shouldClose {
             VStack(alignment: .leading, spacing: 10) {
-                Text(title, tableName: "Home")
-                    .font(.title2)
-                    .fontWeight(.bold)
+                Text(String(localized: title))
+                    .font(.system(size: 22, weight: .semibold))
                     .foregroundStyle(.white)
 
-                Text(description, tableName: "Home")
-                    .font(.headline)
+                Text(String(localized: description))
+                    .font(.system(size: 15))
                     .foregroundStyle(.white)
                     .padding(.bottom, 10)
 
                 Button {
                     Log.ui.debug("Banner tapped")
                 } label: {
-                    Text(buttonTitle, tableName: "Home")
-                        .padding(10)
-                        .foregroundStyle(.white)
-                        .fontWeight(.medium)
-                        .background(.bwellPurple)
+                    Text(String(localized: buttonTitle))
+                        .padding(.horizontal, 15)
+                        .padding(.vertical, 15)
+                        .foregroundStyle(.indigoBrand)
+                        .fontWeight(.semibold)
+                        .background(.white)
                         .clipShape(Capsule())
                 }
             }
             .padding()
             .frame(maxWidth: .infinity, alignment: .leading)
-            .background(.bwellBlue.opacity(0.7))
+            .background(.indigoBrand)
             .clipShape(RoundedRectangle(cornerRadius: 15))
             .transition(.asymmetric(insertion: .scale, removal: .opacity))
             .overlay(alignment: .topTrailing) {
@@ -100,49 +98,19 @@ private struct BannerView: View {
                     shouldClose = true
                 } label: {
                     Image(systemName: "plus.circle.fill")
-                        .padding(.top, 10)
-                        .padding(.trailing, 5)
+                        .padding(.all, 5)
                         .rotationEffect(.degrees(45))
-                        .foregroundStyle(Color(.systemGray5))
+                        .font(.system(size: 30))
+                        .foregroundStyle(.sky, .muted)
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
                 }
             }
+            .animation(.easeInOut(duration: 0.3), value: shouldClose)
         }
     }
 }
 
-// MARK: Suggested Activity List Item
-private struct ActivityListItemView: View {
-    var title: LocalizedStringKey
-    var description: LocalizedStringKey
-    var icon: String
-    var iconColor: Color
-
-    var body: some View {
-        HStack(alignment: .center) {
-            HStack(alignment: .firstTextBaseline) {
-                Image(systemName: icon)
-                    .font(.headline)
-                    .foregroundStyle(iconColor)
-
-                VStack(alignment: .leading, spacing: 5) {
-                    Text(title, tableName: "Home")
-                        .font(.title3)
-                        .fontWeight(.medium)
-
-                    Text(description, tableName: "Home")
-                }
-            }
-
-            Spacer()
-
-            Image(systemName: "chevron.right")
-                .foregroundStyle(.gray)
-        }.padding(.vertical, 10)
-    }
-}
-
 #Preview {
-    HomeView(showMenu: .constant(false), viewModel: AppContainer.preview.makeHomeViewModel())
-        .environmentObject(AppContainer.preview.makeSideMenuViewModel())
+    HomeView(viewModel: AppContainer.preview.makeHomeViewModel())
         .environmentObject(NavigationRouter())
 }

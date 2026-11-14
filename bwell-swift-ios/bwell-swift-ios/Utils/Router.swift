@@ -27,10 +27,21 @@ enum AppRoute: Hashable {
 final class NavigationRouter: ObservableObject {
     // The path that controls the navigation stack
     @Published var path: [AppRoute] = []
+    @Published var selectedTab: AppTab = .home
+    @Published var paths: [AppTab : [AppRoute]] = [:]
+
+    // Create a custom two way communication for the tabView navigation
+    func binding(for tab: AppTab) -> Binding<[AppRoute]> {
+        Binding {
+            self.paths[tab, default: []]
+        } set: {
+            self.paths[tab] = $0
+        }
+    }
 
     // Push the new screen into the navigation path
     func navigate(to route: AppRoute) {
-        path.append(route)
+        paths[selectedTab, default: []].append(route)
     }
 
     // Navigate to a specific destination, clearing the current path first
@@ -47,5 +58,11 @@ final class NavigationRouter: ObservableObject {
     func navigateToRoot() {
         guard !path.isEmpty else { return }
         path.removeAll()
+    }
+
+    // Resets the navigation to the default view (Home)
+    func reset() {
+        selectedTab = .home
+        paths = [:]
     }
 }

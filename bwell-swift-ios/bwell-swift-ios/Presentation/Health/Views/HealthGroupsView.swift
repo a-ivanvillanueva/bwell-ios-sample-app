@@ -31,19 +31,26 @@ struct HealthGroupsView: View {
                     .padding()
             } else {
                 List(viewModel.value) { group in
-                    Button {
-                        router.navigate(to: .healthRecords(category: category, group: group))
-                    } label: {
-                        HealthRowView(title: group.name, date: group.date)
+                    NavigationLink(value: AppRoute.healthRecords(category: category, group: group)) {
+                        if let name = group.name {
+                            Text("\(name)")
+                                .font(.system(size: 17))
+                        }
                     }
                 }
-                .listStyle(.plain)
+                .scrollContentBackground(.hidden)
+                .scrollDisabled(true)
+                .background(.canvas)
             }
         }
         .navigationTitle(category.title)
-        .toolbarColorScheme(.dark, for: .navigationBar)
-        .toolbarBackgroundVisibility(.visible, for: .navigationBar)
-        .toolbarBackground(.indigoBrand, for: .navigationBar)
-        .task { await viewModel.load() }
+        .task {
+            await viewModel.load()
+        }
     }
+}
+
+#Preview {
+    HealthGroupsView(category: .allergyIntolerance,
+                     viewModel: AppContainer.preview.makeHealthGroupsViewModel(for: .allergyIntolerance))
 }

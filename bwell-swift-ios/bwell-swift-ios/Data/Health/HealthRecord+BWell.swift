@@ -60,9 +60,9 @@ extension HealthRecord {
                   title: allergy.code?.coding?.first?.display,
                   value: allergy.criticality,
                   details: [
-                    .stacked("Category: ", allergy.code?.text?.capitalizingFirstLetter()),
-                    .dated("Date of last occurrence: ", allergy.onsetDateTime),
-                    .stacked("Summary: ", allergy.text?.div?.stripHTML())
+                    .stacked("Category", allergy.code?.text?.capitalizingFirstLetter()),
+                    .dated("Last occurrence", allergy.onsetDateTime),
+                    .stacked("Summary", allergy.text?.div?.stripHTML())
                   ])
     }
 
@@ -71,22 +71,22 @@ extension HealthRecord {
                       title: carePlan.title,
                       date: carePlan.period?.start,
                       details: [
-                        .dated("Plan created in: ", carePlan.created),
-                        .dated("Plan start date: ", carePlan.period?.start),
-                        .dated("Plan end date: ", carePlan.period?.end),
-                        .plain("Description: ", carePlan.description),
-                        .stacked("Summary: ", carePlan.text?.div?.stripHTML())
+                        .dated("Plan created in", carePlan.created),
+                        .dated("Plan start date", carePlan.period?.start),
+                        .dated("Plan end date", carePlan.period?.end),
+                        .stacked("Description", carePlan.description),
+                        .stacked("Summary", carePlan.text?.div?.stripHTML())
                       ])
         }
 
         init(sdk condition: BWell.Condition) {
             var details: [Detail?] = [
-                .dated("Onset date: ", condition.onsetDateTime),
-                .dated("Recorded date: ", condition.recordedDate),
-                .plain("Clinical status: ", condition.clinicalStatus?.text),
-                .plain("Summary: ", condition.code?.text)
+                .dated("Onset date", condition.onsetDateTime),
+                .dated("Recorded date", condition.recordedDate),
+                .plain("Clinical status", condition.clinicalStatus?.text),
+                .stacked("Summary", condition.code?.text)
             ]
-            details += (condition.bodySite ?? []).map { Detail.plain("Body site: ", $0.coding?.first?.display) }
+            details += (condition.bodySite ?? []).map { Detail.plain("Body site", $0.coding?.first?.display) }
 
             self.init(sdkId: condition.id,
                       title: condition.code?.text,
@@ -101,12 +101,12 @@ extension HealthRecord {
                       heading: encounter.text?.div?.stripHTML(),
                       date: encounter.period?.start,
                       details: [
-                        .dated("Encounter start: ", encounter.period?.start),
-                        .dated("Encounter end: ", encounter.period?.end),
-                        .plain("Status: ", encounter.status),
-                        .plain("Class: ", encounter.class?.display),
-                        .plain("Hospitalization: ", encounter.hospitalization?.dischargeDisposition?.text),
-                        .plain("Summary: ", encounter.text?.div?.stripHTML())
+                        .dated("Start date", encounter.period?.start),
+                        .dated("End date", encounter.period?.end),
+                        .plain("Status", encounter.status),
+                        .plain("Class", encounter.class?.display),
+                        .plain("Hospitalization", encounter.hospitalization?.dischargeDisposition?.text),
+                        .stacked("Summary", encounter.text?.div?.stripHTML())
                       ])
         }
 
@@ -115,10 +115,10 @@ extension HealthRecord {
                       title: immunization.vaccineCode?.text,
                       date: immunization.occurrenceDateTime,
                       details: [
-                        .dated("Occurrence date: ", immunization.occurrenceDateTime),
-                        .dated("Expiration date: ", immunization.expirationDate),
-                        .plain("Administration route: ", immunization.route?.text),
-                        .plain("Summary: ", immunization.text?.div?.stripHTML())
+                        .dated("Occurrence date", immunization.occurrenceDateTime),
+                        .dated("Expiration date", immunization.expirationDate),
+                        .plain("Administration route", immunization.route?.text),
+                        .stacked("Summary", immunization.text?.div?.stripHTML())
                       ])
         }
 
@@ -128,9 +128,9 @@ extension HealthRecord {
                       title: observation.code?.text,
                       date: observation.effectiveDateTime,
                       details: [
-                        .dated("Effective date: ", observation.effectiveDateTime),
-                        .plain("Effective period: ", observation.effectivePeriod?.start),
-                        .plain("Summary: ", observation.text?.div?.stripHTML())
+                        .dated("Effective date", observation.effectiveDateTime),
+                        .plain("Effective period", observation.effectivePeriod?.start),
+                        .stacked("Summary", observation.text?.div?.stripHTML())
                       ],
                       notes: observation.note)
         }
@@ -140,21 +140,21 @@ extension HealthRecord {
                       title: procedure.code?.text,
                       date: procedure.performedDateTime,
                       details: [
-                        .dated("Performed date: ", procedure.performedDateTime),
-                        .plain("Performed period: ", procedure.performedPeriod?.start),
-                        .plain("Summary: ", procedure.text?.div?.stripHTML())
+                        .dated("Performed date", procedure.performedDateTime),
+                        .plain("Performed period", procedure.performedPeriod?.start),
+                        .stacked("Summary", procedure.text?.div?.stripHTML())
                       ],
                       notes: procedure.note)
         }
 
         init(sdk medication: BWell.MedicationStatement) {
             var details: [Detail?] = [
-                .dated("Period start: ", medication.effectivePeriod?.start),
-                .dated("Period end: ", medication.effectivePeriod?.end),
-                .plain("Status: ", medication.status)
+                .dated("Period start", medication.effectivePeriod?.start),
+                .dated("Period end", medication.effectivePeriod?.end),
+                .plain("Status", medication.status)
             ]
-            details += (medication.reasonCode ?? []).map { Detail.plain("Reason for medication: ", $0.text) }
-            details += (medication.dosage ?? []).map { Detail.plain("Dosage: ", $0.text) }
+            details += (medication.reasonCode ?? []).map { Detail.stacked("Reason for medication", $0.text) }
+            details += (medication.dosage ?? []).map { Detail.stacked("Dosage", $0.text) }
 
             self.init(sdkId: medication.id,
                       title: medication.medicationCodeableConcept?.text,

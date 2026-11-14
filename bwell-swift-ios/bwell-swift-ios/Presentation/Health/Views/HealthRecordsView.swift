@@ -13,15 +13,20 @@ struct HealthRecordsView: View {
     @State private var selectedRecord: HealthRecord?
 
     let category: HealthCategory
+    let group: HealthGroup
 
     init(category: HealthCategory,
+         group: HealthGroup,
          viewModel: @autoclosure @escaping () -> LoadableViewModel<[HealthRecord]>) {
         self.category = category
+        self.group = group
         _viewModel = StateObject(wrappedValue: viewModel())
     }
 
     var body: some View {
         ZStack {
+            Color.canvas
+                .ignoresSafeArea()
             if viewModel.isLoading && viewModel.value.isEmpty {
                 ProgressView("Loading data...")
             } else if let message = viewModel.errorMessage, viewModel.value.isEmpty {
@@ -34,19 +39,31 @@ struct HealthRecordsView: View {
                     Button {
                         selectedRecord = record
                     } label: {
-                        HealthRowView(title: record.title, date: record.date, value: record.value)
+                        HStack(alignment: .center, spacing: 12) {
+                            Text(record.title?.capitalizingFirstLetter() ?? "Unknown record")
+                                .font(.system(size: 17))
+                                .foregroundStyle(.black)
+
+                            Spacer()
+
+                            if let value = record.value {
+                                PillView(text: value, textColor: .indigoBrand, pillColor: .sky)
+                            }
+
+                            Image(systemName: "chevron.right")
+                                .font(.caption)
+                                .frame(width: 24)
+                                .foregroundStyle(.muted)
+                        }
+
                     }
-                }
-                .listStyle(.plain)
+                }.scrollContentBackground(.hidden)
             }
         }
-        .navigationTitle(category.title)
-        .toolbarColorScheme(.dark, for: .navigationBar)
-        .toolbarBackgroundVisibility(.visible, for: .navigationBar)
-        .toolbarBackground(.indigoBrand, for: .navigationBar)
+        .navigationTitle(Text(String("\(group.name ?? "No name")")))
         .task { await viewModel.load() }
         .sheet(item: $selectedRecord) { record in
-            HealthRecordDetailView(record: record)
+            HealthRecordDetailView(category: category, group: group, record: record)
         }
     }
 }

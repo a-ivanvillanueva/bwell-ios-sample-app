@@ -42,8 +42,8 @@ enum ConnectionsModel: Hashable {
 
     var iconColor: Color {
         switch self {
-            case .insurance, .clinics: .bwellBlue
-            case .providers, .labs: .bwellRed
+            case .insurance, .clinics: .indigo
+            case .providers, .labs: .alert
         }
     }
 }
