@@ -47,7 +47,7 @@ struct HealthRecordsView: View {
                             Spacer()
 
                             if let value = record.value {
-                                PillView(text: value, textColor: .indigoBrand, pillColor: .sky)
+                                PillView(text: value,textColor: .indigoBrand, pillColor: .sky)
                             }
 
                             Image(systemName: "chevron.right")
@@ -55,7 +55,6 @@ struct HealthRecordsView: View {
                                 .frame(width: 24)
                                 .foregroundStyle(.muted)
                         }
-
                     }
                 }.scrollContentBackground(.hidden)
             }

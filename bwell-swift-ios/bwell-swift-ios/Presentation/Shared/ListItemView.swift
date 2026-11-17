@@ -9,29 +9,40 @@ import Foundation
 import SwiftUI
 
 struct ListItemView: View {
+    @Environment(\.listItemIconAlignment) private var iconAlignment
     var title: LocalizedStringResource
     var description: LocalizedStringResource? = nil
     var icon: String
     var iconColor: Color
     var total: Int? = nil
+    var hideNavArrow: Bool = false
 
-    init(title: LocalizedStringResource, description: LocalizedStringResource, icon: String, iconColor: Color) {
+    init(title: LocalizedStringResource, icon: String, iconColor: Color, hideNavArrow: Bool = false) {
+        self.title = title
+        self.icon = icon
+        self.iconColor = iconColor
+        self.hideNavArrow = hideNavArrow
+    }
+
+    init(title: LocalizedStringResource, description: LocalizedStringResource, icon: String, iconColor: Color, hideNavArrow: Bool = false) {
         self.title = title
         self.description = description
         self.icon = icon
         self.iconColor = iconColor
+        self.hideNavArrow = hideNavArrow
     }
 
-    init(title: LocalizedStringResource, icon: String, iconColor: Color, total: Int) {
+    init(title: LocalizedStringResource, icon: String, iconColor: Color, total: Int, hideNavArrow: Bool = false) {
         self.title = title
         self.icon = icon
         self.iconColor = iconColor
         self.total = total
+        self.hideNavArrow = hideNavArrow
     }
 
     var body: some View {
         HStack(alignment: .center) {
-            HStack(alignment: .firstTextBaseline) {
+            HStack(alignment: iconAlignment) {
                 Image(systemName: icon)
                     .padding(.all, 5)
                     .font(.system(size: 16))
@@ -41,7 +52,7 @@ struct ListItemView: View {
 
                 VStack(alignment: .leading) {
                     Text(String(localized: title))
-                        .font(.system(size: 17))
+                        .font(.system(size: 17, weight: .medium))
                         .foregroundStyle(.ink)
 
                     if let description = description {
@@ -61,13 +72,50 @@ struct ListItemView: View {
 
             Spacer()
 
-            Image(systemName: "chevron.right")
-                .foregroundStyle(.gray)
+            if !hideNavArrow {
+                Image(systemName: "chevron.right")
+                    .foregroundStyle(.gray)
+            }
         }
     }
 }
+
+// MARK: Icon Custom Alignment
+private struct ListItemIconAlignmentKey: EnvironmentKey {
+    static let defaultValue: VerticalAlignment = .center
+}
+
+extension EnvironmentValues {
+    var listItemIconAlignment: VerticalAlignment {
+        get { self[ListItemIconAlignmentKey.self] }
+        set { self[ListItemIconAlignmentKey.self] = newValue }
+    }
+}
+
+extension View {
+    func listItemIconAlignment(_ alignment: VerticalAlignment) -> some View {
+        environment(\.listItemIconAlignment, alignment)
+    }
+}
+
+// MARK: Preview
 #Preview {
-    ListItemView(title: .Home.activityOneTitle,
-                 icon: "link", iconColor: .ink, total: 2)
-        .padding(.horizontal, 16)
+    ZStack {
+        Color.canvas
+            .ignoresSafeArea()
+
+        List {
+            ListItemView(title: .Home.activityOneTitle,
+                         icon: "link", iconColor: .ink, total: 2)
+            .listItemIconAlignment(.firstTextBaseline)
+
+            ListItemView(title: .Connections.insurance,
+                         description: .Connections.insuranceSubtext,
+                         icon: "document", iconColor: .action)
+            .listItemIconAlignment(.top)
+        }
+        .scrollDisabled(true)
+        .scrollContentBackground(.hidden)
+        .background(.canvas)
+    }
 }

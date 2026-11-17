@@ -7,70 +7,78 @@
 import Foundation
 import SwiftUI
 
-struct ConnectionsView: View {
-    var body: some View {
-        ZStack {
-            List {
-                CardView(connection: .insurance)
-                CardView(connection: .providers)
-                CardView(connection: .clinics)
-                CardView(connection: .labs)
-            }
-            .padding(.top, 10)
-            .listStyle(.plain)
-            .scrollDisabled(true)
-        }
-        .toolbarColorScheme(.dark, for: .navigationBar)
-        .toolbarBackgroundVisibility(.visible, for: .navigationBar)
-        .toolbarBackground(.indigoBrand, for: .navigationBar)
-        .toolbar {
-            ToolbarItem(placement: .principal) {
-                Text("Search connections by")
-                    .fontWeight(.medium)
-            }
-        }
-    }
-}
-
-private struct CardView: View {
-    @EnvironmentObject private var router: NavigationRouter
-    var connection: ConnectionsModel
+struct AddNewConnectionView: View {
+    @Environment(\.dismiss) private var dismiss
 
     var body: some View {
-        Button {
-            router.navigate(to: .searchConnections(connection: connection))
-        } label: {
-            HStack(alignment: .center) {
-                VStack(alignment: .leading, spacing: 10) {
-                    HStack {
-                        Text(connection.title)
-                            .font(.headline)
-                            .fontWeight(.medium)
-                            .multilineTextAlignment(.leading)
+        NavigationStack {
+            VStack(alignment: .leading, spacing: .zero) {
+                Group {
+                    Text(.Connections.addConnectionQuestion)
+                        .font(.system(size: 22, weight: .semibold))
+                        .foregroundStyle(.ink)
+                        .padding(.top, 12)
+                        .padding(.bottom, 4)
 
-                        Spacer()
+                    Text(.Connections.addConnectionSubtext)
+                        .font(.system(size: 15))
+                        .foregroundStyle(.muted)
+                }.padding(.horizontal, 20)
 
-                        Image(systemName: connection.icon)
-                            .font(.headline)
-                            .foregroundStyle(connection.iconColor)
+                List {
+                    NavigationLink(value: AppRoute.searchConnections(connection: .insurance)) {
+                        ListItemView(title: .Connections.insurance,
+                                     description: .Connections.insuranceSubtext,
+                                     icon: "document", iconColor: .action)
+                        .listItemIconAlignment(.top)
+                        
+                    }.navigationLinkIndicatorVisibility(.hidden)
 
-                    }
-                    
-                    Text(connection.description, tableName: "Localizable")
-                        .multilineTextAlignment(.leading)
-                        .foregroundStyle(.black)
+                    NavigationLink(value: AppRoute.searchConnections(connection: .providers)) {
+                        ListItemView(title: .Connections.providers,
+                                     description: .Connections.providersSubtext,
+                                     icon: "plus", iconColor: .alert)
+                        .listItemIconAlignment(.top)
+                    }.navigationLinkIndicatorVisibility(.hidden)
+
+                    NavigationLink(value: AppRoute.searchConnections(connection: .clinics)) {
+                        ListItemView(title: .Connections.clinics,
+                                     description: .Connections.clinicsSubtext,
+                                     icon: "building", iconColor: .ink)
+                        .listItemIconAlignment(.top)
+                    }.navigationLinkIndicatorVisibility(.hidden)
+
+                    NavigationLink(value: AppRoute.searchConnections(connection: .labs)) {
+                        ListItemView(title: .Connections.labs,
+                                     description: .Connections.labsSubtext,
+                                     icon: "flask", iconColor: .success)
+                        .listItemIconAlignment(.top)
+                    }.navigationLinkIndicatorVisibility(.hidden)
                 }
-                Spacer()
+                .scrollContentBackground(.hidden)
+                .scrollDisabled(true)
+                .background(.canvas)
 
-                Image(systemName: "chevron.right")
-                    .font(.subheadline)
-                    .foregroundStyle(.gray)
+                Spacer()
             }
+            .navigationTitle(Text(.Connections.addConnection))
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Text("Cancel")
+                            .font(.system(size: 17))
+                            .foregroundStyle(.action)
+                    }
+                }
+            }
+            .background(.canvas)
         }
-        .listRowSeparator(.hidden, edges: .all)
     }
 }
 
 #Preview {
-    ConnectionsView()
+    AddNewConnectionView()
 }

@@ -1,0 +1,283 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "Add Connection" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add connection"
+          }
+        }
+      }
+    },
+    "Add Connection Question" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What would you like to connect?"
+          }
+        }
+      }
+    },
+    "Add connection subtext" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose a type, then search for it by name."
+          }
+        }
+      }
+    },
+    "Cancel" : {
+      "extractionState" : "manual"
+    },
+    "Clinics" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clinics, hospitals, and health systems"
+          }
+        }
+      }
+    },
+    "Clinics Subtext" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diagnoses, procedures, treatment history, prescriptions and labs."
+          }
+        }
+      }
+    },
+    "Connect" : {
+      "extractionState" : "manual"
+    },
+    "Connection Disclaimer" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Connection disclaimer"
+          }
+        }
+      }
+    },
+    "ConnectionNote" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please turn off your browser’s popup blocker in order to proceed and complete the data sync."
+          }
+        }
+      }
+    },
+    "Delete" : {
+      "extractionState" : "manual"
+    },
+    "Delete Connection" : {
+      "extractionState" : "manual"
+    },
+    "Disclaimer instructions" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Next, you'll sign in on the provider's website."
+          }
+        }
+      }
+    },
+    "Disclaimer Title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Before you connect"
+          }
+        }
+      }
+    },
+    "DisclaimerTerms" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I attest that these are my credentials and I authorize b.well to retrieve my health data."
+          }
+        }
+      }
+    },
+    "Disconnect" : {
+      "extractionState" : "manual"
+    },
+    "Disconnect alert title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Disconnect connection"
+          }
+        }
+      }
+    },
+    "Disconnection alert message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Are you sure you want to disconnect '%@'? You can reconnect later."
+          }
+        }
+      }
+    },
+    "Find your plan" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Find your insurance plan"
+          }
+        }
+      }
+    },
+    "Insurance" : {
+      "extractionState" : "manual"
+    },
+    "Insurance subtext" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Claims and financials, plus the providers you see, from common insurance plans and Medicare."
+          }
+        }
+      }
+    },
+    "Labs" : {
+      "extractionState" : "manual"
+    },
+    "Labs Subtext" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lab results, so you can track your numbers over time."
+          }
+        }
+      }
+    },
+    "Navigation title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Connections"
+          }
+        }
+      }
+    },
+    "Proceed Button" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proceed"
+          }
+        }
+      }
+    },
+    "Providers" : {
+      "extractionState" : "manual"
+    },
+    "Providers Subtext" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Visit summaries, diagnoses, treatment history, prescriptions and labs from your providers."
+          }
+        }
+      }
+    },
+    "Search bar placeholder" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search insurance plans"
+          }
+        }
+      }
+    },
+    "Search plan subtext" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search by insurer or plan name, or by city or state."
+          }
+        }
+      }
+    },
+    "SearchResults" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ Result"
+          }
+        }
+      }
+    },
+    "Subtitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Providers, labs, and insurers linked to your account."
+          }
+        }
+      }
+    },
+    "Successful authentication" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Authentication Succesful!"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.3"
+}

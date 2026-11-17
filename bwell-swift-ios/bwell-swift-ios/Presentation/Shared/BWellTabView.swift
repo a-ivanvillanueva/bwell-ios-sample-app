@@ -30,7 +30,7 @@ struct BWellTabView: View {
 
             Tab("Connections", systemImage: "link", value: AppTab.connections) {
                 NavigationStack(path: router.binding(for: .connections)) {
-                    ManageConnectionsView(showMenu: .constant(false), viewModel: container.makeManageConnectionsViewModel())
+                    ManageConnectionsView(container: container, viewModel: container.makeManageConnectionsViewModel())
                         .appDestinations(container: container)
                 }
             }

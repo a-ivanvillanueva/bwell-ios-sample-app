@@ -8,7 +8,7 @@ import Foundation
 import SwiftUI
 
 struct BWellButton: View {
-    let title: String
+    let title: LocalizedStringResource
     var textColor: Color = .white
     var buttonColor: Color = .action
     var isLoading: Bool = false

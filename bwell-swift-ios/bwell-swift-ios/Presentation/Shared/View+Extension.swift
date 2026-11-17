@@ -16,7 +16,7 @@ extension View {
                 SearchConnectionsView(connection: connection, viewModel: container.makeSearchConnectionsViewModel())
 
             case .connections:
-                ConnectionsView()
+                AddNewConnectionView(container: container)
 
             case .healthGroups(let category):
                 HealthGroupsView(category: category, viewModel: container.makeHealthGroupsViewModel(for: category))

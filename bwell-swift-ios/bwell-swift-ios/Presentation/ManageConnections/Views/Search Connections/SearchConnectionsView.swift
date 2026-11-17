@@ -29,24 +29,43 @@ struct SearchConnectionsView: View {
 
     var body: some View {
         ZStack {
+            Color.canvas
+                .ignoresSafeArea()
+
             if !viewModel.healthResources.isEmpty {
                 resultsView
                     .padding(.top, 10)
             } else {
                 VStack {
-                    Image(systemName: "magnifyingglass")
-                        .padding(.bottom, 10)
+                    Spacer()
 
-                    Text("Search by clinic/medical office name, hospital name. health system name, or city/state.")
+                    Circle()
+                        .frame(width: 72, height: 72, alignment: .center)
+                        .foregroundStyle(.sky)
+                        .overlay {
+                            Image(systemName: "magnifyingglass")
+                                .resizable()
+                                .frame(width: 32, height: 32, alignment: .center)
+                                .foregroundStyle(.indigoBrand)
+                        }.padding(.bottom, 10)
+
+                    Text(.Connections.findYourPlan)
+                        .font(.system(size: 22, weight: .semibold))
+                        .foregroundStyle(.ink)
+                        .padding(.bottom, 8)
+
+                    Text(.Connections.searchPlanSubtext)
+                        .font(.system(size: 15))
+                        .foregroundStyle(.muted)
+
+                    Spacer()
                 }.padding(.horizontal)
             }
         }
-        .toolbarColorScheme(.dark, for: .navigationBar)
-        .toolbarBackgroundVisibility(.visible, for: .navigationBar)
-        .toolbarBackground(.indigoBrand, for: .navigationBar)
-        .navigationBarTitleDisplayMode(.inline)
         .navigationTitle(Text(connection.title))
-        .searchable(text: $searchedText, placement: .toolbar, prompt: Text("Search"))
+        .navigationBarTitleDisplayMode(.inline)
+        .searchable(text: $searchedText, placement: .navigationBarDrawer,
+                    prompt: Text(.Connections.searchBarPlaceholder))
         .submitLabel(.search)
         .onSubmit(of: .search) {
             Task {
@@ -63,7 +82,6 @@ struct SearchConnectionsView: View {
                     }
                 }
                 .presentationDetents([.medium])
-                .presentationDragIndicator(.visible)
 
             case .webView(let url):
                 WebViewWrapper(url: url) {
@@ -83,9 +101,11 @@ struct SearchConnectionsView: View {
 
         }
         .alert("Success!", isPresented: $showOnSuccessMessage) {
-            Button("Done") {}
+            Button("Done") {
+
+            }
         } message: {
-            Text("Authentication successful!")
+            Text(.Connections.successfulAuthentication)
         }
         .onChange(of: showOnSuccessMessage) { _, newValue in
             if !newValue {
@@ -97,22 +117,21 @@ struct SearchConnectionsView: View {
     // MARK: Results view
     @ViewBuilder
     var resultsView: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Text("Results (\(viewModel.healthResources.count))")
-                .font(.headline)
-                .fontWeight(.semibold)
-                .padding(.bottom, 5)
-
-            List {
+        List {
+            Section(.Connections.searchResults(String(viewModel.healthResources.count))) {
                 ForEach(viewModel.healthResources) { resource in
                     Button {
                         activeSheet = .terms(resource: resource)
                     } label: {
-                        ListItem(title: resource.name)
+                        ListItemView(title: LocalizedStringResource(stringLiteral: resource.name),
+                                     icon: "building", iconColor: .indigoBrand)
                     }
                 }
-            }.listStyle(.plain)
-        }.padding(.horizontal)
+            }
+        }
+        .scrollDisabled(true)
+        .scrollContentBackground(.hidden)
+        .background(.canvas)
     }
 
     private func presentNextStep() {
@@ -147,7 +166,6 @@ private struct ListItem: View {
 }
 
 #Preview {
-    SearchConnectionsView(connection: .clinics, viewModel: AppContainer.preview.makeSearchConnectionsViewModel())
-        .environmentObject(AppContainer.preview.makeSideMenuViewModel())
-        .environmentObject(NavigationRouter())
+    SearchConnectionsView(connection: .clinics,
+                          viewModel: AppContainer.preview.makeSearchConnectionsViewModel())
 }

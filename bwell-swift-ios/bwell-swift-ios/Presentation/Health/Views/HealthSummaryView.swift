@@ -28,7 +28,7 @@ struct HealthSummaryView: View {
             .scrollContentBackground(.hidden)
             .scrollDisabled(true)
             .background(.canvas)
-            .navigationTitle(String(localized: LocalizedStringResource.Health.healthTitle))
+            .navigationTitle(.Health.healthTitle)
             .task {
                 await viewModel.load()
             }

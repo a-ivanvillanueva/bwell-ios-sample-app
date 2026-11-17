@@ -20,11 +20,10 @@ struct HomeView: View {
                 .ignoresSafeArea()
             VStack(alignment: .leading) {
                 Group {
-                    Text("Welcome, \(viewModel.firstName)!")
+                    Text(.Home.welcomeUser(viewModel.firstName))
                         .font(.title)
                         .fontWeight(.semibold)
                         .padding(.bottom, 8)
-                        // .frame(width: .infinity, alignment: .leading)
 
                     BannerView(title: .Home.bannerTitle,
                                description: .Home.bannerDescription,
@@ -33,7 +32,7 @@ struct HomeView: View {
                 }.padding(.horizontal, 16)
 
                 List {
-                    Section("Suggested for you") {
+                    Section(.Home.suggestedForYou) {
                         ListItemView(title: .Home.activityOneTitle,
                                              description: .Home.activityOneDescription,
                                              icon: "link", iconColor: .ink)
@@ -58,6 +57,7 @@ struct HomeView: View {
 
 // MARK: Banner View
 private struct BannerView: View {
+    @EnvironmentObject private var router: NavigationRouter
     @State private var shouldClose: Bool = false
 
     var title: LocalizedStringResource
@@ -77,6 +77,7 @@ private struct BannerView: View {
                     .padding(.bottom, 10)
 
                 Button {
+                    router.openAddConnection()
                     Log.ui.debug("Banner tapped")
                 } label: {
                     Text(String(localized: buttonTitle))

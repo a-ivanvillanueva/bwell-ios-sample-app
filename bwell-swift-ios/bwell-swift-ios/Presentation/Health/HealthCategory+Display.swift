@@ -11,15 +11,15 @@ import SwiftUI
 extension HealthCategory {
     var title: LocalizedStringResource {
         switch self {
-        case .allergyIntolerance: LocalizedStringResource.Health.allergies
-        case .carePlan: LocalizedStringResource.Health.carePlans
-        case .condition: LocalizedStringResource.Health.conditions
-        case .encounter: LocalizedStringResource.Health.encounters
-        case .immunization: LocalizedStringResource.Health.immunizations
-        case .labs: LocalizedStringResource.Health.labs
-        case .medications: LocalizedStringResource.Health.medications
-        case .procedure: LocalizedStringResource.Health.procedures
-        case .vitalSigns: LocalizedStringResource.Health.vitalSigns
+        case .allergyIntolerance: .Health.allergies
+        case .carePlan: .Health.carePlans
+        case .condition: .Health.conditions
+        case .encounter: .Health.encounters
+        case .immunization: .Health.immunizations
+        case .labs: .Health.labs
+        case .medications: .Health.medications
+        case .procedure: .Health.procedures
+        case .vitalSigns: .Health.vitalSigns
         }
     }
 

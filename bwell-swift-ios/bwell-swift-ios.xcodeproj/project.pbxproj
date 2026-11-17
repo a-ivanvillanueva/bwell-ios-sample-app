@@ -12,8 +12,7 @@
 		5502AF5230996DE80093B22D /* UserMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5502AF5130996DE40093B22D /* UserMessage.swift */; };
 		5502AF54309974480093B22D /* NavigationRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5502AF53309974430093B22D /* NavigationRouterTests.swift */; };
 		5502AF56309999000093B22D /* Authentication.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 5502AF55309999000093B22D /* Authentication.xcstrings */; };
-		5506C1FC2EBD0FC7005842A6 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 5506C1FB2EBD0FC7005842A6 /* Localizable.xcstrings */; };
-		5506C1FE2EBD147E005842A6 /* ConnectionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5506C1FD2EBD1479005842A6 /* ConnectionsView.swift */; };
+		5506C1FE2EBD147E005842A6 /* AddNewConnectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5506C1FD2EBD1479005842A6 /* AddNewConnectionView.swift */; };
 		5506C2002EBD14D5005842A6 /* ConnectionsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5506C1FF2EBD14D1005842A6 /* ConnectionsModel.swift */; };
 		551538732EB25C7D001174F9 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 551538722EB25C79001174F9 /* ProfileViewModel.swift */; };
 		5522DC872EAFE10C00F9BCD7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5522DC822EAFE10C00F9BCD7 /* Assets.xcassets */; };
@@ -51,6 +50,7 @@
 		5551A3AC2EC3B8EB00394D59 /* KeychainTokenStorageAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5551A3AB2EC3B8E300394D59 /* KeychainTokenStorageAdapter.swift */; };
 		5551A3B02EC3ECC000394D59 /* SessionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5551A3AF2EC3ECB200394D59 /* SessionError.swift */; };
 		5551A3B42EC4023200394D59 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5551A3B32EC4023200394D59 /* HomeViewModel.swift */; };
+		556C8A2D30A96E07001AA23C /* Connections.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 556C8A2C30A96E07001AA23C /* Connections.xcstrings */; };
 		557F91973078A04B005B1E2A /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557F91963078A049005B1E2A /* Log.swift */; };
 		558FBF02307FEE9D00505658 /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558FBF01307FEE9900505658 /* Credentials.swift */; };
 		558FBF04307FEEE700505658 /* SessionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558FBF03307FEEE100505658 /* SessionRepository.swift */; };
@@ -116,8 +116,7 @@
 		5502AF5130996DE40093B22D /* UserMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMessage.swift; sourceTree = "<group>"; };
 		5502AF53309974430093B22D /* NavigationRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationRouterTests.swift; sourceTree = "<group>"; };
 		5502AF55309999000093B22D /* Authentication.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Authentication.xcstrings; sourceTree = "<group>"; };
-		5506C1FB2EBD0FC7005842A6 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
-		5506C1FD2EBD1479005842A6 /* ConnectionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionsView.swift; sourceTree = "<group>"; };
+		5506C1FD2EBD1479005842A6 /* AddNewConnectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewConnectionView.swift; sourceTree = "<group>"; };
 		5506C1FF2EBD14D1005842A6 /* ConnectionsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionsModel.swift; sourceTree = "<group>"; };
 		551538722EB25C79001174F9 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		5522DC572EAFE0FD00F9BCD7 /* bwell-swift-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "bwell-swift-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -158,6 +157,7 @@
 		5551A3AB2EC3B8E300394D59 /* KeychainTokenStorageAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainTokenStorageAdapter.swift; sourceTree = "<group>"; };
 		5551A3AF2EC3ECB200394D59 /* SessionError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionError.swift; sourceTree = "<group>"; };
 		5551A3B32EC4023200394D59 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		556C8A2C30A96E07001AA23C /* Connections.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Connections.xcstrings; sourceTree = "<group>"; };
 		556EE48F30790658003844CD /* MockBWellSDK */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MockBWellSDK; sourceTree = "<group>"; };
 		557D68922EC5542F0089DCC0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		557F91963078A049005B1E2A /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
@@ -319,8 +319,8 @@
 		5551A3A22EBF00BA00394D59 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				5506C1FD2EBD1479005842A6 /* ConnectionsView.swift */,
-				55E6257E2EB5686B000D3783 /* ManageConnectionsView.swift */,
+				556C8A3630AB6F10001AA23C /* Search Connections */,
+				556C8A3430AB6EFE001AA23C /* Manage Connections */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -328,10 +328,10 @@
 		5551A3A32EC296B400394D59 /* Localizables */ = {
 			isa = PBXGroup;
 			children = (
-				5506C1FB2EBD0FC7005842A6 /* Localizable.xcstrings */,
 				5551A3A42EC296E600394D59 /* Home.xcstrings */,
 				5502AF55309999000093B22D /* Authentication.xcstrings */,
 				554ABBFF30A2C48700C611D7 /* Health.xcstrings */,
+				556C8A2C30A96E07001AA23C /* Connections.xcstrings */,
 			);
 			path = Localizables;
 			sourceTree = "<group>";
@@ -343,6 +343,34 @@
 				5551A3B32EC4023200394D59 /* HomeViewModel.swift */,
 			);
 			path = Home;
+			sourceTree = "<group>";
+		};
+		556C8A3330AB4135001AA23C /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				5597E5492EBE565C00A744CD /* SearchConnectionsViewModel.swift */,
+				55E6257C2EB56861000D3783 /* ManageConnectionsViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		556C8A3430AB6EFE001AA23C /* Manage Connections */ = {
+			isa = PBXGroup;
+			children = (
+				55E6257E2EB5686B000D3783 /* ManageConnectionsView.swift */,
+				5506C1FD2EBD1479005842A6 /* AddNewConnectionView.swift */,
+			);
+			path = "Manage Connections";
+			sourceTree = "<group>";
+		};
+		556C8A3630AB6F10001AA23C /* Search Connections */ = {
+			isa = PBXGroup;
+			children = (
+				5597E54B2EBE56A000A744CD /* SearchConnectionsView.swift */,
+				5548A09C2EBEB12E00C0ACF5 /* SearchConnectionDisclaimerView.swift */,
+				5597E5472EBE560500A744CD /* WebViewWrapper.swift */,
+			);
+			path = "Search Connections";
 			sourceTree = "<group>";
 		};
 		556EE48E30790658003844CD /* Frameworks */ = {
@@ -389,12 +417,11 @@
 		558FBF0A3080621F00505658 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				5522DCAA2EB037CF00F9BCD7 /* Authentication */,
 				55F0BCB33083ADB600FF4BDC /* Shared */,
+				5522DCAA2EB037CF00F9BCD7 /* Authentication */,
 				558FBF103080664E00505658 /* SideMenu */,
 				5551A3B52EC4023900394D59 /* Home */,
 				551538712EB25C6A001174F9 /* Profile */,
-				5597E5462EBE55FC00A744CD /* SearchConnections */,
 				55E6257B2EB56858000D3783 /* ManageConnections */,
 				5522DCAF2EB11F9C00F9BCD7 /* Health */,
 			);
@@ -488,25 +515,6 @@
 			path = Health;
 			sourceTree = "<group>";
 		};
-		5597E5462EBE55FC00A744CD /* SearchConnections */ = {
-			isa = PBXGroup;
-			children = (
-				5597E54D2EBE56B400A744CD /* Views */,
-				5597E5492EBE565C00A744CD /* SearchConnectionsViewModel.swift */,
-			);
-			path = SearchConnections;
-			sourceTree = "<group>";
-		};
-		5597E54D2EBE56B400A744CD /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				5548A09C2EBEB12E00C0ACF5 /* SearchConnectionDisclaimerView.swift */,
-				5597E54B2EBE56A000A744CD /* SearchConnectionsView.swift */,
-				5597E5472EBE560500A744CD /* WebViewWrapper.swift */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
 		55A474EA30984B2F00293B43 /* bwell-swift-iosTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -535,10 +543,10 @@
 		55E6257B2EB56858000D3783 /* ManageConnections */ = {
 			isa = PBXGroup;
 			children = (
+				5506C1FF2EBD14D1005842A6 /* ConnectionsModel.swift */,
 				558FBF323082A9B300505658 /* ConnectionStatus+Display.swift */,
 				5551A3A22EBF00BA00394D59 /* Views */,
-				5506C1FF2EBD14D1005842A6 /* ConnectionsModel.swift */,
-				55E6257C2EB56861000D3783 /* ManageConnectionsViewModel.swift */,
+				556C8A3330AB4135001AA23C /* ViewModel */,
 			);
 			path = ManageConnections;
 			sourceTree = "<group>";
@@ -703,9 +711,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5506C1FC2EBD0FC7005842A6 /* Localizable.xcstrings in Resources */,
 				5522DC872EAFE10C00F9BCD7 /* Assets.xcassets in Resources */,
 				554ABC0030A2C48700C611D7 /* Health.xcstrings in Resources */,
+				556C8A2D30A96E07001AA23C /* Connections.xcstrings in Resources */,
 				5551A3A52EC296E600394D59 /* Home.xcstrings in Resources */,
 				5502AF56309999000093B22D /* Authentication.xcstrings in Resources */,
 			);
@@ -763,7 +771,7 @@
 				55F0BCB73086478900FF4BDC /* HealthCategory+Display.swift in Sources */,
 				558FBF283081B9FF00505658 /* ConnectionRepository.swift in Sources */,
 				5551A3B02EC3ECC000394D59 /* SessionError.swift in Sources */,
-				5506C1FE2EBD147E005842A6 /* ConnectionsView.swift in Sources */,
+				5506C1FE2EBD147E005842A6 /* AddNewConnectionView.swift in Sources */,
 				5551A3AA2EC390A200394D59 /* KeychainService.swift in Sources */,
 				5551A3AC2EC3B8EB00394D59 /* KeychainTokenStorageAdapter.swift in Sources */,
 				554ABC0230A356A100C611D7 /* PillView.swift in Sources */,

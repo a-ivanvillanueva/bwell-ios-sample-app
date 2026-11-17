@@ -106,7 +106,7 @@ struct AuthenticationView: View {
             .background(.white)
             .clipShape(RoundedRectangle(cornerRadius: 16))
 
-            BWellButton(title: String(localized: LocalizedStringResource.Authentication.signIn),
+            BWellButton(title: .Authentication.signIn,
                         textColor: .white, buttonColor: .action, isLoading: viewModel.isLoading) {
                 authWithToken ? viewModel.loginWithOAuthToken() : viewModel.loginWithEmailAndPassword()
             }
@@ -216,17 +216,18 @@ struct AuthenticationView: View {
     @ViewBuilder
     var apikey: some View {
         Group {
-            PillView(text: String(localized: LocalizedStringResource.Authentication.stepOne),
-                     textColor: .indigoBrand, pillColor: .sky)
+            PillView(text: String(localized: .Authentication.stepOne),
+                     textColor: .indigoBrand,
+                     pillColor: .sky)
             .frame(maxWidth: .infinity, alignment: .leading)
 
-            Text(LocalizedStringResource.Authentication.connect)
+            Text(.Authentication.connect)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .font(.system(size: 28, weight: .bold))
                 .padding(.top, 16)
                 .padding(.bottom, 6)
 
-            Text(LocalizedStringResource.Authentication.authSubtext)
+            Text(.Authentication.authSubtext)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .font(.system(size: 15))
                 .foregroundStyle(.muted)
@@ -234,7 +235,7 @@ struct AuthenticationView: View {
 
             Grid(alignment: .leading) {
                 GridRow {
-                    Text(String(localized: LocalizedStringResource.Authentication.apiKey))
+                    Text(.Authentication.apiKey)
                         .font(.system(size: 17, weight: .semibold))
                         .foregroundStyle(.ink)
 
@@ -260,7 +261,7 @@ struct AuthenticationView: View {
                 ErrorMessageView(errorMessage)
             }
 
-            BWellButton(title: String(localized: LocalizedStringResource.Authentication.authenticate),
+            BWellButton(title: .Authentication.authenticate,
                         textColor: .white,
                         buttonColor: .action,
                         isLoading: viewModel.isLoading) {

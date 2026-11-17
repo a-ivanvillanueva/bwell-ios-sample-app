@@ -23,12 +23,17 @@ enum AppRoute: Hashable {
     case healthRecords(category: HealthCategory, group: HealthGroup)
 }
 
+enum AppSheet: Identifiable {
+    case addConnection; var id: Self { self }
+}
+
 @MainActor
 final class NavigationRouter: ObservableObject {
     // The path that controls the navigation stack
     @Published var path: [AppRoute] = []
     @Published var selectedTab: AppTab = .home
     @Published var paths: [AppTab : [AppRoute]] = [:]
+    @Published var sheet: AppSheet?
 
     // Create a custom two way communication for the tabView navigation
     func binding(for tab: AppTab) -> Binding<[AppRoute]> {
@@ -59,6 +64,12 @@ final class NavigationRouter: ObservableObject {
         guard !path.isEmpty else { return }
         path.removeAll()
     }
+
+    // Cross-tab: Home's card opens the Add connection sheet on the Connections tab.
+        func openAddConnection() {
+            selectedTab = .connections
+            sheet = .addConnection
+        }
 
     // Resets the navigation to the default view (Home)
     func reset() {
