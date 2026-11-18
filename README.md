@@ -16,7 +16,7 @@ This is an **improved version of a sample app I built at b.well** to show how to
 - **A redesigned UI** that follows Apple's Human Interface Guidelines: tab bar, large titles, native sheets, skeleton loading and clear error states.
 - **Tests** for view models, mappers, repositories and navigation.
 
-> **All data is mocked.** The b.well SDK is private, so this repo ships `MockBWellSDK`, a small local Swift package that mirrors the parts of the SDK the app uses and returns **fictional** data. No network calls, no accounts and no real health information.
+> **All data is mocked.** The b.well SDK is private and hasn’t been released yet, so this repo ships `MockBWellSDK`, a small local Swift package that mirrors the parts of the SDK the app uses and returns **fictional** data. No network calls, no accounts and no real health information.
 
 ## Screenshots
 
