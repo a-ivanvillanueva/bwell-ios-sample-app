@@ -45,7 +45,7 @@ This is an **improved version of a sample app I built at b.well** to show how to
 
 | Area | Choice |
 |---|---|
-| Language and UI | Swift 5, SwiftUI, `async`/`await` |
+| Language and UI | Swift 6, SwiftUI, `async`/`await` |
 | Architecture | Clean Architecture, MVVM, manual dependency injection |
 | Navigation | `TabView` with a `NavigationStack` per tab, typed routes |
 | Reactive state | Combine (session state) |
@@ -135,8 +135,8 @@ Select the **bwell-swift-ios** scheme and an iPhone simulator, then press **⌘R
 
 **Ivan Villanueva**: iOS engineer with almost five years of experience, most recently Senior iOS Developer.
 
-- LinkedIn: [www.linkedin.com/in/a-ivanvillanueva]
-- Email: [ivanvillanueva99@outlook.com]
+- LinkedIn: (Go to Linkedin Profile)[www.linkedin.com/in/a-ivanvillanueva
+- Email: (Send me an email)[ivanvillanueva99@outlook.com]
 
 ## License and acknowledgements
 
