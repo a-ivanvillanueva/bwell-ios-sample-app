@@ -90,6 +90,17 @@
     "Delete Connection" : {
       "extractionState" : "manual"
     },
+    "Delete connection message alert" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Are you sure you want to permanently delete ‘%@’? This action cannot be undone"
+          }
+        }
+      }
+    },
     "Disclaimer instructions" : {
       "extractionState" : "manual",
       "localizations" : {

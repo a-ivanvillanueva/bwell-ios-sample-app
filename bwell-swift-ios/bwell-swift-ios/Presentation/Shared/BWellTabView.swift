@@ -37,7 +37,7 @@ struct BWellTabView: View {
 
             Tab("Profile", systemImage: "person", value: AppTab.profile) {
                 NavigationStack(path: router.binding(for: .profile)) {
-                    ProfileView(showMenu: .constant(false), viewModel: container.makeProfileViewModel())
+                    ProfileView(viewModel: container.makeProfileViewModel())
                         .appDestinations(container: container)
                 }
             }

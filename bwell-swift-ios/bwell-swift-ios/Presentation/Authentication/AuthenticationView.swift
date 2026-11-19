@@ -89,7 +89,8 @@ struct AuthenticationView: View {
             }
 
             Group {
-                if authWithToken {
+                emailAndPassword
+                /*if authWithToken {
                     emailAndPassword
 
                     if let emailError = viewModel.emailErrorMessage, let passwordError = viewModel.passwordErrorMessage {
@@ -101,7 +102,7 @@ struct AuthenticationView: View {
                     if let errorMessage = viewModel.errorMessage {
                         ErrorMessageView(errorMessage)
                     }
-                }
+                }*/
             }
             .background(.white)
             .clipShape(RoundedRectangle(cornerRadius: 16))

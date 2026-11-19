@@ -18,6 +18,7 @@ struct BWellButton: View {
         Button(action: action) {
             Text(title)
                 .font(.system(size: 17, weight: .semibold))
+                .foregroundStyle(textColor)
         }
         .padding()
         .frame(maxWidth: .infinity)

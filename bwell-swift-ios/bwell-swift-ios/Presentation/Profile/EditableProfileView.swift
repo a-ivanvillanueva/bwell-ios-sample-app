@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 struct EditableProfileView: View {
+    @Environment(\.dismiss) private var dismiss
     @State private var shouldRotate: Bool = false
 
     // Personal Information
@@ -35,128 +36,118 @@ struct EditableProfileView: View {
     // Birthdate
     @Binding var selectedBirthdate: Date
 
-
-    let action: () -> Void
-
     var body: some View {
-        VStack {
-            List {
-                Section("Personal Information") {
-                    ListItem(text: $givenName, placeholder: "Given Name", icon: "person")
-                    ListItem(text: $familyName, placeholder: "Family Name", icon: "person.2")
-                    genderPickerView
-                }.listRowSeparator(.hidden, edges: .top)
-
-                Section("Birth date") {
-                    birthDateView
-                }.listRowSeparator(.hidden, edges: .top)
-
-                Section("Contact Information") {
-                    ListItem(text: $email, placeholder: "Email", icon: "envelope")
-                    ListItem(text: $workPhone, placeholder: "Work phone number", icon: "suitcase")
-                    ListItem(text: $homePhone, placeholder: "Home phone number", icon: "house")
-                    ListItem(text: $mobilePhone, placeholder: "Mobile phone number", icon: "iphone")
-                }.listRowSeparator(.hidden, edges: .top)
-
-                Section("Address") {
-                    ListItem(text: $addressLineOne, placeholder: "Address Line 1", icon: "signpost.right.and.left")
-                    ListItem(text: $addressLineTwo, placeholder: "Address Line 2", icon: "house")
-                    ListItem(text: $city, placeholder: "City", icon: "mappin.and.ellipse")
-                    ListItem(text: $state, placeholder: "State", icon: "map")
-                    ListItem(text: $postalCode, placeholder: "Postal Code", icon: "numbers.rectangle")
-                }.listRowSeparator(.hidden, edges: .top)
-
-                Section("Language") {
-                    ListItem(text: $language, placeholder: "Language", icon: "character.book.closed")
-                }.listRowSeparator(.hidden, edges: .top)
-
-            }.listStyle(.plain)
-
-            BWellButton(title: "Save", buttonColor: .green) {
-                action()
+        List {
+            Section("Personal") {
+                EditProfileTextFieldView(fieldTitle: "First name", text: $givenName)
+                EditProfileTextFieldView(fieldTitle: "Last name", text: $familyName)
+                genderPickerView
+                birthDateView
+                EditProfileTextFieldView(fieldTitle: "Language", text: $language)
             }
-            .padding(.horizontal)
-            .padding(.bottom)
+
+            Section("Contact") {
+                EditProfileTextFieldView(fieldTitle: "Email", text: $email)
+                EditProfileTextFieldView(fieldTitle: "Work phone", text: $workPhone)
+                EditProfileTextFieldView(fieldTitle: "Home name", text: $homePhone)
+                EditProfileTextFieldView(fieldTitle: "Mobile name", text: $mobilePhone)
+            }
+
+            Section("Address") {
+                EditProfileTextFieldView(fieldTitle: "Address Line 1", text: $addressLineOne)
+                EditProfileTextFieldView(fieldTitle: "Address Line 2", text: $addressLineTwo)
+                EditProfileTextFieldView(fieldTitle: "City", text: $city)
+                EditProfileTextFieldView(fieldTitle: "Province or State", text: $state)
+                EditProfileTextFieldView(fieldTitle: "Postal Code", text: $postalCode)
+            }
         }
+        .scrollContentBackground(.hidden)
+        .background(.canvas)
     }
 
     @ViewBuilder
     var birthDateView: some View {
-        HStack(spacing: 12) {
-            Image(systemName: "calendar")
-                .frame(width: 24, alignment: .center)
+        HStack(alignment: .center) {
+            Text("Birthdate")
+                .foregroundStyle(.muted)
+                .font(.system(size: 13))
 
-            Text("\(selectedBirthdate.toString())")
+            Spacer()
 
             DatePicker("",
                        selection: $selectedBirthdate,
                        in: ...Date(),
                        displayedComponents: .date
-            ).datePickerStyle(.compact)
+            )
+            .datePickerStyle(.compact)
+            .tint(.action)
         }
     }
 
     @ViewBuilder
     var genderPickerView: some View {
-        HStack(spacing: 12) {
-            Image(systemName: "figure.stand.dress.line.vertical.figure")
-                .frame(width: 24, alignment: .center)
-            Text("\(gender.displayName)")
+        VStack(alignment: .leading, spacing: 5) {
+            Text("Gender")
+                .foregroundStyle(.muted)
+                .font(.system(size: 13))
 
-            Spacer()
+            HStack {
+                Text("\(gender.displayName)")
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .font(.system(size: 17))
+                    .foregroundStyle(.ink)
 
-            Menu {
-                GenderMenuButton(title: "Male",
-                                 genderOption: .male,
-                                 currentGender: gender) { gender = .male }
+                Spacer()
 
-                GenderMenuButton(title: "Female",
-                                 genderOption: .female,
-                                 currentGender: gender) { gender = .female }
+                Menu {
+                    GenderMenuButton(title: "Male",
+                                     genderOption: .male,
+                                     currentGender: gender) { gender = .male }
 
-                GenderMenuButton(title: "Other",
-                                 genderOption: .other,
-                                 currentGender: gender) { gender = .other }
-            } label: {
-                Image(systemName: "chevron.right.circle.fill")
-                    .foregroundStyle(Color(.systemGray4))
-                    .frame(width: 10)
+                    GenderMenuButton(title: "Female",
+                                     genderOption: .female,
+                                     currentGender: gender) { gender = .female }
+
+                    GenderMenuButton(title: "Other",
+                                     genderOption: .other,
+                                     currentGender: gender) { gender = .other }
+                } label: {
+                    Image(systemName: "chevron.up.chevron.down")
+                        .font(.system(size: 12))
+                        .foregroundStyle(Color(.systemGray4))
+                }
             }
         }
     }
-
-    @ViewBuilder
-    var separatorView: some View {
-        Rectangle()
-            .fill(.separator)
-            .frame(height: 1)
-            .padding(.bottom, 20)
-    }
 }
 
-private struct ListItem: View {
+private struct EditProfileTextFieldView: View {
+    var fieldTitle: String
     @Binding var text: String
-    var placeholder: String
-    var icon: String
 
     var body: some View {
-        HStack(spacing: 12) {
-            Image(systemName: icon)
-                .frame(width: 24, alignment: .center)
+        VStack(alignment: .leading, spacing: 5) {
+            Text(fieldTitle)
+                .foregroundStyle(.muted)
+                .font(.system(size: 13))
 
-            TextField(placeholder, text: $text)
-                .frame(width: 200)
+            HStack(alignment: .lastTextBaseline) {
+                TextField("", text: $text)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .font(.system(size: 17))
+                    .foregroundStyle(.ink)
 
-            Spacer()
+                Spacer()
 
-            if !text.isEmpty {
-                Button {
-                    text = ""
-                } label: {
-                    Image(systemName: "plus.circle.fill")
-                        .rotationEffect(.degrees(45))
-                        .foregroundStyle(Color(.systemGray4))
-                        .frame(width: 10)
+                if !text.isEmpty {
+                    Button {
+                        text = ""
+                    } label: {
+                        Image(systemName: "plus.circle.fill")
+                            .rotationEffect(.degrees(45))
+                            .foregroundStyle(Color(.systemGray4))
+                            .frame(width: 10)
+                    }
                 }
             }
         }
@@ -164,38 +155,32 @@ private struct ListItem: View {
 }
 
 private struct GenderMenuButton: View {
+    @Binding private var isSelected: Bool
+
     let title: String
     let genderOption: Gender
     let currentGender: Gender
     let action: () -> Void
 
-    var body: some View {
-        Button(action: action) {
-            HStack {
-                Text(title)
-                Spacer()
-                if currentGender == genderOption {
-                    Image(systemName: "checkmark")
-                        .foregroundColor(.blue)
+    init(title: String, genderOption: Gender, currentGender: Gender, action: @escaping () -> Void) {
+        self.title = title
+        self.genderOption = genderOption
+        self.currentGender = currentGender
+        self.action = action
+        _isSelected = Binding(
+            get: { currentGender == genderOption },
+            set: { newValue in
+                if newValue {
+                    action()
                 }
             }
+        )
+    }
+
+    var body: some View {
+        Toggle(isOn: $isSelected) {
+            Text(title)
+                .foregroundStyle(.ink)
         }
     }
-}
-
-#Preview {
-    EditableProfileView(givenName: .constant("John"),
-                        familyName: .constant("Doe"),
-                        gender: .constant(.male),
-                        email: .constant("example@example.com"),
-                        workPhone: .constant("221-923-1033"),
-                        homePhone: .constant("221-629-2253"),
-                        mobilePhone: .constant("221-812-7803"),
-                        addressLineOne: .constant("145 W Osten St"),
-                        addressLineTwo:  .constant("Suite 300"),
-                        city: .constant("Baltimore"),
-                        state: .constant("Maryland"),
-                        postalCode: .constant("21230"),
-                        language: .constant("en"),
-                        selectedBirthdate: .constant(Date.now), action: {})
 }

@@ -1,0 +1,39 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "Address" : {
+      "extractionState" : "manual"
+    },
+    "Birthdate" : {
+      "extractionState" : "manual"
+    },
+    "Contact" : {
+      "extractionState" : "manual"
+    },
+    "Email" : {
+      "extractionState" : "manual"
+    },
+    "Gender" : {
+      "extractionState" : "manual"
+    },
+    "Home" : {
+      "extractionState" : "manual"
+    },
+    "Language" : {
+      "extractionState" : "manual"
+    },
+    "Mobile" : {
+      "extractionState" : "manual"
+    },
+    "Personal" : {
+      "extractionState" : "manual"
+    },
+    "Sign out" : {
+      "extractionState" : "manual"
+    },
+    "Work" : {
+      "extractionState" : "manual"
+    }
+  },
+  "version" : "1.3"
+}

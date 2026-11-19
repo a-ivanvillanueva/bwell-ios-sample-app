@@ -10,167 +10,179 @@ import SwiftUI
 
 struct ProfileView: View {
     @StateObject private var viewModel: ProfileViewModel
-    @Binding private var showMenu: Bool
 
     @State private var text: String = ""
     @State private var isEditing: Bool = false
 
-    init(showMenu: Binding<Bool>, viewModel: @autoclosure @escaping () -> ProfileViewModel) {
-        _showMenu = showMenu
+    init(viewModel: @autoclosure @escaping () -> ProfileViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel())
     }
 
-    var fullName: String {
-        return "\(viewModel.givenName) \(viewModel.familyName)"
-    }
-
-    var address: String {
-        let addressLine = "\(viewModel.addressLineOne), \(viewModel.addressLineTwo)"
-
-        return "\(addressLine), \(viewModel.city), \(viewModel.state) \(viewModel.postalCode)"
-    }
-
     var body: some View {
-        ZStack(alignment: .center) {
-            if viewModel.isLoading {
-                ProgressView("Loading profile data...")
-            } else {
+        NavigationStack {
+            ZStack {
+                Color.canvas
+                    .ignoresSafeArea()
+
                 if isEditing {
-                   EditableProfileView(
-                    givenName: $viewModel.givenName,
-                    familyName: $viewModel.familyName,
-                    gender: $viewModel.gender,
-                    email: $viewModel.email,
-                    workPhone: $viewModel.workPhone,
-                    homePhone: $viewModel.homePhone,
-                    mobilePhone: $viewModel.mobilePhone,
-                    addressLineOne: $viewModel.addressLineOne,
-                    addressLineTwo: $viewModel.addressLineTwo,
-                    city: $viewModel.city,
-                    state: $viewModel.state,
-                    postalCode: $viewModel.postalCode,
-                    language: $viewModel.language,
-                    selectedBirthdate: Binding<Date>(
-                        get: {
-                            return viewModel.birthdate.dateFormatter().toDate()
-                        }, set: { newDate in
-                            viewModel.birthdate = newDate.toString()
+                    editProfile
+                        .navigationTitle(Text("Edit Profile"))
+                        .navigationBarTitleDisplayMode( .inline)
+                        .padding(.top, 5)
+                        .toolbar {
+                            ToolbarItem(placement: .topBarLeading) {
+                                Button {
+                                    isEditing = false
+                                } label: {
+                                    Text("Cancel")
+                                        .font(.system(size: 17))
+                                        .foregroundStyle(.action)
+                                }
+                            }
+
+                            ToolbarItem(placement: .topBarTrailing) {
+                                Button {
+                                    Log.profile.log("Save button pressed")
+                                    Task {
+                                        await viewModel.updateUserProfile()
+                                        isEditing = false
+                                    }
+                                } label: {
+                                    Text("Save")
+                                        .font(.system(size: 17, weight: .semibold))
+                                        .foregroundStyle(.action)
+                                }
+                            }
                         }
-                    ),
-                    action: {
-                        Task {
-                            await viewModel.updateUserProfile()
-                            isEditing = false
-                        }
-                    }).padding(.top, 5)
                 } else {
-                    readOnlyProfileView
+                    userProfile
+                        .scrollContentBackground(.hidden)
+                        .background(.canvas)
+                        .navigationTitle(Text("Profile"))
+                        .navigationBarTitleDisplayMode(.large)
+                        .padding(.top, 12)
+                        .padding(.horizontal, 16)
+                        .toolbar {
+                            ToolbarItem(placement: .topBarTrailing) {
+                                Button {
+                                    isEditing = true
+                                } label: {
+                                    Text("Edit")
+                                        .font(.system(size: 17))
+                                        .foregroundStyle(.action)
+                                }
+                            }
+                        }
+                        .task {
+                            await viewModel.getUserProfile()
+                        }
                 }
             }
-        }
-        .ignoresSafeArea(edges: .bottom)
-        .bwellNavigationBar(showMenu: $showMenu,
-                            navigationTitle: "Profile", trailingItem: {
-            Button {
-                isEditing.toggle()
-            } label: {
-                if isEditing {
-                    Text("Cancel")
-                        .foregroundStyle(.white)
-                } else {
-                    Image(systemName: "square.and.pencil")
-                }
-            }
-        })
-        .task {
-            await viewModel.getUserProfile()
         }
     }
 
     @ViewBuilder
-    var readOnlyProfileView: some View {
-        ScrollView {
-            Image("user-profile-picture")
-                .resizable()
-                .scaledToFill()
-                .clipShape(Circle())
-                .frame(width: 120, height: 120, alignment: .center)
-                .padding(.top, 20)
+    var editProfile: some View {
+        EditableProfileView(givenName: $viewModel.givenName,
+                            familyName: $viewModel.familyName,
+                            gender: $viewModel.gender,
+                            email: $viewModel.email,
+                            workPhone: $viewModel.workPhone,
+                            homePhone: $viewModel.homePhone,
+                            mobilePhone: $viewModel.mobilePhone,
+                            addressLineOne: $viewModel.addressLineOne,
+                            addressLineTwo: $viewModel.addressLineTwo,
+                            city: $viewModel.city,
+                            state: $viewModel.state,
+                            postalCode: $viewModel.postalCode,
+                            language: $viewModel.language,
+                            selectedBirthdate: Binding<Date>(
+                                get: { viewModel.birthdate.dateFormatter().toDate() },
+                                set: { newDate in viewModel.birthdate = newDate.toString() })
+        )
+    }
 
-            VStack {
-                Text("Personal Information")
-                    .font(.title3)
-                    .fontWeight(.medium)
-                    .padding(.bottom, 10)
+    @ViewBuilder
+    var userProfile: some View {
+        List {
+            HStack {
+                Circle()
+                    .frame(width: 56, height: 56, alignment: .leading)
+                    .foregroundStyle(.sky)
+                    .overlay {
+                        Text("AS")
+                            .font(.system(size: 20, weight: .semibold))
+                            .foregroundStyle(.indigoBrand)
+                    }
+                VStack {
+                    Text("\(viewModel.givenName) \(viewModel.familyName)")
+                        .font(.system(size: 22, weight: .semibold))
+                        .foregroundStyle(.ink)
 
-                ListItem(icon: "person.text.rectangle", title: "Full name", text: fullName)
-                ListItem(icon: "calendar", title: "Birthdate", text: viewModel.birthdate)
-                ListItem(icon: "figure.stand.dress.line.vertical.figure", title: "Gender", text: viewModel.gender.displayName)
-                ListItem(icon: "house", title: "Address", text: address)
-
-                Text("Contact Information")
-                    .font(.title3)
-                    .fontWeight(.medium)
-                    .padding(.vertical, 10)
-
-                if !viewModel.email.isEmpty {
-                    ListItem(icon: "envelope", title: "Email address", text: viewModel.email)
+                    Text("Member profile")
+                        .font(.system(size: 15))
+                        .foregroundStyle(.muted)
                 }
-
-                if !viewModel.workPhone.isEmpty {
-                    ListItem(icon: "suitcase", title: "Work phone number", text: viewModel.workPhone)
-                }
-
-                if !viewModel.homePhone.isEmpty {
-                    ListItem(icon: "house", title: "Home phone number", text: viewModel.homePhone)
-                }
-
-                if !viewModel.mobilePhone.isEmpty {
-                    ListItem(icon: "iphone", title: "Mobile phone number", text: viewModel.mobilePhone)
-                }
-
-                Text("Language")
-                    .font(.title3)
-                    .fontWeight(.medium)
-                    .padding(.vertical, 10)
-
-                ListItem(icon: "translate", title: "Language", text: viewModel.language)
             }
-            .padding()
-            .frame(height: .infinity)
-            .clipShape(UnevenRoundedRectangle(topLeadingRadius: 25,
-                                              topTrailingRadius: 25))
+            .listRowInsets(EdgeInsets())
+            .listRowBackground(Color.clear)
 
+            Section("Personal") {
+                ProfileListItemView(label: .Profile.birthdate,
+                                    value: viewModel.birthdate.dateFormatter().toDate().toString())
+
+                ProfileListItemView(label: .Profile.gender,
+                                    value: viewModel.gender.displayName)
+
+                ProfileListItemView(label: .Profile.language,
+                                    value: viewModel.language)
+            }
+
+            Section("Contact") {
+                ProfileListItemView(label: .Profile.email,
+                                    value: viewModel.email)
+
+                ProfileListItemView(label: .Profile.work,
+                                    value: viewModel.workPhone)
+
+                ProfileListItemView(label: .Profile.home,
+                                    value: viewModel.homePhone)
+
+                ProfileListItemView(label: .Profile.mobile,
+                                    value: viewModel.mobilePhone)
+            }
+
+            Section("Address") {
+                Text("\(viewModel.addressLineOne), \(viewModel.addressLineTwo)")
+            }
+
+            BWellButton(title: .Profile.signOut,
+                        textColor: .alert,
+                        buttonColor: .clear,
+                        action: {
+                Log.ui.debug("Sign out button pressed.")
+            })
+            .listRowInsets(EdgeInsets())
         }
-        .ignoresSafeArea(edges: .bottom)
     }
 }
 
-private struct ListItem: View {
-    var icon: String
-    var title: String
-    var text: String
+private struct ProfileListItemView: View {
+    var label: LocalizedStringResource
+    var value: String
 
     var body: some View {
-        HStack(alignment: .center, spacing: 17) {
-            Image(systemName: icon)
-                .font(.title2)
-                .frame(width: 24, alignment: .center)
+        HStack {
+            Text(label)
 
-            VStack(alignment: .leading) {
-                Text(title)
-                    .font(.headline)
-                    .fontWeight(.medium)
-
-                Text(text)
-            }
             Spacer()
-        }.padding(.bottom, 5)
+
+            Text(value.isEmpty ? "Not set" : value)
+        }
     }
 }
 
 #Preview {
-    ProfileView(showMenu: .constant(false), viewModel: AppContainer.preview.makeProfileViewModel())
-        .environmentObject(NavigationRouter())
-        .environmentObject(AppContainer.preview.makeSideMenuViewModel())
+    ProfileView(viewModel: AppContainer.preview.makeProfileViewModel())
 }
+
