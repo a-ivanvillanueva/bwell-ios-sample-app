@@ -135,8 +135,8 @@ Select the **bwell-swift-ios** scheme and an iPhone simulator, then press **⌘R
 
 **Ivan Villanueva**: iOS engineer with almost five years of experience, most recently Senior iOS Developer.
 
-- LinkedIn: (Go to Linkedin Profile)[www.linkedin.com/in/a-ivanvillanueva
-- Email: (Send me an email)[ivanvillanueva99@outlook.com]
+- LinkedIn: www.linkedin.com/in/a-ivanvillanueva
+- Email: ivanvillanueva99@outlook.com
 
 ## License and acknowledgements
 
